@@ -6,7 +6,7 @@ import Myimg from './assets/Components/Image/img'
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css'
 import Mynavbar from './assets/Components/Navbar/navbar'
-
+import MySidebar from './assets/Components/Sidebar/sidebar'
 
 
 
@@ -16,7 +16,7 @@ function App() {
   return(
     <> 
       <Mynavbar />
-
+      <MySidebar/>
       <div>
         <Mybutton topic={"done"} process={()=>{
           alert('sdadas')
