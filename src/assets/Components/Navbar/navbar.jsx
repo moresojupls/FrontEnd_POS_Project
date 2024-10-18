@@ -1,14 +1,37 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+
 import 'bootstrap/dist/css/bootstrap.css';
 
-import React, { useState } from 'react'
+
 import Myimg from '../Image/img'
 import Logo from './MilkTea_logo.png';
+import { useState,useEffect } from 'react';
 
 function Mynavbar() {
+  function UserDisplay(){
+    const data = {
+      name:'champ',
+      gender:'man'
+    }
+    return `${data.gender === 'man'?'Mr':'Miss'}  ${data.name}`;
+  }
+  function DateNow(){
+    const date = new Date();
+    const day = `${ date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
+    const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    return day+time
+  }
+  const [date,setDate] = useState(0);
+  useEffect(()=>{
+    setTimeout(()=>{
+        setDate(()=>
+          DateNow()
+        
+        )
+    },1000)
+  })
     // const [date,setDate] = useState();
     // var newDate = new Date();
 
@@ -16,33 +39,39 @@ function Mynavbar() {
     //     setDate(newDate.getHours()+' : '+newDate.getMinutes()+' : '+newDate.getSeconds())
     // },1000)
   return (
-    <div>
-    <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
-      <Container>
-        <Myimg url={Logo} size={"80px"} />
-        <Navbar.Brand href="#home"c>MilkTea</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            {/* <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
-          </Nav>
-        </Navbar.Collapse>
-        <Navbar.Text  />
-        {/* <h1>{date   }</h1> */}
-      </Container>
-      </Navbar>
-    </div>
+  
+      
+      <Navbar bg="prinary  "   expand="lg" className='d-flex '  fixed="top">
+       
+          
+          <Navbar.Brand className='d-flex flex-row' href="home">
+            <Myimg url={Logo} size={"40px"} />
+            <h2>Welcome</h2>
+            
+          </Navbar.Brand>
+          <Container className='d-flex justify-content-end'>
+            <Navbar.Text className='mx-4'>
+                <div>
+                  <h5>Time {date}</h5>
+                </div>
+            </Navbar.Text>
+
+            <Navbar.Text className='mx-4'>
+                <div>
+                  <h5>User {UserDisplay()}</h5>
+                </div>
+            </Navbar.Text>
+          </Container>
+          
+            
+        
+         
+          
+       
+        
+   
+        </Navbar>
+   
   )
 }
 
