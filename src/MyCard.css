@@ -1,7 +1,7 @@
 
 .card-wrapper {
   display: flex;  /* จัดเรียงเป็นแนวนอน */
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   flex-direction: row;
   justify-content: space-around; /* กระจายการ์ดให้มีระยะห่างเท่าๆ กัน */
   gap: 16px; /* ระยะห่างระหว่างการ์ด */

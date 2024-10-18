@@ -38,7 +38,7 @@ function Mynavbar() {
   return (
   
       
-      <Navbar bg="prinary  "   expand="lg" className='d-flex container-fluid'  fixed="top" >
+      <Navbar bg="prinary  "   expand="lg" className='d-flex container-fluid'  >
        
           
           <Navbar.Brand className='d-flex flex-row' href="home">
