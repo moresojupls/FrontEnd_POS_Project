@@ -1,8 +1,10 @@
 // Library
 import { useState } from 'react'
-
-// assets
-import Myimg from './assets/Components/Image/img';
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import Mybutton from './assets/Components/Button/button'
+import Myimg from './assets/Components/Image/img'
+import MyCard from './assets/Components/Card_Menu/Card'
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css'
 
@@ -20,14 +22,56 @@ function App() {
   return(
     <div> 
       <Mynavbar />
-      <div className='d-flex '  style={{width:'100%' ,marginTop:'20px'}}>
-        <MySidebar />
-        <h1 style={{width:'60%'}}>Card</h1>
-        <MyOrderlist />
-      </div>
-     
+      <MySidebar/>
       
-    </div>
+      <div className="card-wrapper" style={{paddingRight: '400px', marginTop : '8px'}}>
+        <MyCard 
+            myimg="https://images.unsplash.com/photo-1542452376175-82b6fb643412?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            name="ชาไทย"
+            price="20 bath"
+        />
+        <MyCard 
+            myimg="https://images.unsplash.com/photo-1542452376175-82b6fb643412?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            name="ชาไทย"
+            price="20 bath"
+        />
+        <MyCard 
+            myimg="https://images.unsplash.com/photo-1542452376175-82b6fb643412?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            name="ชาไทย"
+            price="20 bath"
+        />
+        <MyCard 
+            myimg="https://images.unsplash.com/photo-1542452376175-82b6fb643412?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            name="ชาไทย"
+            price="20 bath"
+        />
+
+      </div>
+
+      <div className="card-wrapper" style={{paddingRight: '400px', marginTop: '-40px'}}>
+        <MyCard 
+            myimg="https://images.unsplash.com/photo-1542452376175-82b6fb643412?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            name="ชาไทย"
+            price="20 bath"
+        />
+        <MyCard 
+            myimg="https://images.unsplash.com/photo-1542452376175-82b6fb643412?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            name="ชาไทย"
+            price="20 bath"
+        />
+        <MyCard 
+            myimg="https://images.unsplash.com/photo-1542452376175-82b6fb643412?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            name="ชาไทย"
+            price="20 bath"
+        />
+        <MyCard 
+            myimg="https://images.unsplash.com/photo-1542452376175-82b6fb643412?q=80&w=1901&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            name="ชาไทย"
+            price="20 bath"
+        />
+
+      </div>
+    </>
   )
 }
 
