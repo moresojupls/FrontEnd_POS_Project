@@ -1,3 +1,6 @@
+// npm install; npm run build
+// npm run dev -- --host
+
 // Library
 import { useState } from 'react'
 import { BrowserRouter as Router,Routes,Route,Link } from 'react-router-dom';
