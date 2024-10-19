@@ -33,7 +33,7 @@ function MySidebar() {
     <div  style={{  minWidth:'60px', width:'10%',backgroundColor: '#f5f5f5', height: window.innerWidth}}>      
            <List>
              
-              <Link to='/Home'>
+              <Link to='/'>
                 <ListItem button width='100rem'>
                   <ListItemIcon>
                     <HomeIcon />
