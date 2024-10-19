@@ -3,19 +3,19 @@ import MyCard from '../Card_Menu/Card'
 
 function Mycontent({items}) {
     console.log('items : ',items)
+    
   return (
+    <>
+    <div   style={{display:'flex', flexDirection:'row', flexWrap:'wrap' }}>
+        {
+        items.map(element => (
+            <MyCard key={element.id} myimg = { element.myimg }name = { element.name } price = { element.price }/>
+            
+        ))
+        }
+    </div>
+    </>
     
-    
-    items.map(element => (
-        
-        
-       
-        <div key={element.id} className="card-wrapper" style={{paddingRight: '20px'}}>
-            <MyCard  myimg = { element.myimg }name = { element.name } price = { element.price }/>
-        </div>
-        
-    ))
-
 
     
     
