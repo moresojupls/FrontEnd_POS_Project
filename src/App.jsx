@@ -23,7 +23,7 @@ function App({content}) {
   
   return(
    
-      <div>
+    <div>
         <Mynavbar className='d-flex '/>
         <div className='d-flex '  style={{width:'100%' }}>
           <MySidebar />
@@ -31,9 +31,8 @@ function App({content}) {
           <div style={{width:'60%'}}>
             <Mycontent items={content}/>
           </div>
-          <MyOrderlist />
+          <MyOrderlist/>
           
-        
 
         </div>
     </div>
