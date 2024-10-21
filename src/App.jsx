@@ -60,9 +60,8 @@ function App({content}) {
             <Mycontent items={result === undefined ? []:result}/>
             
           </div>
-          <MyOrderlist />
+          <MyOrderlist/>
           
-        
 
         </div>
     </div>
