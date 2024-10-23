@@ -23,8 +23,8 @@ function MyRouter() {
       
         <Routes>
             <Route path='/' exact={true} Component={HomePage} ></Route>
-            <Route path='/User' Component={Userpage}></Route>
             <Route path='/User/member' Component={Userpage}></Route>
+         
             <Route path='/Product' Component={ProductPage}></Route>
             { // All  Product pages
                 ProductBtn.map((element)=>(
