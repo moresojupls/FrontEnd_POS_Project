@@ -1,0 +1,12 @@
+.Catagory:hover{
+    background-color: black;
+}
+
+.Catagory{
+    border-radius: 15px;
+    color:white;
+    border: 10px;
+    margin-left:  10px;
+    padding: 12px;
+    background-color: blue;
+}
