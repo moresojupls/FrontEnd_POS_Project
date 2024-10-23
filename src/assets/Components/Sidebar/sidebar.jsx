@@ -56,7 +56,7 @@ function MySidebar() {
                <h4 style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Supply</h4>
              </ListItem>
 
-             <Link to='/product'>
+             <Link to='/product/favourite'>
                 <ListItem button width='100rem'>
                   <ListItemIcon>
                     <HomeIcon />
@@ -65,7 +65,7 @@ function MySidebar() {
                 </ListItem>
               </Link>
              
-             <Link to='/User'>
+             <Link to='/user/member'>
               <ListItem button>
                 <ListItemIcon>
                   <InventoryIcon />

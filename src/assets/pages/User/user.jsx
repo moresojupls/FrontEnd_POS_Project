@@ -2,8 +2,9 @@ import  { useState ,useEffect,createContext,useContext} from 'react'
 import App from '../../../App'
 
 import Api   from '../../Service/api'
-// import MyValidator from '../../Service/validator';
+import MyValidator from '../../Service/validator';
 import img from '../../image';
+import image from '../../image';
 
 
 export const UseContext =createContext('user');
@@ -26,11 +27,13 @@ function Userpage() {
   const [result,setResult] = useState();
 
   useEffect(()=>{
+    
     results_api.getApi().then((res)=>{
-      res.map((element)=>{
-        element.img = img.thaitea
-      })
-      setResult(res);
+      // res.map((element,index)=>{
+      //   element.img = s[index%s.length]
+      // })
+    
+      setResult({"member":res});
       
       
     })
