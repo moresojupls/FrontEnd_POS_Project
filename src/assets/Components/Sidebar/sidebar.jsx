@@ -65,7 +65,7 @@ function MySidebar() {
                 </ListItem>
               </Link>
              
-             <Link to='/User'>
+             <Link to='/user'>
               <ListItem button>
                 <ListItemIcon>
                   <InventoryIcon />

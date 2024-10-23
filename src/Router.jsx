@@ -24,7 +24,9 @@ function MyRouter() {
             <Route path='/' exact={true} Component={HomePage} ></Route>
             <Route path='/User' Component={Userpage}></Route>
             <Route path='/Product' Component={ProductPage}></Route>
-            <Route path='*' Component={NotFound}></Route>
+            <Route path='/Product/favourite' Component={ProductPage}></Route>
+            <Route path='/Product/greentea' Component={ProductPage}></Route>
+            <Route path='*' Component={ProductPage}></Route>
         </Routes>
 
     </Router>
