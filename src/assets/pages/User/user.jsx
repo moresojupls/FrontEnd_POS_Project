@@ -30,9 +30,9 @@ function Userpage() {
   useEffect(()=>{
     
     results_api.getApi().then((res)=>{
-      // res.map((element,index)=>{
-      //   element.img = s[index%s.length]
-      // })
+      res.map((element,index)=>{
+        element.img = image.User;
+      })
     
       setResult({"member":res});
       

@@ -7,8 +7,9 @@ import image from '../../image';
 import Myimg from '../Image/img'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-
+import './navbar.css';
 import { useState,useEffect } from 'react';
+
 
 function Mynavbar() {
   function UserDisplay(){
@@ -38,7 +39,7 @@ function Mynavbar() {
   return (
   
       
-      <Navbar bg="prinary  "   expand="lg" className='d-flex container-fluid'  >
+      <Navbar  bg="prinary  "   expand="sm" className=' d-flex container-sm'  >
        
           
           <Navbar.Brand className='d-flex flex-row' href="home">

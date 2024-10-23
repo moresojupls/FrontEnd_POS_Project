@@ -21,7 +21,7 @@ const Favourite = [{
 },
 {
     id:3,
-    myimg:'https://img.freepik.com/free-photo/leaf-plate-wood-object-healthy-eating_1172-451.jpg',
+    img:'https://img.freepik.com/free-photo/leaf-plate-wood-object-healthy-eating_1172-451.jpg',
     name:'Espresso ',
     price:30,
 
