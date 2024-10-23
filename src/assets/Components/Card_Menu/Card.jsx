@@ -1,18 +1,19 @@
 import React from 'react'
 import '../../../MyCard.css'
-import { useState } from 'react';
+import  { useState } from 'react'
 // import Button from 'react-bootstrap/Button';
 import { Button, ButtonGroup } from '@mui/material';
 import Modal from 'react-bootstrap/Modal';
+import NumberInputBasic from '../Amount_label/Amount_label';
 
 
 function MyCard({img,name,id,price}) {
+  
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-function MyCard({img,name,id,price}) {
+
   price=10;
   return (
     <>
@@ -33,25 +34,34 @@ function MyCard({img,name,id,price}) {
         </Modal.Header>
         <Modal.Body>
 
-          <div style={{display:'flex',flexDirection:'column',alignContent:'center',alignItemsItems:'center'}}>
+          <div style={{flexDirection:'column',justifyContent:'center',justifyItems:'center'}}>
             <img src={img} alt="" style={{ width: '100%', borderRadius: '8px' }} />
             
-            <ButtonGroup variant="outlined" aria-label="Basic button group">
-              <Button>One</Button>
-              <Button>Two</Button>
-              <Button>Three</Button>
-            </ButtonGroup>           
+            
 
-            <div style={{fontFamily:'cursive',fontSize:'30px'}}>
-              {price} บาท
+            <div  style={{display:'flex',flexDirection:'row',paddingTop:'25px'}}>
+              <h4 style={{fontFamily:'cursive'}}>Sweetness</h4>
+              <ButtonGroup variant="outlined" aria-label="Basic button group">
+              <Button>0</Button>
+              <Button>25</Button>
+              <Button>50</Button>
+              <Button>75</Button>
+              <Button>100</Button>
+              </ButtonGroup>
+            </div>
+
+            <div style={{paddingBottom:'10px',paddingTop:'10px'}}> <NumberInputBasic/> </div>  
+
+            <div style={{fontFamily:'cursive',fontSize:'30px',  }}>
+            Total {price} bath
             </div> 
           </div>
           </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
+          <Button style={{color:'white',background:'red'}} onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button style={{color:'white',background:'green'}} onClick={handleClose}>
             Save Changes
           </Button>
         </Modal.Footer>
