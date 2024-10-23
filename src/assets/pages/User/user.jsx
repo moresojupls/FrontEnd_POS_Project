@@ -1,17 +1,12 @@
 import  { useState ,useEffect,createContext,useContext} from 'react'
 import App from '../../../App'
-
-import Api   from '../../Service/api'
-import MyValidator from '../../Service/validator';
-import img from '../../image';
-import image from '../../image';
-
+import results_apis from '../../MockUpData/User';
 
 export const UseContext =createContext('user');
 
 function Userpage() {
-  const results_api = new Api('https://jsonplaceholder.typicode.com/users');
-
+  // const results_api = new Api('https://jsonplaceholder.typicode.com/users');
+  
  
   // set up for page
  
@@ -28,15 +23,11 @@ function Userpage() {
 
   useEffect(()=>{
     
-    results_api.getApi().then((res)=>{
-      res.map((element,index)=>{
-        element.img = img.thaitea;
-      })
+   
+    setResult({"member":results_apis});
+      
+      
     
-      setResult({"member":res});
-      
-      
-    })
   },[])
 
   if(result !== undefined) console.log('result : ',result);

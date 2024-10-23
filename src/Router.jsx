@@ -2,6 +2,7 @@
 import React from 'react'
 import { BrowserRouter as Router,Routes,Route,Link,useNavigate, replace } from 'react-router-dom';
 import App from './App';
+import ProductBtn from './assets/pages/Product/productbtn';
 
 // page
 import HomePage from './assets/pages/Home/home';
@@ -22,11 +23,14 @@ function MyRouter() {
       
         <Routes>
             <Route path='/' exact={true} Component={HomePage} ></Route>
-            <Route path='/User' Component={Userpage}></Route>
             <Route path='/User/member' Component={Userpage}></Route>
+         
             <Route path='/Product' Component={ProductPage}></Route>
-            <Route path='/Product/favourite' Component={ProductPage}></Route>
-            <Route path='/Product/greentea' Component={ProductPage}></Route>
+            { // All  Product pages
+                ProductBtn.map((element)=>(
+                    <Route path={'/Product/'+element} Component={ProductPage}></Route>
+                ))
+            }
             <Route path='*' Component={NotFound}></Route>
         </Routes>
 

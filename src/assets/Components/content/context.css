@@ -1,12 +1,35 @@
-.Catagory:hover{
-    background-color: black;
+/* @keyframes example{
+    from{
+        background-color: #0cf;
+    }to{
+        background-color: black;
+
+    }
+} */
+@keyframes example {
+    from {
+        background-color: #0cf;
+    }
+    to {
+        color:  #0cf;
+        background-color: rgb(0, 0, 0);
+    }
 }
+  
 
 .Catagory{
-    border-radius: 15px;
+    border-radius: 10px;
     color:white;
-    border: 10px;
+    
     margin-left:  10px;
     padding: 12px;
-    background-color: blue;
+    background-color: #0cf;
 }
+.Catagory:hover{
+    animation-name: example;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+   
+}
+
+

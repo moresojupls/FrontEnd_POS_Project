@@ -17,5 +17,7 @@ export  default   {
     Logout,
     Trush,
     thaitea,
+    House
+
 }
 
