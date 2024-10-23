@@ -6,11 +6,11 @@ export const ProductContext =createContext('product');
 
 function ProductPage() {
    
-    const [result,setResult] = useState({"Favourite":Favourite,"GreenTea":GreenTea});
+  const [result,setResult] = useState({"favourite":Favourite,"greentea":GreenTea});
       
   
   return (
-    <ProductContext.Provider value={{col:[],result:result !== undefined ? result:[]}}>
+    <ProductContext.Provider value={{col:[],result:result !== undefined ? result:[],btn:Object.keys(result)}}>
         <App></App>
     </ProductContext.Provider>
   )

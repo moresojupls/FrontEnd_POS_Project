@@ -4,15 +4,18 @@ import Mybutton from '../Button/button';
 import MyValidator from '../../Service/validator';
 import { UseContext } from '../../pages/User/user';
 import { ProductContext }   from '../../pages/Product/product';
+import { Link } from 'react-router-dom';
+import  './context.css';
 
 
 function Mycontent() {
   
   const pathurl = window.location.href.split('/')[3];
   const pathafterCatagory = window.location.href.split('/')[4];
-  let catagory ="";
+  let catagory = false;
   let path;
-  switch(pathurl){
+  console.log('pathurl : ',pathurl)
+  switch(pathurl.toLowerCase()){
     case 'product':
       path = ProductContext;
       break;
@@ -26,35 +29,51 @@ function Mycontent() {
   }
 
   
-  let { col,result } =useContext(path);
-  if(pathafterCatagory === 'Favourite' && path !== undefined){
-    catagory = "Favourite"
-  }else if(pathafterCatagory === 'Greentea' && path !== undefined){
-    catagory = "GreenTea" 
-  }else{
-
+  let { col,result,btn} = useContext(path);
+  if(path !== undefined && pathafterCatagory !== undefined){
+    
+    Object.keys(result).forEach(element => {
+      if(element === pathafterCatagory.toLowerCase()){
+        catagory = result[element];
+        console.log('catagory: ',catagory)
+      }
+     
+    });
+   
+    // pathafterCatagory[result];
+    // catagory = result[pathafterCatagory.toLowerCase()];
+    // console.log('catagory :',catagory)
+    
   }
-  console.log('pathafterCatagory',pathafterCatagory)
+
   
   useEffect(()=>{
-    console.log('result : ',result)
+
     ShowData()
   },[result])
 
 
   function ShowData(){
-    return <div   style={{display:'flex', flexDirection:'row', flexWrap:'wrap' }}>
+    return <>
+       {
+       
+       btn != undefined ? btn.map((element)=>(<Link  className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
+    }
+    <div   style={{display:'flex', flexDirection:'row', flexWrap:'wrap' }}>
       
+      
+
       {
         
+        catagory == false  ? '':
+        catagory.map(element => (
       
-        result[catagory].map(element => (
-      
-            <MyCard id={element.id} img = { element.img } name = { element.name } price = { element.price }/>
+          <MyCard id={element.id} img = { element.img } name = { element.name } price = { element.price }/>
             
         ))
       }
     </div>
+    </>
   }
   
   

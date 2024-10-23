@@ -3,13 +3,15 @@ import App from '../../../App'
 
 import Api   from '../../Service/api'
 import MyValidator from '../../Service/validator';
+import img from '../../image';
+import image from '../../image';
 
 
 export const UseContext =createContext('user');
 
 function Userpage() {
   const results_api = new Api('https://jsonplaceholder.typicode.com/users');
-0
+
  
   // set up for page
  
@@ -19,20 +21,21 @@ function Userpage() {
     setResult(item)
   }
   
-  const btn =[
-    {topic:"Favourite",process:() => PageinationData("Favourite")},
-    {topic:"GreenTea",process:() => PageinationData("GreenTea")},
-    
-  ]
-    
   
+    
+  const s = [img.LogoBrand,img.Logout,image.User]
 
-  const [result,setResult] = useState();
+  const [result,setResult] = useState({"member":[]});
 
   useEffect(()=>{
+    
     results_api.getApi().then((res)=>{
+      // res.map((element,index)=>{
+      //   element.img = s[index%s.length]
+      // })
+    
+      setResult({"member":res});
       
-      setResult(res);
       
     })
   },[])
@@ -57,7 +60,7 @@ function Userpage() {
   return (
     <>
       <UseContext.Provider value={{col:[],result:result !== undefined ? result:[]}}>
-        <App btn={btn}></App>
+        <App></App>
       </UseContext.Provider>
     
       {/* <button onClick={() => Addvalue()}>+</button> */}

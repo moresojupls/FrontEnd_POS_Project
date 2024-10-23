@@ -16,17 +16,18 @@ function MyRouter() {
     
     
     return (
-    <Router basename=''>
+    <Router basename='/'>
  
       
       
         <Routes>
             <Route path='/' exact={true} Component={HomePage} ></Route>
             <Route path='/User' Component={Userpage}></Route>
+            <Route path='/User/member' Component={Userpage}></Route>
             <Route path='/Product' Component={ProductPage}></Route>
             <Route path='/Product/favourite' Component={ProductPage}></Route>
             <Route path='/Product/greentea' Component={ProductPage}></Route>
-            <Route path='*' Component={ProductPage}></Route>
+            <Route path='*' Component={NotFound}></Route>
         </Routes>
 
     </Router>
