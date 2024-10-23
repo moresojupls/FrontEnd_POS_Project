@@ -19,7 +19,6 @@ function Userpage() {
   
     
 
-
   const [result,setResult] = useState();
 
   useEffect(()=>{
@@ -62,3 +61,4 @@ function Userpage() {
 }
 
 export default Userpage
+// jsonplaceholder.typicode.com
