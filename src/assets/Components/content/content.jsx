@@ -57,15 +57,16 @@ function Mycontent() {
     return <>
        {
        
-       btn != undefined ? btn.map((element)=>(<Link  className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
+       btn != undefined ? btn.map((element)=>(<Link  style={{height:"200px"}} className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
     }
-    <div   style={{display:'flex', flexDirection:'row', flexWrap:'wrap' }}>
+    <div   style={{display:'flex', flexDirection:'row', flexWrap:'wrap'}}>
       
       
 
       {
         
-        catagory == false  ? '':
+        catagory == false  ? 
+        <></>:
         catagory.map(element => (
       
           <MyCard id={element.id} img = { element.img } name = { element.name } price = { element.price }/>
