@@ -5,6 +5,8 @@ import Time from './image/Time.png';
 import User from './image/User.png';
 import Logout from './image/Log out.png';
 import Trush from './image/Trush.png';
+import thaitea from './image/thaitea.png';
+
 
 
 // export Image
@@ -14,6 +16,6 @@ export  default   {
     User,
     Logout,
     Trush,
-
+    thaitea,
 }
 
