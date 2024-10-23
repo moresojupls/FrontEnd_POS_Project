@@ -59,9 +59,8 @@ function App() {
             <Mycontent catagory={result !== undefined ? result:"Favourite"}/>
             
           </div>
-          <MyOrderlist />
+          <MyOrderlist/>
           
-        
 
         </div>
     </div>
