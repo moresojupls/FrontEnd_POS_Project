@@ -4,8 +4,7 @@ import App from '../../../App';
 function HomePage() {
     return (<>
         
-        <App content={[]}>
-        </App>
+        <h1>Hello World</h1>
 
         </>
 

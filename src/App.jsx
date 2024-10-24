@@ -3,7 +3,7 @@
 
 // Library
 import { useState,useEffect } from 'react'
-import { BrowserRouter as Router,Routes,Route,Link } from 'react-router-dom';
+import { Outlet,Router,Routes,Route,Link } from 'react-router-dom';
 
 
 
@@ -55,8 +55,8 @@ function App() {
           
           <div style={{width:'60%'}}>
            
-     
-            <Mycontent catagory={result !== undefined ? result:"Favourite"}/>
+            <Outlet />
+            {/* <Mycontent catagory={result !== undefined ? result:"Favourite"}/> */}
             
           </div>
           <MyOrderlist/>

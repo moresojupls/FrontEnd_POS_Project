@@ -8,66 +8,55 @@ import { Link } from 'react-router-dom';
 import  './context.css';
 
 
-function Mycontent() {
-  
-  const pathurl = window.location.href.split('/')[3];
-  const pathafterCatagory = window.location.href.split('/')[4];
-  let catagory = false;
-  let path;
-  console.log('pathurl : ',pathurl)
-  switch(pathurl.toLowerCase()){
-    case 'product':
-      path = ProductContext;
-      break;
-    case 'user':
-      path = UseContext;
-      break;
-    default:
-      path = ProductContext;
-      break;
+function Mycontent({results,btn}) {
+  const [result,setResult] = useState([])
 
-  }
-
-  
-  let { col,result,btn} = useContext(path);
-  if(path !== undefined && pathafterCatagory !== undefined){
-    
-    Object.keys(result).forEach(element => {
-      if(element === pathafterCatagory.toLowerCase()){
-        catagory = result[element];
-        console.log('catagory: ',catagory)
-      }
-     
-    });
-   
-    // pathafterCatagory[result];
-    // catagory = result[pathafterCatagory.toLowerCase()];
-    // console.log('catagory :',catagory)
-    
-  }
-
-  
   useEffect(()=>{
+    
+    setResult(results)
+    
+  },[results !== result])
 
-    ShowData()
-  },[result])
+  // console.log('pathafterCatagory : ',pathafterCatagory)
+
+
+  
+  // let { col,result,btn} = useContext(path);
+  // if(path !== undefined && pathafterCatagory !== undefined){
+    
+  //   Object.keys(result).forEach(element => {
+  //     if(element === pathafterCatagory.toLowerCase()){
+  //       catagory = result[element];
+  //       console.log('catagory: ',catagory)
+  //     }
+     
+  //   });
+   
+  //   // pathafterCatagory[result];
+  //   // catagory = result[pathafterCatagory.toLowerCase()];
+  //   // console.log('catagory :',catagory)
+    
+  // }
+
+  
+
+
 
 
   function ShowData(){
     return <>
-       {
+      {
        
        btn != undefined ? btn.map((element)=>(<Link  style={{height:"200px"}} className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
-    }
+      }
     <div   style={{display:'flex', flexDirection:'row', flexWrap:'wrap'}}>
       
       
 
       {
         
-        catagory == false  ? 
-        <></>:
-        catagory.map(element => (
+      
+        result.map(element => (
       
           <MyCard id={element.id} img = { element.img } name = { element.name } price = { element.price }/>
             

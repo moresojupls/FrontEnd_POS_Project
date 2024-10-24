@@ -1,19 +1,39 @@
-import React,{createContext,useState,useEffect} from 'react'
+import {createContext,useState,useEffect} from 'react'
 import App from '../../../App'
 import Favourite from '../../MockUpData/Favourite';
 import GreenTea from '../../MockUpData/Greentea';
 import  ProductBtn   from './productbtn';
-export const ProductContext =createContext('product');
+import Mycontent from '../../Components/content/content';
+import btn from './productbtn';
+export const ProductContext = createContext('product');
 
 function ProductPage() {
-   
-  const [result,setResult] = useState({"favourite":Favourite,"greentea":GreenTea});
+  const pathafterCatagory = window.location.pathname.split('/')[3];
+  const [path,setPath] = useState();
+  const [result,setResult] = useState(Favourite);
+  if(pathafterCatagory.toLowerCase() !== path) setPath(pathafterCatagory)
+  useEffect(()=>{
+    setPath(pathafterCatagory.toLowerCase())
+    switch(pathafterCatagory.toLowerCase()){
+      case "favourite":
+        setResult(Favourite);
+        break;
+      case "greentea":
+        setResult(GreenTea);
+        break;
+      default:
+        setResult([])
+        break;
+    }
+  
+  },[path])
+
 
   
   return (
-    <ProductContext.Provider value={{col:[],result:result !== undefined ? result:[],btn:ProductBtn}}>
-        <App></App>
-    </ProductContext.Provider>
+   
+    <Mycontent results={result !== undefined?result:''} btn={ProductBtn}/>
+  
   )
 }
 
