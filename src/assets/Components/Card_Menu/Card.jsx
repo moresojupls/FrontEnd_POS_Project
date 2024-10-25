@@ -14,6 +14,9 @@ function MyCard({ img, name, id, price }) {
   const handleClose = () => {
     setShow(false);
   };
+  const handleShow = () => {
+    setShow(true);
+  };
 
   const handleSaveChanges = () => {
     const result_order = {
@@ -32,16 +35,18 @@ function MyCard({ img, name, id, price }) {
   price = 10;
   return (
     <>
-      <div className="card-wrapper" style={{ width: "230px" }}>
-        <div className="card">
-          <img src={img} alt="Not Found Img" style={{ display: 'flex', borderRadius: "8px" }} />
-          <h7> Name : {name} </h7>
-          <h5><b> Price : {price !== undefined ? 'Price' : ''}{price} </b></h5>
-          <button onClick={() => setShow(true)}>Click Here</button>
-        </div>
-      </div>
 
-      <Modal show={show} onHide={handleClose}>
+    <div className="card-wrapper" style={{width:"240px",display:'inline-block'}}>
+      <div className="card" >
+        <img src={img} alt="Not Found Img" style={{display: 'flex'   , borderRadius:"8px" }} />
+          {/* <h7> ID : {id} </h7> */}
+          <h6> Name : {name} </h6>
+          <h5><b> Price : {price !== undefined ?'Price':''}{price} </b> </h5>
+          <button onClick={handleShow}>Click Here</button>
+      </div>
+    </div>
+    
+    <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{name}</Modal.Title>
         </Modal.Header>

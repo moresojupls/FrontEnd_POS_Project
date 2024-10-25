@@ -1,5 +1,5 @@
 // library
-import React from 'react'
+import { useId } from 'react'
 import { BrowserRouter , Router,Routes,Route, } from 'react-router-dom';
 import App from './App';
 import ProductBtn from './assets/pages/Product/productbtn';
@@ -13,7 +13,7 @@ import NotFound from './assets/pages/NotFound/notfound';
 
 function MyRouter() {
   
-   
+   const idelement =useId()
     
     
     return (
@@ -25,8 +25,8 @@ function MyRouter() {
                 <Route path="User" element={<Userpage />} />
 
                 { // All  Product pages
-                    ProductBtn.map((element)=>(
-                        <Route path={'Product/'+element}  element={<ProductPage/>} />
+                    ProductBtn.map((element,index)=>(
+                        <Route key={idelement} path={'Product/'+element}  element={<ProductPage/>} />
                     ))
                 }
       
@@ -35,24 +35,7 @@ function MyRouter() {
         </Routes>
     </BrowserRouter>
     
-    // <Router basename='/'>
- 
-      
-      
-    //     <Routes>
-    //         <Route index path='/FrontEnd_POS_Project' exact={true} Component={HomePage} ></Route>
-    //         <Route path='/FrontEnd_POS_Project/User/member' Component={Userpage}></Route>
-         
-    //         <Route path='/FrontEnd_POS_Project/Product' Component={ProductPage}></Route>
-    //         { // All  Product pages
-    //             ProductBtn.map((element)=>(
-    //                 <Route path={'/FrontEnd_POS_Project/Product/'+element} Component={ProductPage}></Route>
-    //             ))
-    //         }
-    //         {/* <Route path='*' Component={NotFound}></Route> */}
-    //     </Routes>
 
-    // </Router>
   
   )
 }

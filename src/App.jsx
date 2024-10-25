@@ -49,10 +49,10 @@ function App() {
   return(
       <div style={{width:'100%',height:'100vh' ,overflow:'hidden'}}>
         <Mynavbar className='d-flex '/>
-        <div className='d-flex '  style={{width:'100%',height:'90%' }}>
+        <div className='d-flex justify-content-center'  style={{width:'100%',height:'90%' }}>
           <MySidebar />
           
-          <div style={{width:'60%'}}>
+          <div style={{width:'80%'}}>
            
             <Outlet/>
             {/* <Mycontent catagory={result !== undefined ? result:"Favourite"}/> */}

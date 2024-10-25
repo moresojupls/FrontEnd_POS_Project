@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Mybutton({topic,process}) {
+function Mybutton({size,topic,process}) {
   return (
-    <button style={{minWidth:'100px', maxWidth: '100px', maxHeight: '80px'}} onClick={process}>  {topic}</button>
+    <button style={{minWidth:size === undefined?'100px':size+'px', maxHeight: size === undefined?'80px':size+'px'}} onClick={process}>  {topic}</button>
   )
 }
 
