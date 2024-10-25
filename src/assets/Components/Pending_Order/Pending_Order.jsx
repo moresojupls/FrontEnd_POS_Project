@@ -27,7 +27,8 @@ function Pending_Order() {
       };
     }, []);
   
-    return (
+    return (<>
+    
       <div style={{ width: '100%', height: '70px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
         {resultJson && resultJson.name ? (
           <>
@@ -40,6 +41,7 @@ function Pending_Order() {
           <p>No order</p>
         )}
       </div>
+     </>
     );
   }
   
@@ -70,182 +72,7 @@ function Pending_Order() {
    
 //    console.log("id : ",id)
 
-  return (
-    <>
-           <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-        <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-        <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-        <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-        <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-        <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-        <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-        <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-        <button 
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'black',
-                background:'white',
-                outlineStyle:'auto',
-                outlineColor:'black',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                width:'100%',
-                height:'60px'
-            }}
-        >
-        ชานม
-        
-        </button>
-    </>
 
-//   )
 // }
 
 // export default Pending_Order
