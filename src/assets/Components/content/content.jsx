@@ -10,7 +10,7 @@ import  './context.css';
 
 function Mycontent({results,btn}) {
   const [result,setResult] = useState([])
-
+  
   useEffect(()=>{
     
     setResult(results)
@@ -51,14 +51,14 @@ function Mycontent({results,btn}) {
       }
     <div   style={{display:'flex', flexDirection:'row', flexWrap:'wrap'}}>
       
-      
+    
 
       {
         
       
         result.map(element => (
       
-          <MyCard id={element.id} img = { element.img } name = { element.name } price = { element.price }/>
+          <MyCard id={element.id} img = { element.img } name = { element.name } price = { element.price } />
             
         ))
       }

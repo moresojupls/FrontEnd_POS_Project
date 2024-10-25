@@ -1,16 +1,29 @@
 import React from 'react'
 import '../../../MyCard.css'
-import  { useState } from 'react'
+import  { useState,cache } from 'react'
 // import Button from 'react-bootstrap/Button';
 import { Button, ButtonGroup } from '@mui/material';
 import Modal from 'react-bootstrap/Modal';
 import NumberInputBasic from '../Amount_label/Amount_label';
+import Pending_Order from '../Pending_Order/Pending_Order';
 
 
 function MyCard({img,name,id,price}) {
   
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    const result_order = new Object({
+      "id":id,
+      "name":name,
+      "img":img,
+      "price":price,
+    })
+  
+ 
+    window.localStorage.setItem('result_order',JSON.stringify(result_order));
+    
+    setShow(false);
+  }
   const handleShow = () => setShow(true);
 
 
@@ -72,4 +85,7 @@ function MyCard({img,name,id,price}) {
   )
 }
 
+
 export default MyCard
+
+

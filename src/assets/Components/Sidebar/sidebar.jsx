@@ -30,9 +30,7 @@ function MySidebar() {
 
   }, []);
 
-  console.log('window.location.hostname : ');
-  console.log('window.location.hostname : ',window.location.pathname.split('/'));
-  console.log('window.location.pathname22 : ',window.location.href.replace(window.location.pathname,window.location.pathname.split('/')[1]));
+ 
   function Ng(){
     // return window.location.host+'/'+window.location.pathname.split('/')[1]
     window.location.replace(window.location.pathname.split('/')[2])

@@ -23,7 +23,7 @@ function Userpage() {
 
   useEffect(()=>{
     
-   
+    window.localStorage.removeItem('result_order')
     setResult({"member":results_apis});
       
       
