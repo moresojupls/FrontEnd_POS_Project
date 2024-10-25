@@ -47,7 +47,6 @@ function App() {
  
 
   return(
-   
       <div style={{width:'100%',height:'100vh' ,overflow:'hidden'}}>
         <Mynavbar className='d-flex '/>
         <div className='d-flex '  style={{width:'100%',height:'90%' }}>
@@ -55,7 +54,7 @@ function App() {
           
           <div style={{width:'60%'}}>
            
-            <Outlet />
+            <Outlet/>
             {/* <Mycontent catagory={result !== undefined ? result:"Favourite"}/> */}
             
           </div>
@@ -64,9 +63,6 @@ function App() {
 
         </div>
     </div>
-   
-   
-   
   )
 }
 
