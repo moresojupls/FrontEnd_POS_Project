@@ -29,14 +29,17 @@ function MySidebar() {
  
 
   }, []);
+
  
-  
-  
+  function Ng(){
+    // return window.location.host+'/'+window.location.pathname.split('/')[1]
+    window.location.replace(window.location.pathname.split('/')[2])
+  }
   return (
     <div  style={{  minWidth:'60px', width:'10%',justifyItems:"center"}}>      
            <List>
              
-              <Link to='/'>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])}>
                 <ListItem button width='100rem'>
                   <div>
                     <Myimg  url={img.House} size={30}></Myimg>
@@ -59,7 +62,7 @@ function MySidebar() {
                <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Supply</h4>
              </ListItem> */}
 
-             <Link to='/product/favourite' >
+             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
                 <ListItem button width='100rem' >
                   <div>
                     <Myimg  url={img.LogoBrand} size={30}></Myimg>
@@ -69,7 +72,7 @@ function MySidebar() {
                 </ListItem>
               </Link>
              
-             <Link to='/user/member' style={{width:"100%"}}>
+             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} style={{width:"100%"}}>
               <ListItem button>
                 <div>
                   <Myimg  url={img.User} size={30}></Myimg>

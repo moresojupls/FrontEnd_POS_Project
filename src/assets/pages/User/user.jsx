@@ -23,7 +23,7 @@ function Userpage() {
 
   useEffect(()=>{
     
-   
+    window.localStorage.removeItem('result_order')
     setResult({"member":results_apis});
       
       
@@ -49,10 +49,11 @@ function Userpage() {
   
   return (
     <>
-      <UseContext.Provider value={{col:[],result:result !== undefined ? result:[]}}>
+      <h1>User</h1>
+      {/* <UseContext.Provider value={{col:[],result:result !== undefined ? result:[]}}>
         <App></App>
       </UseContext.Provider>
-    
+     */}
       {/* <button onClick={() => Addvalue()}>+</button> */}
     </>
     // <App content={[]}></App>

@@ -35,6 +35,7 @@ function Mynavbar() {
         )
     },1000)
   })
+ 
 
   return (
   
@@ -42,7 +43,7 @@ function Mynavbar() {
       <Navbar  bg="prinary  "   expand="sm" className=' d-flex container-sm'  >
        
           
-          <Navbar.Brand className='d-flex flex-row' href="home">
+          <Navbar.Brand className='d-flex flex-row' >
             <Myimg url={image.LogoBrand} size={"40px"} />
             <h2>MilkTea</h2>
             
