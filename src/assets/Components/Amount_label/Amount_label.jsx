@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 
 export default function NumberInputBasic() {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   const handleIncrement = () => {
     setValue(prevValue => prevValue + 1);
@@ -27,7 +27,7 @@ export default function NumberInputBasic() {
         type="number"
         value={value}
         onChange={handleChange}
-        inputProps={{ min: 0 }} // กำหนดให้ input มีค่าต่ำสุดที่ 0
+        inputProps={{ min: 1 }} // กำหนดให้ input มีค่าต่ำสุดที่ 0
         variant="outlined"
         style={{ width: '150px', textAlign: 'center' }}
       />
