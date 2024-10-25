@@ -1,6 +1,6 @@
 // library
 import React from 'react'
-import { BrowserRouter as Router,Routes,Route,Link,useNavigate, replace } from 'react-router-dom';
+import { BrowserRouter , Router,Routes,Route, } from 'react-router-dom';
 import App from './App';
 import ProductBtn from './assets/pages/Product/productbtn';
 
@@ -18,10 +18,7 @@ function MyRouter() {
     
     
     return (
-    <Router basename='/'>
- 
-      
-      
+    <BrowserRouter>
         <Routes>
             <Route path='/' exact={true} Component={HomePage} ></Route>
             <Route path='/User/member' Component={Userpage}></Route>
@@ -36,8 +33,26 @@ function MyRouter() {
             }
             <Route path='*' Component={NotFound}></Route>
         </Routes>
+    </BrowserRouter>
+    
+    // <Router basename='/'>
+ 
+      
+      
+    //     <Routes>
+    //         <Route index path='/FrontEnd_POS_Project' exact={true} Component={HomePage} ></Route>
+    //         <Route path='/FrontEnd_POS_Project/User/member' Component={Userpage}></Route>
+         
+    //         <Route path='/FrontEnd_POS_Project/Product' Component={ProductPage}></Route>
+    //         { // All  Product pages
+    //             ProductBtn.map((element)=>(
+    //                 <Route path={'/FrontEnd_POS_Project/Product/'+element} Component={ProductPage}></Route>
+    //             ))
+    //         }
+    //         {/* <Route path='*' Component={NotFound}></Route> */}
+    //     </Routes>
 
-    </Router>
+    // </Router>
   
   )
 }
