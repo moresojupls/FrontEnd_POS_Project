@@ -1,75 +1,112 @@
 import { AddBox } from '@mui/icons-material'
 import { Box } from '@mui/material'
-import React, { useEffect, useState,useReducer, useId } from 'react'
-
-function Reducer(state,action){
-    // if(action.type === 'click'){
-    
-    //     return {
-    //         id : state.id+1
-    //     }
-    // }
-    console.log('state 2: ',state)
-    return {
-        id : state.id+1
-    }
-   
-} 
-
-
+import React, { useEffect, useState } from 'react';
+import MyCard from '../Card_Menu/Card';
 
 function Pending_Order() {
-    const [state,dispath] = useReducer(Reducer,{id:41})
-    const [resultJson,setresultJson] = useState({});
-    const id = useId();
+    const [resultJson, setResultJson] = useState({});
+  
+    useEffect(() => {
+      // ฟังก์ชันที่ดึงข้อมูลจาก localStorage
+      const fetchOrder = () => {
+        const res = window.localStorage.getItem('result_order');
+        if (res) {
+          setResultJson(JSON.parse(res));
+        }
+      };
+  
+      // ฟัง event 'storage' ที่ถูก trigger ใน MyCard เมื่อมีการบันทึกข้อมูล
+      window.addEventListener('storage', fetchOrder);
+  
+      // เรียก fetchOrder เมื่อ component โหลดครั้งแรก
+      fetchOrder();
+  
+      // ล้าง event listener เมื่อ component ถูกทำลาย
+      return () => {
+        window.removeEventListener('storage', fetchOrder);
+      };
+    }, []);
+  
+    return (
+      <div style={{ width: '100%', height: '70px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
+        {resultJson && resultJson.name ? (
+          <>
+          <button style={{width:'100%'}}>
+            <p>สินค้า: {resultJson.name}</p>
+            <p>ราคา: {resultJson.price} บาท</p>
+          </button>
+          </>
+        ) : (
+          <p>No order</p>
+        )}
+      </div>
+    );
+  }
+  
+  export default Pending_Order;
+    
+  
+  
+
+
+
+// function Pending_Order() {
+//     const [state,dispath] = useReducer(Reducer,{id:41})
+//     const [resultJson,setresultJson] = useState({});
+//     const id = useId();
 
  
 
-    useEffect(()=>{
-        if(window.localStorage.getItem('result_order')!==null){
-            let res = (window.localStorage.getItem('result_order'));
-            console.log('res : ',res.id)
-            setresultJson(JSON.parse(res))  
-        }
+//     useEffect(()=>{
+//         if(window.localStorage.getItem('result_order')!==null){
+//             let res = (window.localStorage.getItem('result_order'));
+//             console.log('res : ',res.id)
+//             setresultJson(JSON.parse(res))  
+//         }
        
-    },[window.localStorage.getItem('result_order')!==null])
+//     },[window.localStorage.getItem('result_order')!==null])
     
 
    
-   console.log("id : ",id)
+//    console.log("id : ",id)
 
-  return (
-    <>
-     <input
-          type="password"
-          aria-describedby={id}
-        />
-        <p id={id}>Word 5</p>
-        <button onClick={()=>{dispath({type:"click"})}}>click count : {state.id}</button>
-    </>
-        // <button 
-        //     style={{
-        //         display: 'flex',
-        //         alignItems: 'center',
-        //         padding: '10px 20px',
-        //         border: 'none',
-        //         color: 'black',
-        //         background:'white',
-        //         outlineStyle:'auto',
-        //         outlineColor:'black',
-        //         cursor: 'pointer',
-        //         borderRadius: '5px',
-        //         width:'100%',
-        //         height:'70px'
-        //     }}
-        // >
-        //  { resultJson !== null && window.localStorage.getItem('result_order')!==null? resultJson.name:""}
+//   return (
+//     <>
+        
+        
+
+    
+
+//      {/* <input
+//           type="password"
+//           aria-describedby={id}
+//         />
+//         <p id={id}>Word 5</p>
+//         <button onClick={()=>{dispath({type:"click"})}}>click count : {state.id}</button> */}
+//     </>
+//         // <button 
+//         //     style={{
+//         //         display: 'flex',
+//         //         alignItems: 'center',
+//         //         padding: '10px 20px',
+//         //         border: 'none',
+//         //         color: 'black',
+//         //         background:'white',
+//         //         outlineStyle:'auto',
+//         //         outlineColor:'black',
+//         //         cursor: 'pointer',
+//         //         borderRadius: '5px',
+//         //         width:'100%',
+//         //         height:'70px'
+//         //     }}
+//         // >
+//         //  { resultJson !== null && window.localStorage.getItem('result_order')!==null? resultJson.name:""}
     
         
-        // </button>
+//         // </button>
     
 
-  )
-}
+//   )
+// }
 
-export default Pending_Order
+// export default Pending_Order

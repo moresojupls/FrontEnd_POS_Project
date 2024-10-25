@@ -54,7 +54,7 @@ function App() {
           
           <div style={{width:'60%'}}>
            
-            <Outlet />
+            <Outlet/>
             {/* <Mycontent catagory={result !== undefined ? result:"Favourite"}/> */}
             
           </div>
