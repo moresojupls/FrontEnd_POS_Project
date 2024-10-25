@@ -14,6 +14,9 @@ function MyCard({ img, name, id, price }) {
   const handleClose = () => {
     setShow(false);
   };
+  const handleShow = () => {
+    setShow(true);
+  };
 
   const handleSaveChanges = () => {
     const result_order = {
