@@ -46,7 +46,7 @@ function Structure() {
 
   return(
    
-      <div style={{width:'100%',height:'100vh' ,overflow:'hidden'}}>
+      <div style={{width:'100%',height:'100vh' ,overflow:'scroll'}}>
         <Mynavbar className='d-flex '/>
         <div className='d-flex '  style={{width:'100%',height:'90%' }}>
           <MySidebar />

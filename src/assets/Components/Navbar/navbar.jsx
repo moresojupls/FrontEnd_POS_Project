@@ -40,26 +40,26 @@ function Mynavbar() {
   return (
   
       
-      <Navbar  bg="prinary  "   expand="sm" className=' d-flex container-sm'  >
+      <Navbar  bg="prinary  "   className='container-fluid'  >
        
           
-          <Navbar.Brand className='d-flex flex-row' >
-            <Myimg url={image.LogoBrand} size={"40px"} />
+          <Navbar.Brand  className='d-flex flex-row    justify-content-start' >
+            <Myimg className=" " url={image.LogoBrand} size={"40px"} />
             <h2>MilkTea</h2>
             
           </Navbar.Brand>
-          <Container className='d-flex justify-content-end'>
-            <Navbar.Text className='mx-4'>
-                <div className='d-flex flex-row'>
+          <Container className='d-flex flex-row   justify-content-end' >
+            <Navbar.Text className='mr-2 '>
+                <div className='d-flex flex-row '>
                   <Myimg url={image.Time} size={30}/>
                   <h5 className='mx-2'> {date}</h5>
                 </div>
             </Navbar.Text>
 
-            <Navbar.Text className='mx-4 '>
-                <div className='d-flex flex-row'>
+            <Navbar.Text className='mr-2'>
+                <div className='d-flex flex-row '>
                   <Myimg url={image.User} size={30}/>
-                  <h5 className='mx-2'> {UserDisplay()}</h5>
+                  <h5 className='mr-2'> {UserDisplay()}</h5>
                 </div>
             </Navbar.Text>
           </Container>

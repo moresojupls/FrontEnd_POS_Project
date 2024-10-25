@@ -1,4 +1,4 @@
-import { React ,useContext, useEffect, useState} from 'react'
+import { React ,useContext, useEffect, useState , useMemo,useId} from 'react'
 import MyCard from '../Card_Menu/Card'
 import Mybutton from '../Button/button';
 import MyValidator from '../../Service/validator';
@@ -10,6 +10,17 @@ import  './context.css';
 
 function Mycontent({results,btn}) {
   const [result,setResult] = useState([])
+  let show
+  const idelement = useId();
+
+  function plus(results,btn){
+    results = 5;
+    btn = 6;
+  }
+  const user = useMemo(()=>
+    plus(results,btn)
+    
+  ,[results,btn])
   
   useEffect(()=>{
     
@@ -45,24 +56,28 @@ function Mycontent({results,btn}) {
 
   function ShowData(){
     return <>
+    <button onClick={()=>user}> adad {show}</button>
       {
        
-       btn != undefined ? btn.map((element)=>(<Link  style={{height:"200px"}} className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
+       btn != undefined ? btn.map((element)=>(<Link key={{idelement}} style={{height:"200px"}} className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
       }
-    <div   style={{display:'flex', flexDirection:'row', flexWrap:'wrap'}}>
-      
-    
-
-      {
+     
+          <div style={{marginTop:"15px",overflow:"scroll",height:'100%'}}>
+          
         
-      
-        result.map(element => (
-      
-          <MyCard id={element.id} img = { element.img } name = { element.name } price = { element.price } />
+
+          {
             
-        ))
-      }
-    </div>
+          
+            result.map(element => (
+          
+              <MyCard key={element.id} img = { element.img } name = { element.name } price = { element.price } />
+                
+            ))
+          }
+        </div>
+   
+    
     </>
   }
   

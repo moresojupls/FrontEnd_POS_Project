@@ -31,10 +31,7 @@ function MySidebar() {
   }, []);
 
  
-  function Ng(){
-    // return window.location.host+'/'+window.location.pathname.split('/')[1]
-    window.location.replace(window.location.pathname.split('/')[2])
-  }
+ 
   return (
     <div  style={{  minWidth:'60px', width:'10%',justifyItems:"center"}}>      
            <List>
