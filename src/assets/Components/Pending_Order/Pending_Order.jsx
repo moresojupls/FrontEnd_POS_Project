@@ -70,41 +70,180 @@ function Pending_Order() {
    
 //    console.log("id : ",id)
 
-//   return (
-//     <>
+  return (
+    <>
+           <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
         
+        </button>
+        <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
         
-
-    
-
-//      {/* <input
-//           type="password"
-//           aria-describedby={id}
-//         />
-//         <p id={id}>Word 5</p>
-//         <button onClick={()=>{dispath({type:"click"})}}>click count : {state.id}</button> */}
-//     </>
-//         // <button 
-//         //     style={{
-//         //         display: 'flex',
-//         //         alignItems: 'center',
-//         //         padding: '10px 20px',
-//         //         border: 'none',
-//         //         color: 'black',
-//         //         background:'white',
-//         //         outlineStyle:'auto',
-//         //         outlineColor:'black',
-//         //         cursor: 'pointer',
-//         //         borderRadius: '5px',
-//         //         width:'100%',
-//         //         height:'70px'
-//         //     }}
-//         // >
-//         //  { resultJson !== null && window.localStorage.getItem('result_order')!==null? resultJson.name:""}
-    
+        </button>
+        <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
         
-//         // </button>
-    
+        </button>
+        <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
+        
+        </button>
+        <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
+        
+        </button>
+        <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
+        
+        </button>
+        <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
+        
+        </button>
+        <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
+        
+        </button>
+        <button 
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px 20px',
+                border: 'none',
+                color: 'black',
+                background:'white',
+                outlineStyle:'auto',
+                outlineColor:'black',
+                cursor: 'pointer',
+                borderRadius: '5px',
+                width:'100%',
+                height:'60px'
+            }}
+        >
+        ชานม
+        
+        </button>
+    </>
 
 //   )
 // }
