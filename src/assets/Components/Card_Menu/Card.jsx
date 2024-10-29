@@ -7,7 +7,6 @@ import Modal from 'react-bootstrap/Modal';
 import NumberInputBasic from '../Amount_label/Amount_label';
 import Pending_Order from '../Pending_Order/Pending_Order';
 
-
 function MyCard({ img, name, id, price }) {
   const [show, setShow] = useState(false);
 
@@ -56,6 +55,17 @@ function MyCard({ img, name, id, price }) {
             {/* Other options like Sweetness, Quantity */}
             <div style={{ paddingBottom: '10px', paddingTop: '10px' }}> {/* ... */}</div>
             <div style={{ fontFamily: 'cursive', fontSize: '30px' }}>
+
+            {/* <div  style={{display:'flex',flexDirection:'row',paddingTop:'25px'}}>
+              <h4 style={{fontFamily:'cursive'}}>Sweetness</h4>
+              <ButtonGroup variant="outlined" aria-label="Basic button group">
+              <Button>0</Button>
+              <Button>25</Button>
+              <Button>50</Button>
+              <Button>75</Button>
+              <Button>100</Button>
+              </ButtonGroup>
+            </div> */}
               Total {price} bath
             </div>
           </div>
@@ -65,7 +75,7 @@ function MyCard({ img, name, id, price }) {
             Close
           </Button>
           <Button style={{ color: 'white', background: 'green' }} onClick={handleSaveChanges}>
-            Save Changes
+            Add
           </Button>
         </Modal.Footer>
       </Modal>
@@ -120,16 +130,16 @@ export default MyCard
             
             
 
-//             <div  style={{display:'flex',flexDirection:'row',paddingTop:'25px'}}>
-//               <h4 style={{fontFamily:'cursive'}}>Sweetness</h4>
-//               <ButtonGroup variant="outlined" aria-label="Basic button group">
-//               <Button>0</Button>
-//               <Button>25</Button>
-//               <Button>50</Button>
-//               <Button>75</Button>
-//               <Button>100</Button>
-//               </ButtonGroup>
-//             </div>
+            // <div  style={{display:'flex',flexDirection:'row',paddingTop:'25px'}}>
+            //   <h4 style={{fontFamily:'cursive'}}>Sweetness</h4>
+            //   <ButtonGroup variant="outlined" aria-label="Basic button group">
+            //   <Button>0</Button>
+            //   <Button>25</Button>
+            //   <Button>50</Button>
+            //   <Button>75</Button>
+            //   <Button>100</Button>
+            //   </ButtonGroup>
+            // </div>
 
 //             <div style={{paddingBottom:'10px',paddingTop:'10px'}}> <NumberInputBasic/> </div>  
 

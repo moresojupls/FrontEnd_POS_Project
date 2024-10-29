@@ -28,7 +28,7 @@ function Pending_Order() {
     }, []);
   
     return (
-      <div style={{ width: '100%', height: '70px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
+      <div style={{ width: '100%', height: '20px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
         {resultJson && resultJson.name ? (
           <>
           <button style={{width:'100%'}}>

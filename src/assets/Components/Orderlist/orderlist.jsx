@@ -33,7 +33,7 @@ function MyOrderlist() {
           <p className="font-bold" style={{fontSize:'25px'}}>Total: 50 บาท</p>
           </div>
   
-          <div style={{display: 'flex',justifyItems:'center', gap: '60px', marginTop: 'auto',paddingBottom:'20px' }}>
+          <div style={{display:'flex',justifyContent:'space-evenly',justifyItems:'center',  marginTop: 'auto',paddingBottom:'20px' }}>
           <Mybutton size={"120"} process={()=>{
             alert("hold order")
           }} topic={"Hold Order"}/>
