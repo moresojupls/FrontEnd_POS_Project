@@ -36,16 +36,22 @@ function App() {
 
  
   const [result,setResult] = useState();
+  const [Orderlist,setOrderlist] = useState(true);
+  
  
   // set up for page
  
+ 
+
 
 
 
 
  
- 
 
+  function Or(){
+    return setOrderlist(!Orderlist)
+  }
   return(
       <div style={{width:'100%',height:'100vh' ,overflow:'hidden'}}>
         <Mynavbar className='d-flex '/>
@@ -58,7 +64,9 @@ function App() {
             {/* <Mycontent catagory={result !== undefined ? result:"Favourite"}/> */}
             
           </div>
-          <MyOrderlist/>
+          {/* <button onClick={()=>Or()}>Side</button> */}
+          <MyOrderlist setStateOrderlist={Orderlist}/>
+         
           
 
         </div>

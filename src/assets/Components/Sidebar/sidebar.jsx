@@ -4,8 +4,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { BrowserRouter as Router,Routes,Route,Link } from 'react-router-dom';
+import { BrowserRouter as Router,Routes,Route,Link,useNavigate } from 'react-router-dom';
 import "./sidebar.css"
+
 
 import img from '../../image';
 import Myimg from '../Image/img';
@@ -13,7 +14,7 @@ import Myimg from '../Image/img';
 
 //  paddingTop: '10px', position: 'fixed', left: 5, top: '100px' 
 function MySidebar() {
- 
+
   var [respone,setrespone]= useState(false);
 
   useEffect(() => {
@@ -36,7 +37,9 @@ function MySidebar() {
     <div  style={{  minWidth:'60px', width:'10%',justifyItems:"center"}}>      
            <List>
              
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])}>
+              <Link onClick={()=>{
+              
+              }} to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])}>
                 <ListItem button width='100rem'>
                   <div>
                     <Myimg  url={img.House} size={30}></Myimg>
