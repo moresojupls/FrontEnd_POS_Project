@@ -56,7 +56,6 @@ function Mycontent({results,btn}) {
 
   function ShowData(){
     return <>
-    <button onClick={()=>user}> adad {show}</button>
       {
        
        btn != undefined ? btn.map((element)=>(<Link key={{idelement}} style={{height:"200px"}} className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
