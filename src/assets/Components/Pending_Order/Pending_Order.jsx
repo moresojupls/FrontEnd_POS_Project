@@ -28,31 +28,8 @@ function Pending_Order() {
       };
     }, []);
   
-    return ( 
-      <>
-      <div style={{ width: '100%', height: '70px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
-        {resultJson && resultJson.name ? (
-          <>
-          <button style={{width:'100%'}}>
-            <p>สินค้า: {resultJson.name}</p>
-            <p>ราคา: {resultJson.price} บาท</p>
-          </button>
-          </>
-        ) : (
-          <p>No order</p>
-        )}
-      </div><div style={{ width: '100%', height: '70px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
-        {resultJson && resultJson.name ? (
-          <>
-          <button style={{width:'100%'}}>
-            <p>สินค้า: {resultJson.name}</p>
-            <p>ราคา: {resultJson.price} บาท</p>
-          </button>
-          </>
-        ) : (
-          <p>No order</p>
-        )}
-      </div><div style={{ width: '100%', height: '70px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
+    return (
+      <div style={{ width: '100%', height: '20px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
         {resultJson && resultJson.name ? (
           <>
           <button style={{width:'100%'}}>

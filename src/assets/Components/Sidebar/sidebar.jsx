@@ -6,10 +6,12 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { BrowserRouter as Router,Routes,Route,Link,useNavigate } from 'react-router-dom';
 import "./sidebar.css"
+import Loader from '../TestComponent/hamster';
 
 
 import img from '../../image';
 import Myimg from '../Image/img';
+import { ImportExport } from '@mui/icons-material';
 
 
 //  paddingTop: '10px', position: 'fixed', left: 5, top: '100px' 
@@ -76,11 +78,17 @@ function MySidebar() {
               <ListItem button>
                 <div>
                   <Myimg  url={img.User} size={30}></Myimg>
-                  <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>User</h4>
+                  <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Admin</h4>
                 </div>
                
               </ListItem>
              </Link>
+            
+            {/* Wrapper ของ Loader ที่ตั้งค่า marginTop: auto; */}
+            <div style={{ marginTop: 'auto' }}>
+              <Loader />
+            </div>
+            
             
              {/* <ListItem button>
                <ListItemIcon>
