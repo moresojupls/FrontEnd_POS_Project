@@ -5,6 +5,7 @@ import GreenTea from '../../MockUpData/Greentea';
 import  ProductBtn   from './productbtn';
 import Mycontent from '../../Components/content/content';
 import btn from './productbtn';
+import MyOrderlist from '../../Components/Orderlist/orderlist';
 export const ProductContext = createContext('product');
 
 function ProductPage() {
@@ -28,11 +29,12 @@ function ProductPage() {
   
   },[path])
 
-
+  
   
   return (
-   
-    <Mycontent results={result !== undefined?result:''} btn={ProductBtn}/>
+    <>
+      <Mycontent results={result !== undefined?result:''} btn={ProductBtn}/>
+    </>
   
   )
 }

@@ -54,7 +54,7 @@ function MyCard({ img, name, id, price }) {
             <img src={img} alt="" style={{ width: '100%', borderRadius: '8px' }} />
             {/* Other options like Sweetness, Quantity */}
             <div style={{ paddingBottom: '10px', paddingTop: '10px' }}> {/* ... */}</div>
-            <div style={{ fontFamily: 'cursive', fontSize: '30px' }}>
+            <div style={{ fontSize: '30px' }}>
 
             {/* <div  style={{display:'flex',flexDirection:'row',paddingTop:'25px'}}>
               <h4 style={{fontFamily:'cursive'}}>Sweetness</h4>
@@ -71,12 +71,13 @@ function MyCard({ img, name, id, price }) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button style={{ color: 'white', background: 'red' }} onClick={handleClose}>
-            Close
-          </Button>
           <Button style={{ color: 'white', background: 'green' }} onClick={handleSaveChanges}>
             Add
           </Button>
+          <Button style={{ color: 'white', background: 'red' }} onClick={handleClose}>
+            Close
+          </Button>
+          
         </Modal.Footer>
       </Modal>
     </>

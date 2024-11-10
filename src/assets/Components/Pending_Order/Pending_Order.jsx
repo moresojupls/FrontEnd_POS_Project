@@ -5,6 +5,7 @@ import MyCard from '../Card_Menu/Card';
 
 function Pending_Order() {
     const [resultJson, setResultJson] = useState({});
+
   
     useEffect(() => {
       // ฟังก์ชันที่ดึงข้อมูลจาก localStorage
@@ -28,6 +29,7 @@ function Pending_Order() {
     }, []);
   
     return (
+      <>
       <div style={{ width: '100%', height: '20px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
         {resultJson && resultJson.name ? (
           <>
@@ -40,6 +42,7 @@ function Pending_Order() {
           <p>No order</p>
         )}
       </div>
+      </>
     );
   }
   
