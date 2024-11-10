@@ -57,7 +57,7 @@ function Mycontent({results,btn}) {
     return <>
    
       {
-       
+        // catagory button code  
        btn != undefined ? btn.map((element)=>(<Link  style={{height:"200px"}} className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
       }
      
@@ -67,7 +67,7 @@ function Mycontent({results,btn}) {
 
           {
             
-          
+          // Item list code
             result.map(element => (
           
               <MyCard key={element.id} img = { element.img } name = { element.name } price = { element.price } />

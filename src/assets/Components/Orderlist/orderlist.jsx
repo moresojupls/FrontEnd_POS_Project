@@ -16,7 +16,7 @@ function MyOrderlist() {
       <div className = 'd-flex ' style={{outlineStyle: 'auto', width:'20%', color:'black' ,background:'white'}}>
         <div style={{width:'100%'}}> 
   
-          <h2 style={{fontFamily:'fantasy'}}>Order list</h2>
+          <h2 >Order list</h2>
           <div style={{display:'flex',height:'360px'}}>
             <div style={{width:'100%',height:'100%',borderStyle:'solid',border:'2px',outlineStyle:'auto',marginBottom:'20px',overflow:"scroll",display:'block'}}>
               <Pending_Order/>
