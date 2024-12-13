@@ -41,7 +41,7 @@ function MyCard({ img, name, id, price }) {
           {/* <h7> ID : {id} </h7> */}
           <h6> Name : {name} </h6>
           <h5><b> Price : {price !== undefined ?'Price':''}{price} </b> </h5>
-          <button onClick={handleShow}>Click Here</button>
+          <button onClick={handleShow}>Clickkkkkkkkk</button>
       </div>
     </div>
     
