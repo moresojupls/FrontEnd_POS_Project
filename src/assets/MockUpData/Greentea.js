@@ -1,7 +1,7 @@
 const GreenTea = [{
     id:0,
     img:'https://img.freepik.com/free-photo/leaf-plate-wood-object-healthy-eating_1172-451.jpg',
-    name:'GreenTea',
+    name:'Thaitea',
     price:30,
 
 },
@@ -15,14 +15,14 @@ const GreenTea = [{
 {
     id:2,
     img:'https://img.freepik.com/free-photo/leaf-plate-wood-object-healthy-eating_1172-451.jpg',
-    name:'GreenTea',
+    name:'Oliang',
     price:30,
 
 },
 {
     id:3,
     img:'https://img.freepik.com/free-photo/leaf-plate-wood-object-healthy-eating_1172-451.jpg',
-    name:'GreenTea',
+    name:'Nomsod',
     price:30,
 
 }]
