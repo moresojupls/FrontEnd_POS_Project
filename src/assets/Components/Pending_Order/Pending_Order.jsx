@@ -1,81 +1,159 @@
-import { AddBox } from '@mui/icons-material'
-import { Box } from '@mui/material'
-import React, { useEffect, useState } from 'react';
-import MyCard from '../Card_Menu/Card';
+import React, { useState, useEffect } from "react";
+import Modal from "react-bootstrap/Modal";
+import { Button } from "@mui/material";
 
 function Pending_Order() {
-    const [resultJson, setResultJson] = useState({});
+  const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null); // เก็บข้อมูลรายการที่คลิก
+  const [showModal, setShowModal] = useState(false); // state สำหรับ Modal
 
+  // โหลดข้อมูลจาก localStorage เมื่อ component ถูก mount
+  useEffect(() => {
+    const fetchOrders = () => {
+      const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
+      setOrders(storedOrders);
+    };
+
+    fetchOrders();
+
+    // ฟัง event 'storage' เพื่อดักการเปลี่ยนแปลงใน localStorage
+    window.addEventListener("storage", fetchOrders);
+
+    return () => {
+      window.removeEventListener("storage", fetchOrders);
+    };
+  }, []);
+
+  // เมื่อคลิกที่กล่องรายการ
+  const handleItemClick = (order) => {
+    setSelectedOrder(order);
+    setShowModal(true); // เปิด Modal
+  };
+
+  // ฟังก์ชันสำหรับลบรายการ
+  const handleDelete = (id) => {
+    const updatedOrders = orders.filter((order) => order.id !== id); // ลบเฉพาะรายการที่ id ไม่ตรงกับที่เลือก
+    setOrders(updatedOrders); // อัปเดต State ของ orders
+    window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกการเปลี่ยนแปลงใน localStorage
+  };
   
-    useEffect(() => {
-      // ฟังก์ชันที่ดึงข้อมูลจาก localStorage
-      const fetchOrder = () => {
-        const res = window.localStorage.getItem('result_order');
-        if (res) {
-          setResultJson(JSON.parse(res));
-        }
-      };
-  
-      // ฟัง event 'storage' ที่ถูก trigger ใน MyCard เมื่อมีการบันทึกข้อมูล
-      window.addEventListener('storage', fetchOrder);
-  
-      // เรียก fetchOrder เมื่อ component โหลดครั้งแรก
-      fetchOrder();
-  
-      // ล้าง event listener เมื่อ component ถูกทำลาย
-      return () => {
-        window.removeEventListener('storage', fetchOrder);
-      };
-    }, []);
-  
-    return (
-      <>
-      <div style={{ width: '100%', height: '20px', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
-        {resultJson && resultJson.name ? (
-          <>
-          <button style={{width:'100%'}}>
-            <p>สินค้า: {resultJson.name}</p>
-            <p>ราคา: {resultJson.price} บาท</p>
-          </button>
-          </>
+
+  // บันทึกข้อมูลใหม่ใน localStorage และปิด Modal
+  const handleSave = () => {
+    if (selectedOrder !== null) {
+      const updatedOrders = orders.map((order) =>
+        order.id === selectedOrder.id ? selectedOrder : order
+      );
+      setOrders(updatedOrders);
+      window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกใน localStorage
+      setShowModal(false);
+    }
+  };
+
+  // ปิด Modal โดยไม่บันทึก
+  const handleClose = () => {
+    setShowModal(false);
+    setSelectedOrder(null);
+  };
+
+  return (
+    <div style={{ padding: "10px", backgroundColor: "#f9f9f9", borderRadius: "5px" }}>
+      <div style={{ width: "100%", backgroundColor: "white", padding: "10px", borderRadius: "5px" }}>
+        {orders.length > 0 ? (
+          orders.map((order, index) => (
+            <div
+              key={index}
+              style={{
+                position: "relative", // สำหรับวางปุ่มลบ
+                marginBottom: "10px",
+                padding: "10px",
+                border: "1px solid #ddd",
+                borderRadius: "5px",
+                backgroundColor: "#fefefe",
+              }}
+            >
+              {/* ปุ่มลบ */}
+              <button
+                onClick={() => handleDelete(order.id)} // ลบเมื่อกดปุ่ม
+                style={{
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                  background: "red",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "25px",
+                  height: "25px",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                ×
+              </button>
+
+              {/* เนื้อหาในกล่อง */}
+              <div onClick={() => handleItemClick(order)} style={{ cursor: "pointer" }}>
+                <p>สินค้า: {order.name}</p>
+                <p>ราคา: {order.price} บาท</p>
+              </div>
+            </div>
+          ))
         ) : (
-          <p>No order</p>
+          <p>No orders</p>
         )}
       </div>
-      </>
-    );
-  }
-  
-  export default Pending_Order;
-    
-  
-  
 
+      {/* Modal สำหรับแสดงข้อมูล */}
+      {selectedOrder && (
+        <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedOrder.name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div style={{ textAlign: "center" }}>
+              <img
+                src={selectedOrder.img}
+                alt=""
+                style={{ width: "100%", borderRadius: "8px", marginBottom: "10px" }}
+              />
+              <div>
+                <label>สินค้า:</label>
+                <input
+                  type="text"
+                  value={selectedOrder.name}
+                  onChange={(e) =>
+                    setSelectedOrder({ ...selectedOrder, name: e.target.value })
+                  }
+                  style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+                />
+                <label>ราคา:</label>
+                <input
+                  type="number"
+                  value={selectedOrder.price}
+                  onChange={(e) =>
+                    setSelectedOrder({ ...selectedOrder, price: e.target.value })
+                  }
+                  style={{ width: "100%", padding: "5px" }}
+                />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button style={{ backgroundColor: "green", color: "white" }} onClick={handleSave}>
+              Save Changes
+            </Button>
+            <Button style={{ backgroundColor: "red", color: "white" }} onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+    </div>
+  );
+}
 
-
-// function Pending_Order() {
-//     const [state,dispath] = useReducer(Reducer,{id:41})
-//     const [resultJson,setresultJson] = useState({});
-//     const id = useId();
-
- 
-
-//     useEffect(()=>{
-//         if(window.localStorage.getItem('result_order')!==null){
-//             let res = (window.localStorage.getItem('result_order'));
-//             console.log('res : ',res.id)
-//             setresultJson(JSON.parse(res))  
-//         }
-       
-//     },[window.localStorage.getItem('result_order')!==null])
-    
-
-   
-//    console.log("id : ",id)
-
-  
-
-//   )
-// }
-
-// export default Pending_Order
+export default Pending_Order;

@@ -8,6 +8,7 @@ import NumberInputBasic from '../Amount_label/Amount_label';
 import Pending_Order from '../Pending_Order/Pending_Order';
 
 function MyCard({ img, name, id, price }) {
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -17,15 +18,12 @@ function MyCard({ img, name, id, price }) {
     setShow(true);
   };
 
-  const handleSaveChanges = () => {
-    const result_order = {
-      id: id,
-      name: name,
-      img: img,
-      price: price,
-    };
+  const handleAddOrder = () => {
+    const newOrder = { id, name, img, price };
+    const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
+    const updatedOrders = [...storedOrders, newOrder];
     // บันทึกข้อมูลลงใน localStorage
-    window.localStorage.setItem('result_order', JSON.stringify(result_order));
+    window.localStorage.setItem('order_list', JSON.stringify(updatedOrders));
     setShow(false);
     // trigger event to notify Pending_Order to update
     window.dispatchEvent(new Event('storage')); // สร้าง event เพื่อแจ้ง Pending_Order
@@ -34,55 +32,43 @@ function MyCard({ img, name, id, price }) {
   price = 10;
   return (
     <>
-
-    <div className="card-wrapper" style={{width:"240px",display:'inline-block'}}>
-      <div className="card" >
-        <img src={img} alt="Not Found Img" style={{display: 'flex'   , borderRadius:"8px" }} />
-          {/* <h7> ID : {id} </h7> */}
-          <h6> Name : {name} </h6>
-          <h5><b> Price : {price !== undefined ?'Price':''}{price} </b> </h5>
-          <button onClick={handleShow}>Clickkkkkkkkk</button>
+      <div className="card-wrapper" style={{ width: "240px", display: 'inline-block' }}>
+        <div className="card" style={{ display: 'flex', alignItems: 'center' }}>
+          <img src={img} alt="Not Found Img" style={{ width: '100%', borderRadius: "8px" }} />
+          <div style={{ marginLeft: '10px', textAlign: 'center', flex: 1 }}>
+            <h6> Name : {name} </h6>
+            <h5><b> Price : {price !== undefined ? 'Price' : ''}{price} </b> </h5>
+            <button onClick={handleShow}>Click Here</button>
+          </div>
+        </div>
       </div>
-    </div>
-    
-    <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{name}</Modal.Title>
-        </Modal.Header>
+  
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton> </Modal.Header>
         <Modal.Body>
-          <div style={{ flexDirection: 'column', justifyContent: 'center', justifyItems: 'center' }}>
-            <img src={img} alt="" style={{ width: '100%', borderRadius: '8px' }} />
-            {/* Other options like Sweetness, Quantity */}
-            <div style={{ paddingBottom: '10px', paddingTop: '10px' }}> {/* ... */}</div>
-            <div style={{ fontSize: '30px' }}>
-
-            {/* <div  style={{display:'flex',flexDirection:'row',paddingTop:'25px'}}>
-              <h4 style={{fontFamily:'cursive'}}>Sweetness</h4>
-              <ButtonGroup variant="outlined" aria-label="Basic button group">
-              <Button>0</Button>
-              <Button>25</Button>
-              <Button>50</Button>
-              <Button>75</Button>
-              <Button>100</Button>
-              </ButtonGroup>
-            </div> */}
-              Total {price} bath
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <img src={img} alt="" style={{width: '35%', borderRadius: '8px' }} />
+            <div style={{ paddingLeft: '20px' }}>
+              <h3>{name}</h3>
+              <div style={{ fontSize: '30px' }}>
+                Total {price} bath
+              </div>
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button style={{ color: 'white', background: 'green' }} onClick={handleSaveChanges}>
+          <Button style={{ color: 'white', background: 'green' }} onClick={handleAddOrder}>
             Add
           </Button>
           <Button style={{ color: 'white', background: 'red' }} onClick={handleClose}>
             Close
           </Button>
-          
         </Modal.Footer>
       </Modal>
     </>
   );
-}
+  
+} 
 
 export default MyCard
 
