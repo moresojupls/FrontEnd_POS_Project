@@ -7,12 +7,15 @@ export default defineConfig({
   preview: {
    port: 5173,
    strictPort: true,
+
   },
   server: {
    port: 5173,
    strictPort: true,
-   host: true,
-   origin: "http://0.0.0.0:3000",
+    host:true,
+   origin: "http://0.0.0.0:3000/FrontEnd_POS_Project",
+  
   },
+  base:"http://0.0.0.0/FrontEnd_POS_Project"
 
 })
