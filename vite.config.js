@@ -14,8 +14,10 @@ export default defineConfig({
    strictPort: true,
     host:true,
    origin: "http://0.0.0.0:3000/FrontEnd_POS_Project",
+   
   
   },
+  base:"/FrontEnd_POS_Project"
 
 
 })
