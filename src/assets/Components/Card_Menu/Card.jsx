@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../../../MyCard.css'
 import  { useState,cache } from 'react'
 // import Button from 'react-bootstrap/Button';
@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import NumberInputBasic from '../Amount_label/Amount_label';
 import Pending_Order from '../Pending_Order/Pending_Order';
 
-function MyCard({ img, name, id, price }) {
+function MyCard({item,colCard}) {
 
   const [show, setShow] = useState(false);
 
@@ -19,9 +19,9 @@ function MyCard({ img, name, id, price }) {
   };
 
   const handleAddOrder = () => {
-    const newOrder = { id, name, img, price };
-    const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
-    const updatedOrders = [...storedOrders, newOrder];
+    // const newOrder = { id, name, img, price };
+    // const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
+    // const updatedOrders = [...storedOrders, newOrder];
     // บันทึกข้อมูลลงใน localStorage
     window.localStorage.setItem('order_list', JSON.stringify(updatedOrders));
     setShow(false);
@@ -29,21 +29,32 @@ function MyCard({ img, name, id, price }) {
     window.dispatchEvent(new Event('storage')); // สร้าง event เพื่อแจ้ง Pending_Order
   };
 
-  price = 10;
+  useEffect(()=>{
+    console.log('col : ',colCard);
+  },[])
   return (
     <>
-      <div className="card-wrapper" style={{ width: "240px", display: 'inline-block' }}>
+      <div className="card-wrapper" style={{ width: "280px", display: 'inline-block' }}>
         <div className="card" style={{ display: 'flex', alignItems: 'center' }}>
-          <img src={img} alt="Not Found Img" style={{ width: '100%', borderRadius: "8px" }} />
-          <div style={{ marginLeft: '10px', textAlign: 'center', flex: 1 }}>
-            <h6> Name : {name} </h6>
-            <h5><b> Price : {price !== undefined ? 'Price' : ''}{price} </b> </h5>
+          <img  alt="Not Found Img" style={{ width: '100%', borderRadius: "8px" }} />
+          <div style={{ marginLeft: '5px', textAlign: 'center', flex: 1 }}>
+            {
+              colCard.map(element => (
+                
+                <h5> {element} : {item[element]}  </h5>
+               
+              ))
+
+            }
+           
+           
+            {/* <h5><b> Price : {price !== undefined ? 'Price' : ''}{price} </b> </h5> */}
             <button onClick={handleShow}>Click Here</button>
           </div>
         </div>
       </div>
   
-      <Modal show={show} onHide={handleClose}>
+      {/* <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton> </Modal.Header>
         <Modal.Body>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -64,7 +75,7 @@ function MyCard({ img, name, id, price }) {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </>
   );
   

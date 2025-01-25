@@ -29,7 +29,7 @@ function MyRouter() {
             <Route path="/FrontEnd_POS_Project" element={<App />}>
                 <Route index element={<HomePage />}  />
                 <Route   path="User"  element={<Userpage />}/>
-
+                <Route   path="Product"  element={<ProductPage />}/>
                 { // All  Product pages
                     ProductBtn.map((element,index)=>(
                         <Route  path={'Product/'+element}  element={<ProductPage/>} />

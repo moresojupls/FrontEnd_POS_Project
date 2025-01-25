@@ -2,31 +2,31 @@ import { React ,useContext, useEffect, useState , useMemo,useId} from 'react'
 import MyCard from '../Card_Menu/Card'
 import Mybutton from '../Button/button';
 import MyValidator from '../../Service/validator';
-import { UseContext } from '../../pages/User/user';
+import { MyContext } from '../../pages/User/user';
 import { ProductContext }   from '../../pages/Product/product';
 import { Link } from 'react-router-dom';
 import  './context.css';
 
 
-function Mycontent({results,btn}) {
-  const [result,setResult] = useState([])
-  const idelement = useId();
-
-  function plus(results,btn){
-    results = 5;
-    btn = 6;
+function Mycontent({btn,colCard,table}) {
+  let con;
+  if(table == "User"){
+    con = MyContext;
+  }else if(table == "Product"){
+    con = ProductContext;
   }
-  const user = useMemo(()=>
-    plus(results,btn)
-    
-  ,[results,btn])
-  
-  useEffect(()=>{
-    
-    setResult(results)
-    
-  },[results !== result])
+  const {result} = useContext(con);
+  const [unnullResult,setunnullResult] = useState(false);
+  // const a = ()=>{
+  //   console.log("res : ",result.result)
+  //   return result.result != undefined;
+  // }
 
+
+
+
+  
+ 
   // console.log('pathafterCatagory : ',pathafterCatagory)
 
 
@@ -49,7 +49,10 @@ function Mycontent({results,btn}) {
   // }
 
   
-
+  // if(result.length > 0){
+  //   console.log(result);
+  //   setunnullResult(true);
+  // }
 
 
 
@@ -63,16 +66,18 @@ function Mycontent({results,btn}) {
      
           <div style={{marginTop:"15px",overflow:"scroll",height:'100%'}}>
           
+          {
+            console.log('result ',result)
+          }
         
 
           {
-            
-          // Item list code
-            result.map(element => (
+         
+         result != undefined  ? result.Result.map(element => (
           
-              <MyCard key={element.id} img = { element.img } name = { element.name } price = { element.price } />
+              <MyCard key={element.id}  colCard={colCard} item = {element} />
                 
-            ))
+            )):"no items"
           }
         </div>
    
