@@ -2,6 +2,10 @@ import  { useState ,useEffect,createContext,useContext} from 'react'
 import App from '../../../App'
 import results_apis from '../../MockUpData/User';
 
+import myImage from '../../image';
+
+
+
 export const UseContext =createContext('user');
 
 function Userpage() {
@@ -49,7 +53,8 @@ function Userpage() {
   
   return (
     <>
-      <h1>1User</h1>
+      <h1>User</h1>
+
       {/* <UseContext.Provider value={{col:[],result:result !== undefined ? result:[]}}>
         <App></App>
       </UseContext.Provider>
