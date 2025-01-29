@@ -24,6 +24,7 @@ function MyOrderlist() {
       selectedSugar,
       toppings,
       quantity,
+      total
     };
     const storedOrders = JSON.parse(localStorage.getItem("order_list")) || [];
     localStorage.setItem("order_list", JSON.stringify([...storedOrders, newOrder]));

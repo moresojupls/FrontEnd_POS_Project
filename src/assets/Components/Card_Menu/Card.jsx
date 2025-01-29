@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import NumberInputBasic from '../Amount_label/Amount_label';
 import Pending_Order from '../Pending_Order/Pending_Order';
 
-function MyCard({ img, name, id, price,amount=1}) {
+function MyCard({ img, name, id, price,amount=1,total=0}) {
 
   const [show, setShow] = useState(false);
 
@@ -41,9 +41,30 @@ function MyCard({ img, name, id, price,amount=1}) {
       selectedSugar,
       toppings,
       quantity,
+      amount,
+      total,
     };
-    const storedOrders = JSON.parse(localStorage.getItem("order_list")) || [];
-    localStorage.setItem("order_list", JSON.stringify([...storedOrders, newOrder]));
+   
+
+    const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
+    // console.log(localStorage.getItem("order_list"));
+    const sameorder = storedOrders.filter((value,index)=>value.id == newOrder.id);
+    let  updatedOrders = [];
+    if(sameorder.length > 0){
+      const findorder = storedOrders.find((value,index)=>
+        value.id == newOrder.id
+      );
+      findorder.amount +=1;
+      findorder.total = findorder.amount * findorder.price;
+      console.log(findorder)
+      updatedOrders = [...storedOrders];
+
+    }else{
+      newOrder.total = newOrder.price;
+      
+      updatedOrders = [...storedOrders, newOrder];
+    }
+    window.localStorage.setItem("order_list", JSON.stringify(updatedOrders));
     setShow(false);
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
   };
