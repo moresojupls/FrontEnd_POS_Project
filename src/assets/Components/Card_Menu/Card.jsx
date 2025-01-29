@@ -53,9 +53,9 @@ function MyCard({ img, name, id, price,amount=1}) {
         <div className="card" style={{ display: 'flex', alignItems: 'center' }}>
           <img src={img} alt="Not Found Img" style={{ width: '100%', borderRadius: "8px" }} />
           <div style={{ marginLeft: '10px', textAlign: 'center', flex: 1 }}>
-          <h6> Name : {id} </h6>
+            <h6>  </h6>
             <h6> Name : {name} </h6>
-            <h5><b> Price : {price !== undefined ? 'Price' : ''}{price} </b> </h5>
+            <h5><b>  {price !== undefined ? 'Price : ' : ''}{price} </b> </h5>
             <button onClick={handleShow}>Click Here</button>
           </div>
         </div>
