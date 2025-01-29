@@ -1,3 +1,11 @@
+:root{
+    --primary:#B17457;
+    --TextColor:#000000;
+    --Backgroundwhite:#ffffff;
+    --TextHover:#ffffff;
+    --TextColorContrast:#ffffff;
+}
+  
 /* @keyframes example{
     from{
         background-color: #0cf;
@@ -19,14 +27,13 @@
 
     }
 }
-  
 
 .Catagory{
     border-radius: 10px;
-    color:white;
+    color:var(--TextColorContrast);
     margin-left:  10px;
     padding: 12px;
-    background-color: #0cf;
+    background-color: var(--primary);
 }
 .Catagory:hover{
     animation-name: example;
@@ -34,6 +41,7 @@
     animation-fill-mode: forwards;
    
 }
+
 
   
 

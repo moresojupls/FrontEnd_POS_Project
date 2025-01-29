@@ -55,13 +55,14 @@ function Mycontent({results,btn}) {
 
   function ShowData(){
     return <>
-   
+     
+      <br></br>
       {
         // catagory button code  
        btn != undefined ? btn.map((element)=>(<Link  style={{height:"200px"}} className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
       }
      
-          <div style={{marginTop:"15px",overflow:"scroll",height:'100%'}}>
+        <div style={{marginTop:"15px",overflow:"scroll",height:'100%'}}>
           
         
 

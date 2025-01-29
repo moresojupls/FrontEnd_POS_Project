@@ -3,6 +3,9 @@ import Mybutton from '../Button/button'
 import { Margin } from '@mui/icons-material'
 import Pending_Order from '../Pending_Order/Pending_Order'
 import { Container } from 'react-bootstrap'
+import './orderlist.css';
+import img from '../../image';
+import Myimg from '../Image/img'
 
 function MyOrderlist() {
 
@@ -13,18 +16,25 @@ function MyOrderlist() {
 
   return (
     <>
-      <div className = 'd-flex ' style={{outlineStyle: 'auto', width:'20%', color:'black' ,background:'white'}}>
+      <div className = 'd-flex Orderlist ' style={{ width:'30%', }}>
         <div style={{width:'100%'}}> 
   
           <h2 >Order list</h2>
           <div style={{display:'flex',height:'360px'}}>
-            <div style={{width:'100%',height:'100%',borderStyle:'solid',border:'2px',outlineStyle:'auto',marginBottom:'20px',overflow:"scroll",display:'block'}}>
+            <div style={{width:'100%',height:'100%',border:'2px',marginBottom:'20px',overflow:"scroll",display:'block'}}>
               <Pending_Order/>
             </div>
           </div>
   
-          <div style={{paddingBottom:'5px'}}>
-            <button style={{width:'100%',height:'50px',fontSize:'20px',fontFamily:'cursive'}} onClick={()=>{alert("Coupon")}}> Coupon </button>
+          <div  style={{width:'100%',paddingBottom:'5px'}}>
+            <button className="coupon" style={{width:'80%',height:'50px',fontSize:'20px',fontFamily:'cursive'}} onClick={()=>{alert("Coupon")}}> 
+           
+           
+              <h4 style={{display:"flex"}}>Coupon</h4>
+              <Myimg  url={img.thaitea} size={30}></Myimg> 
+            
+           
+            </button>
           </div>
   
           <div style={{display: 'flex',flexDirection:'column',justifyContent:'center',paddingBottom:'5px'}}>

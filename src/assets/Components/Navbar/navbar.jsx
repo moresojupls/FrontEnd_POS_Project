@@ -41,7 +41,7 @@ function Mynavbar() {
   return (
   
       
-      <Navbar  bg="prinary  "   className='container-fluid'  >
+      <Navbar  bg="prinary  "   className='container-fluid Navbar'  >
        
           
           <Navbar.Brand  className='d-flex flex-row    justify-content-start' >
