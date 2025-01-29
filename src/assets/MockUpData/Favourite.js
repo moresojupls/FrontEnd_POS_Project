@@ -1,19 +1,19 @@
 const Favourite = [{
     id:60,
     img:'https://img.freepik.com/free-photo/leaf-plate-wood-object-healthy-eating_1172-451.jpg',
-    name:'Milk Tea',
+    name:'Milk ',
     price:30,
 
 },{
     id:40,
     img:'https://img.freepik.com/free-photo/leaf-plate-wood-object-healthy-eating_1172-451.jpg',
-    name:'Milk Tea',
+    name:'Tea',
     price:30,
 
 },{
     id:30,
     img:'https://img.freepik.com/free-photo/leaf-plate-wood-object-healthy-eating_1172-451.jpg',
-    name:'Milk Tea',
+    name:'MK',
     price:30,
 
 },{

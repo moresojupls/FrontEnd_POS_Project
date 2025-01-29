@@ -33,6 +33,7 @@ function Pending_Order() {
   // ฟังก์ชันสำหรับลบรายการ
   const handleDelete = (id) => {
     const updatedOrders = orders.filter((order) => order.id !== id); // ลบเฉพาะรายการที่ id ไม่ตรงกับที่เลือก
+    console.log('id : ',id)
     setOrders(updatedOrders); // อัปเดต State ของ orders
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกการเปลี่ยนแปลงใน localStorage
   };
@@ -96,8 +97,10 @@ function Pending_Order() {
               </button>
 
               {/* เนื้อหาในกล่อง */}
+              {console.log("order : ",order)}
               <div onClick={() => handleItemClick(order)} style={{ cursor: "pointer" }}>
-                <p>สินค้า: {order.name}</p>
+                <p>สินค้า: {order.name } </p>
+                <p>จํานวน: {order.amount !== undefined ?order.amount : 0 } </p>
                 <p>ราคา: {order.price} บาท</p>
               </div>
             </div>
@@ -125,6 +128,15 @@ function Pending_Order() {
                 <input
                   type="text"
                   value={selectedOrder.name}
+                  onChange={(e) =>
+                    setSelectedOrder({ ...selectedOrder, name: e.target.value })
+                  }
+                  style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+                />
+                 <label>จํานวน:</label>
+                <input
+                  type="text"
+                  value={selectedOrder.amount}
                   onChange={(e) =>
                     setSelectedOrder({ ...selectedOrder, name: e.target.value })
                   }

@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import NumberInputBasic from '../Amount_label/Amount_label';
 import Pending_Order from '../Pending_Order/Pending_Order';
 
-function MyCard({ img, name, id, price }) {
+function MyCard({ img, name, id, price,amount=1}) {
 
   const [show, setShow] = useState(false);
 
@@ -19,10 +19,26 @@ function MyCard({ img, name, id, price }) {
   };
 
   const handleAddOrder = () => {
-    const newOrder = { id, name, img, price };
+    const newOrder = { id, name, img, price,amount};
     const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
-    const updatedOrders = [...storedOrders, newOrder];
-    // บันทึกข้อมูลลงใน localStorage
+    console.log("newOrder"+newOrder.id);
+    // check new order have same old order
+    const sameorder = storedOrders.filter((value,index)=>value.id == newOrder.id);
+    let  updatedOrders = [];
+    if(sameorder.length > 0){
+      const findorder = storedOrders.find((value,index)=>
+        value.id == newOrder.id
+      );
+      findorder.amount +=1;
+      updatedOrders = [...storedOrders];
+
+    }else{
+      updatedOrders = [...storedOrders, newOrder];
+    }
+   
+    
+    console.log('update',sameorder)
+      // บันทึกข้อมูลลงใน localStorage
     window.localStorage.setItem('order_list', JSON.stringify(updatedOrders));
     setShow(false);
     // trigger event to notify Pending_Order to update
@@ -36,6 +52,7 @@ function MyCard({ img, name, id, price }) {
         <div className="card" style={{ display: 'flex', alignItems: 'center' }}>
           <img src={img} alt="Not Found Img" style={{ width: '100%', borderRadius: "8px" }} />
           <div style={{ marginLeft: '10px', textAlign: 'center', flex: 1 }}>
+          <h6> Name : {id} </h6>
             <h6> Name : {name} </h6>
             <h5><b> Price : {price !== undefined ? 'Price' : ''}{price} </b> </h5>
             <button onClick={handleShow}>Click Here</button>

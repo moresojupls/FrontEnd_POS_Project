@@ -70,7 +70,7 @@ function Mycontent({results,btn}) {
           // Item list code
             result.map(element => (
           
-              <MyCard key={element.id} img = { element.img } name = { element.name } price = { element.price } />
+              <MyCard key={element.id} id={element.id} img = { element.img } name = { element.name } price = { element.price } />
                 
             ))
           }
