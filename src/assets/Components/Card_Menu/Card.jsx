@@ -30,6 +30,7 @@ function MyCard({ img, name, id, price,amount=1}) {
         value.id == newOrder.id
       );
       findorder.amount +=1;
+      findorder.price *=findorder.amount;
       updatedOrders = [...storedOrders];
 
     }else{

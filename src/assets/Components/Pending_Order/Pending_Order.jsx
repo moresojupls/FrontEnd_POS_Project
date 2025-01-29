@@ -124,21 +124,14 @@ function Pending_Order() {
                 style={{ width: "100%", borderRadius: "8px", marginBottom: "10px" }}
               />
               <div>
-                <label>สินค้า:</label>
+                <label>สินค้า {selectedOrder.name}</label>
+                <br></br>
+                <label>จํานวน:</label>
                 <input
-                  type="text"
-                  value={selectedOrder.name}
-                  onChange={(e) =>
-                    setSelectedOrder({ ...selectedOrder, name: e.target.value })
-                  }
-                  style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-                />
-                 <label>จํานวน:</label>
-                <input
-                  type="text"
+                  type="number"
                   value={selectedOrder.amount}
                   onChange={(e) =>
-                    setSelectedOrder({ ...selectedOrder, name: e.target.value })
+                    setSelectedOrder({ ...selectedOrder, amount: e.target.value })
                   }
                   style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
                 />
