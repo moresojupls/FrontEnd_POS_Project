@@ -2,3 +2,8 @@
   min-width: 100vw;
   text-align: center;
 }
+:root{
+  --primary:#B17457;
+  --TextColor:#000000;
+  --TextHover:#ffffff;
+}

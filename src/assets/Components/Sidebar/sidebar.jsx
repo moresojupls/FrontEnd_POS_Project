@@ -36,19 +36,21 @@ function MySidebar() {
  
  
   return (
-    <div  style={{  minWidth:'60px', width:'10%',justifyItems:"center"}}>      
+    <div  className="sidebar" style={{  minWidth:'60px', width:'8%',justifyItems:"center"}}>      
            <List>
-             
-              <Link onClick={()=>{
+            <div className='Onclickhover'>
+             <Link  onClick={()=>{
               
-              }} to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])}>
-                <ListItem button width='100rem'>
-                  <div>
-                    <Myimg  url={img.House} size={30}></Myimg>
-                    <h4  className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Home</h4>
-                  </div>
-                </ListItem>
-              </Link>
+            }} to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])}>
+              <ListItem button width='100rem'>
+                <div  style={{width:"100%"}}>
+                  <Myimg  url={img.House} size={40}></Myimg>
+                  <h4  className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Home</h4>
+                </div>
+              </ListItem>
+            </Link>
+             </div>
+             
 
            
              {/* <ListItem button>
@@ -63,31 +65,33 @@ function MySidebar() {
                </ListItemIcon>
                <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Supply</h4>
              </ListItem> */}
-
+              <div className='Onclickhover'>
              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
                 <ListItem button width='100rem' >
                   <div>
-                    <Myimg  url={img.LogoBrand} size={30}></Myimg>
+                    <Myimg  url={img.LogoBrand} size={40}></Myimg>
                     <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Product</h4>
                   </div>
                  
                 </ListItem>
               </Link>
-             
+              </div>
+              <div className='Onclickhover'>
              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} style={{width:"100%"}}>
               <ListItem button>
                 <div>
-                  <Myimg  url={img.User} size={30}></Myimg>
+                  <Myimg  url={img.User} size={40}></Myimg>
                   <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Admin</h4>
                 </div>
                
               </ListItem>
              </Link>
+             </div>
             
             {/* Wrapper ของ Loader ที่ตั้งค่า marginTop: auto; */}
-            <div style={{ marginTop: 'auto' }}>
+            {/* <div style={{ marginTop: 'auto' }}>
               <Loader />
-            </div>
+            </div> */}
             
             
              {/* <ListItem button>

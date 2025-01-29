@@ -53,6 +53,7 @@ const [quantity, setQuantity] = useState(1);
   // ฟังก์ชันสำหรับลบรายการ
   const handleDelete = (id) => {
     const updatedOrders = orders.filter((order) => order.id !== id); // ลบเฉพาะรายการที่ id ไม่ตรงกับที่เลือก
+    console.log('id : ',id)
     setOrders(updatedOrders); // อัปเดต State ของ orders
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกการเปลี่ยนแปลงใน localStorage
   };

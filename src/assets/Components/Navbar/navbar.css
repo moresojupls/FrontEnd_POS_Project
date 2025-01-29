@@ -1,0 +1,10 @@
+:root{
+    --primary:#B17457
+    --TextColor:black
+ }
+
+.Navbar{
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+ 
+}

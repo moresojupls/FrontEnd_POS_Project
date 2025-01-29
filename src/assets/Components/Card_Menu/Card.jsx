@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import NumberInputBasic from '../Amount_label/Amount_label';
 import Pending_Order from '../Pending_Order/Pending_Order';
 
-function MyCard({ img, name, id, price }) {
+function MyCard({ img, name, id, price,amount=1}) {
 
   const [show, setShow] = useState(false);
 

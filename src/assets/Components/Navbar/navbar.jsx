@@ -41,7 +41,7 @@ function Mynavbar() {
   return (
   
       
-      <Navbar  bg="prinary  "   className='container-fluid'  >
+      <Navbar  bg="prinary  "   className='container-fluid Navbar'  >
        
           
           <Navbar.Brand  className='d-flex flex-row    justify-content-start' >
@@ -53,7 +53,7 @@ function Mynavbar() {
             <Navbar.Text className='mr-2 '>
                 <div className='d-flex flex-row '>
                   {/* <img src="image/House.png" alt="fasf" /> */}
-                  {console.log('img :',image.House)}
+          
                   <Myimg url={image.Time} size={30}/>
                   <h5 className='mx-2'> {date}</h5>
                 </div>

@@ -12,8 +12,19 @@
     background: red; 
     border-radius: 5px;
   }
-  
+   */
   /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+  /* ::-webkit-scrollbar-thumb:hover {
     background: #b30000; 
+  } */
+
+  .Orderlist{
+    border: 2px solid var(--primary);
+    border-radius:10px ;
+    
+  }
+
+  .coupon{
+    border: 2px solid var(--primary);
+    border-radius:10px ;
   }
