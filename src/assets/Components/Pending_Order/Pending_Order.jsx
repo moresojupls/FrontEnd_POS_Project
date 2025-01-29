@@ -20,11 +20,13 @@ const [quantity, setQuantity] = useState(1);
   // โหลดข้อมูลจาก localStorage เมื่อ component ถูก mount
   useEffect(() => {
     const fetchOrders = () => {
+      
       const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
+   
       setOrders(storedOrders);
     };
 
-    fetchOrders();
+    // fetchOrders();
 
     // ฟัง event 'storage' เพื่อดักการเปลี่ยนแปลงใน localStorage
     window.addEventListener("storage", fetchOrders);
@@ -74,7 +76,7 @@ const [quantity, setQuantity] = useState(1);
         order.id === selectedOrder.id ? updatedOrder : order
       );
       setOrders(updatedOrders);
-      localStorage.setItem("order_list", JSON.stringify(updatedOrders));
+      window.localStorage.setItem("order_list", JSON.stringify(updatedOrders));
       setShowModal(false);
     }
   };
@@ -129,7 +131,8 @@ const [quantity, setQuantity] = useState(1);
                 {/* แสดงรูปเล็กในกล่อง */}
                 <div>
                 <p>สินค้า: {order.name}</p>
-                <p>ราคา: {order.price} บาท</p>
+                <p>จํานวน: {order.amount}</p>
+                <p>ราคา: {order.total } บาท</p>
                 </div>
 
                 {/* แสดงรูปเล็กในกล่อง */}
