@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
-import { Button } from "@mui/material";
+import { Button, ButtonGroup } from '@mui/material';
 
 function Pending_Order() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null); // เก็บข้อมูลรายการที่คลิก
   const [showModal, setShowModal] = useState(false); // state สำหรับ Modal
+  const [selectedMood, setSelectedMood] = useState(null);
+  const [selectedSize, setSelectedSize] = useState("M");
+  const [selectedSugar, setSelectedSugar] = useState(50);
+  const [toppings, setToppings] = useState({
+  ไข่มุก: false,
+  เยลลี่: false,
+  บุก: false,
+  วิปครีม: false,
+});
+const [quantity, setQuantity] = useState(1);
 
   // โหลดข้อมูลจาก localStorage เมื่อ component ถูก mount
   useEffect(() => {
@@ -27,7 +37,17 @@ function Pending_Order() {
   // เมื่อคลิกที่กล่องรายการ
   const handleItemClick = (order) => {
     setSelectedOrder(order);
-    setShowModal(true); // เปิด Modal
+    setSelectedMood(order.selectedMood || null);
+    setSelectedSize(order.selectedSize || "M");
+    setSelectedSugar(order.selectedSugar || 50);
+    setToppings(order.toppings || {
+      ไข่มุก: false,
+      เยลลี่: false,
+      บุก: false,
+      วิปครีม: false,
+    });
+    setQuantity(order.quantity || 1);
+    setShowModal(true);
   };
 
   // ฟังก์ชันสำหรับลบรายการ
@@ -41,12 +61,20 @@ function Pending_Order() {
 
   // บันทึกข้อมูลใหม่ใน localStorage และปิด Modal
   const handleSave = () => {
-    if (selectedOrder !== null) {
+    if (selectedOrder) {
+      const updatedOrder = {
+        ...selectedOrder,
+        selectedMood,
+        selectedSize,
+        selectedSugar,
+        toppings,
+        quantity,
+      };
       const updatedOrders = orders.map((order) =>
-        order.id === selectedOrder.id ? selectedOrder : order
+        order.id === selectedOrder.id ? updatedOrder : order
       );
       setOrders(updatedOrders);
-      window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกใน localStorage
+      localStorage.setItem("order_list", JSON.stringify(updatedOrders));
       setShowModal(false);
     }
   };
@@ -68,26 +96,25 @@ function Pending_Order() {
                 position: "relative", // สำหรับวางปุ่มลบ
                 marginBottom: "10px",
                 padding: "10px",
-                border: "1px solid #ddd",
+                border: "solid #ddd",
                 borderRadius: "5px",
                 backgroundColor: "#fefefe",
-              }}
-            >
+              }}>
               {/* ปุ่มลบ */}
               <button
                 onClick={() => handleDelete(order.id)} // ลบเมื่อกดปุ่ม
                 style={{
                   position: "absolute",
-                  top: "5px",
-                  right: "5px",
+                  top: "2px",
+                  right: "2px",
                   background: "red",
                   color: "white",
                   border: "none",
                   borderRadius: "50%",
-                  width: "25px",
-                  height: "25px",
+                  width: "2px",
+                  height: "5px",
                   cursor: "pointer",
-                  fontSize: "16px",
+                  fontSize: "14px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -97,11 +124,20 @@ function Pending_Order() {
               </button>
 
               {/* เนื้อหาในกล่อง */}
-              {console.log("order : ",order)}
-              <div onClick={() => handleItemClick(order)} style={{ cursor: "pointer" }}>
-                <p>สินค้า: {order.name } </p>
-                <p>จํานวน: {order.amount !== undefined ?order.amount : 0 } </p>
+              <div onClick={() => handleItemClick(order)} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px" }}>
+                
+                {/* แสดงรูปเล็กในกล่อง */}
+                <div>
+                <p>สินค้า: {order.name}</p>
                 <p>ราคา: {order.price} บาท</p>
+                </div>
+
+                {/* แสดงรูปเล็กในกล่อง */}
+                <img
+                  src={order.img} 
+                  alt="Product" 
+                  style={{ width: "40px", height: "40px", borderRadius: "5px" }} 
+                />
               </div>
             </div>
           ))
@@ -113,49 +149,99 @@ function Pending_Order() {
       {/* Modal สำหรับแสดงข้อมูล */}
       {selectedOrder && (
         <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{selectedOrder.name}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div style={{ textAlign: "center" }}>
-              <img
-                src={selectedOrder.img}
-                alt=""
-                style={{ width: "100%", borderRadius: "8px", marginBottom: "10px" }}
-              />
-              <div>
-                <label>สินค้า {selectedOrder.name}</label>
-                <br></br>
-                <label>จํานวน:</label>
-                <input
-                  type="number"
-                  value={selectedOrder.amount}
-                  onChange={(e) =>
-                    setSelectedOrder({ ...selectedOrder, amount: e.target.value })
-                  }
-                  style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-                />
-                <label>ราคา:</label>
-                <input
-                  type="number"
-                  value={selectedOrder.price}
-                  onChange={(e) =>
-                    setSelectedOrder({ ...selectedOrder, price: e.target.value })
-                  }
-                  style={{ width: "100%", padding: "5px" }}
-                />
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedOrder.name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ textAlign: "center" }}>
+            <img src={selectedOrder.img} alt="" style={{ width: "35%", borderRadius: "8px" }} />
+            <h3>{selectedOrder.name}</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "10px" }}>
+              {/* Mood */}
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+                <div style={{ flex: 1 }}>
+                  <h5>Mood</h5>
+                  <ButtonGroup>
+                    <Button
+                      variant={selectedMood === "Hot" ? "contained" : "outlined"}
+                      onClick={() => setSelectedMood("Hot")}
+                    >
+                      🔥 Hot
+                    </Button>
+                    <Button
+                      variant={selectedMood === "Cold" ? "contained" : "outlined"}
+                      onClick={() => setSelectedMood("Cold")}
+                    >
+                      ❄️ Cold
+                    </Button>
+                  </ButtonGroup>
+                </div>
+      
+                {/* Size */}
+                <div style={{ flex: 1 }}>
+                  <h5>Size</h5>
+                  <ButtonGroup>
+                    {["S", "M", "L"].map((size) => (
+                      <Button
+                        key={size}
+                        variant={selectedSize === size ? "contained" : "outlined"}
+                        onClick={() => setSelectedSize(size)}
+                      >
+                        {size}
+                      </Button>
+                    ))}
+                  </ButtonGroup>
+                </div>
+              </div>
+      
+              {/* Sugar */}
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+                <div style={{ flex: 1 }}>
+                  <h5>Sugar</h5>
+                  <ButtonGroup>
+                    {[25, 50, 75, 100].map((level) => (
+                      <Button
+                        key={level}
+                        variant={selectedSugar === level ? "contained" : "outlined"}
+                        onClick={() => setSelectedSugar(level)}
+                      >
+                        {level}%
+                      </Button>
+                    ))}
+                  </ButtonGroup>
+                </div>
+      
+                {/* Topping */}
+                <div style={{ flex: 1 }}>
+                  <h5>Topping</h5>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+                    {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
+                      <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                        <input
+                          type="checkbox"
+                          id={topping}
+                          value={topping}
+                          checked={toppings[topping]}
+                          onChange={(e) => setToppings({ ...toppings, [topping]: e.target.checked })}
+                        />
+                        <label htmlFor={topping} style={{ marginLeft: "10px" }}>{topping}</label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button style={{ backgroundColor: "green", color: "white" }} onClick={handleSave}>
-              Save Changes
-            </Button>
-            <Button style={{ backgroundColor: "red", color: "white" }} onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button style={{ color: "white", background: "green" }} onClick={handleSave}>
+            Save Changes
+          </Button>
+          <Button style={{ color: "white", background: "red" }} onClick={handleClose}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
       )}
     </div>
   );
