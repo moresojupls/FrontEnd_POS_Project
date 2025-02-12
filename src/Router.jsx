@@ -10,6 +10,7 @@ import Userpage from '../src/assets/pages/User/user';
 import ProductPage from './assets/pages/Product/product';
 import NotFound from './assets/pages/NotFound/notfound';
 import User from './assets/MockUpData/User';
+import Purchase from './assets/Components/Purchase/purchase'
 
 
 function MyRouter() {
@@ -35,11 +36,14 @@ function MyRouter() {
                         <Route  path={'Product/'+element}  element={<ProductPage/>} />
                     ))
                 }
-      
-      
             </Route>
+            <Route path="purchase" element={<Purchase />} />
+            <Route path="*" element={<NotFound />} /> {/* สำหรับหน้าที่ไม่พบ */}
         </Routes>
     </BrowserRouter>
+    
+
+    
     
 
   

@@ -7,7 +7,9 @@ import Logout from './image/Log out.png';
 import Trush from './image/Trush.png';
 import thaitea from './image/thaitea.png';
 import House from './image/House.png';
-
+import Qrcode from './image/qr-code.png';
+import cash from './image/cash.png';
+import atmcard from './image/atm_card.png'
 
 // export Image
 export  default   {
@@ -17,7 +19,10 @@ export  default   {
     Logout,
     Trush,
     thaitea,
-    House
+    House,
+    Qrcode,
+    cash,
+    atmcard
 
 }
 

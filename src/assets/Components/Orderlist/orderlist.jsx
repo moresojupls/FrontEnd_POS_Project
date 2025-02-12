@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap'
 import './orderlist.css';
 import img from '../../image';
 import Myimg from '../Image/img'
+import { useNavigate } from 'react-router-dom';
 
 function MyOrderlist() {
 
@@ -13,6 +14,8 @@ function MyOrderlist() {
   //   window.location.pathname.split('/')[2] == 'product' ? setUrl(true):setUrl(false)
   //   console.log('url ', window.location.pathname.split('/')[2])
   // },[])
+  const navigate = useNavigate(); // ใช้ hook สำหรับการ Redirect
+
   const handleAddOrder = () => {
     const newOrder = {
       id,
@@ -33,17 +36,27 @@ function MyOrderlist() {
   };
   
 
-  const Mybutton = ({ size, process, topic, color }) => {
-    const buttonStyle = {
-        width: `${size}px`,
-        backgroundColor: color, // ใช้สีจาก props
-        padding: '10px',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        fontSize: '16px',
-        color: '#fff', // สีข้อความ
+  const Mybutton = ({ size, process, topic, color, redirectTo }) => {
+    //const history = useHistory(); // ใช้ useHistory สำหรับการ redirect
+  
+    const handleClick = () => {
+      process(); // เรียกฟังก์ชัน process ที่ส่งเข้ามา (เช่น alert)
+      if (redirectTo) {
+        history.push(redirectTo); // redirect ไปยัง path ที่กำหนด
+      }
     };
+  
+    const buttonStyle = {
+      width: `${size}px`, // ✅ ใช้ backticks (``) ครอบ ${size}
+      backgroundColor: color, 
+      padding: '10px',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      fontSize: '16px',
+      color: '#fff',
+    };
+    
 
     return (
         <button style={buttonStyle} onClick={process}>
@@ -88,9 +101,7 @@ function MyOrderlist() {
       style={{ width: '25px', height: '25px' }} 
     />
   </button>
-</div>
-
-  
+  </div>  
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '5px',margin:'10px' }}>
         <p className="mb-2" style={{ fontSize: '25px', display: 'flex' ,justifyContent: 'space-between'}}>
           <span style={{ marginRight: '10px' }}>SubTotal:</span>
@@ -106,17 +117,20 @@ function MyOrderlist() {
         </p>
         </div>
 
-          <div style={{display:'flex',justifyContent:'space-evenly',justifyItems:'center',paddingBottom:'20px',marginTop:'-10px'}}>
-              <Mybutton size={"120"} process={()=>{
-              alert("hold order")}} 
-              topic={"Hold Order"}
-              color={"#FFB38E"}/>
-  
-              <Mybutton size={"80"}process={()=>{
-              alert("done")}} 
-              topic={"Done"}
-              color={"#C2F5A1"}/>
-          </div>
+        <div style={{display:'flex',justifyContent:'space-evenly',justifyItems:'center',paddingBottom:'20px',marginTop:'-10px'}}>
+        <Mybutton size={"120"} 
+          process={() => alert("hold order")} 
+          topic={"Hold Order"}
+          color={"#FFB38E"}/>
+        
+        <Mybutton size={"80"} 
+        process={() => { 
+          navigate('/purchase'); // ⬅️ เมื่อกด Done ให้เปลี่ยนหน้า
+        }} 
+        topic={"done"}
+        color={"#C2F5A1"}
+      />
+    </div>
 
           
   
@@ -124,12 +138,6 @@ function MyOrderlist() {
       </div>
     </>
     )  
-
-
-  
-
-  
-  
 }
 
 export default MyOrderlist
