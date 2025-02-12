@@ -62,7 +62,7 @@ function Mynavbar() {
             <Navbar.Text className='mr-2'>
                 <div className='d-flex flex-row '>
                   
-                  {/* <Myimg url={image.User} size={30}/> */}
+                  <Myimg url={image.User} size={30}/> 
                   <h5 className='mr-2'> {UserDisplay()}</h5>
                 </div>
             </Navbar.Text>
