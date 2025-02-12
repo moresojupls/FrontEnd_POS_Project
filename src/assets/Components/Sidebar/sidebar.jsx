@@ -44,7 +44,7 @@ function MySidebar() {
             }} to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])}>
               <ListItem button width='100rem'>
                 <div  style={{width:"100%"}}>
-                  <Myimg  url={img.House} size={40}></Myimg>
+                  <Myimg  url={img.House} size={45}></Myimg>
                   <h4  className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Home</h4>
                 </div>
               </ListItem>
@@ -70,7 +70,7 @@ function MySidebar() {
               <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
                   <ListItem button width='100rem' >
                     <div>
-                      <Myimg  url={img.LogoBrand} size={40}></Myimg>
+                      <Myimg  url={img.LogoBrand} size={45}></Myimg>
                       <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Product</h4>
                     </div>
                   
@@ -82,8 +82,8 @@ function MySidebar() {
               <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
                   <ListItem button width='100rem' >
                     <div>
-                      <Myimg  url={img.LogoBrand} size={40}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>submenu</h4>
+                      <Myimg  url={img.Sale} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Sale</h4>
                     </div>
                   
                   </ListItem>
@@ -93,8 +93,8 @@ function MySidebar() {
               <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
                   <ListItem button width='100rem' >
                     <div>
-                      <Myimg  url={img.LogoBrand} size={40}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>submenu</h4>
+                      <Myimg  url={img.Stock} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Stock</h4>
                     </div>
                   
                   </ListItem>
@@ -104,13 +104,50 @@ function MySidebar() {
               
             </div>
 
-
             <div className='Menu'>
             <div className='MenuOnclickhover'>
              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} style={{width:"100%"}}>
               <ListItem button>
                 <div>
-                  <Myimg  url={img.User} size={40}></Myimg>
+                  <Myimg  url={img.Supply} size={45}></Myimg>
+                  <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Supply</h4>
+                </div>
+               
+              </ListItem>
+             </Link>
+             </div>
+              <div className='submenu'>
+              <div className='Onclickhover '>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.Supply} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>crud</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+              </div>
+              <div className='Onclickhover'>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.Order} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Order</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+              </div>
+              </div>
+              
+            </div>
+            <div className='Menu'>
+            <div className='MenuOnclickhover'>
+             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} style={{width:"100%"}}>
+              <ListItem button>
+                <div>
+                  <Myimg  url={img.User} size={45}></Myimg>
                   <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Admin</h4>
                 </div>
                
@@ -122,8 +159,8 @@ function MySidebar() {
               <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
                   <ListItem button width='100rem' >
                     <div>
-                      <Myimg  url={img.LogoBrand} size={40}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>submenu</h4>
+                      <Myimg  url={img.LogoBrand} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Users</h4>
                     </div>
                   
                   </ListItem>
@@ -133,8 +170,8 @@ function MySidebar() {
               <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
                   <ListItem button width='100rem' >
                     <div>
-                      <Myimg  url={img.LogoBrand} size={40}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>submenu</h4>
+                      <Myimg  url={img.LogoBrand} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Crud</h4>
                     </div>
                   
                   </ListItem>
