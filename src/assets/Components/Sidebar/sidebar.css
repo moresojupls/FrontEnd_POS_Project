@@ -9,7 +9,8 @@
 .sidebar{
     border: 2px solid var(--primary);
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+   
 }
 
 .Onclickhover:hover{
@@ -21,3 +22,45 @@
 .Onclickhover:hover .sidebarbtn{
    color: white;
 }
+
+/* .submenu{
+   display: none;
+} */
+
+/* .Menu:hover :first{
+    display: inline-block;
+    width: 50%;
+
+} */
+ .menu{
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+    position: relative;
+ }
+
+.submenu {
+    display: none;
+    background: white;
+    border: 1px solid var(--primary);
+    position: absolute;
+    right: -110%;
+    margin-top: -90px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.Menu:hover .submenu{
+    z-index: 1;
+    display: block;
+}
+
+.submenu:hover{
+    z-index: 1;
+    display: block;
+}
+
+/* .Menu div:hover{
+    width: 120px;
+} */
