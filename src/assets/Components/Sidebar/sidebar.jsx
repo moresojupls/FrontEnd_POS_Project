@@ -105,7 +105,7 @@ function MySidebar() {
             </div>
 
             <div className='Menu'>
-            <div className='MenuOnclickhover'>
+            <div className='Menu Onclickhover'>
              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} style={{width:"100%"}}>
               <ListItem button>
                 <div>
@@ -143,7 +143,7 @@ function MySidebar() {
               
             </div>
             <div className='Menu'>
-            <div className='MenuOnclickhover'>
+            <div className='Menu Onclickhover'>
              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} style={{width:"100%"}}>
               <ListItem button>
                 <div>
