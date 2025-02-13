@@ -1,10 +1,9 @@
 import {createContext,useState,useEffect} from 'react'
 import App from '../../../App'
-import Favourite from '../../MockUpData/Favourite';
-import GreenTea from '../../MockUpData/Greentea';
+import Favourite from '../../MockUpData/Product/Favourite';
+import GreenTea from '../../MockUpData/Product/Greentea';
 import  ProductBtn   from './productbtn';
 import Mycontent from '../../Components/content/content';
-import btn from './productbtn';
 import MyOrderlist from '../../Components/Orderlist/orderlist';
 export const ProductContext = createContext('product');
 

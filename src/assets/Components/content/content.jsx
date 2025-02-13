@@ -10,7 +10,7 @@ import  './context.css';
 
 function Mycontent({results,btn}) {
   const [result,setResult] = useState([])
-  const idelement = useId();
+  
 
   function plus(results,btn){
     results = 5;
@@ -20,7 +20,7 @@ function Mycontent({results,btn}) {
     plus(results,btn)
     
   ,[results,btn])
-  
+ 
   useEffect(()=>{
     
     setResult(results)
