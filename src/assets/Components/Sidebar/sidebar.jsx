@@ -36,7 +36,7 @@ function MySidebar() {
  
  
   return (
-    <div  className="sidebar" style={{  minWidth:'60px', width:'8%',justifyItems:"center"}}>      
+    <div  className="sidebar" style={{  minWidth:'100px', width:'9%',justifyItems:"center"}}>      
            <List>
             <div className='Onclickhover'>
              <Link  onClick={()=>{
@@ -44,7 +44,7 @@ function MySidebar() {
             }} to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])}>
               <ListItem button width='100rem'>
                 <div  style={{width:"100%"}}>
-                  <Myimg  url={img.House} size={40}></Myimg>
+                  <Myimg  url={img.House} size={45}></Myimg>
                   <h4  className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Home</h4>
                 </div>
               </ListItem>
@@ -65,28 +65,123 @@ function MySidebar() {
                </ListItemIcon>
                <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Supply</h4>
              </ListItem> */}
-              <div className='Onclickhover'>
-             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
-                <ListItem button width='100rem' >
-                  <div>
-                    <Myimg  url={img.LogoBrand} size={40}></Myimg>
-                    <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Product</h4>
-                  </div>
-                 
-                </ListItem>
-              </Link>
+            <div className='Menu'>
+              <div className='Menu Onclickhover'>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.LogoBrand} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Product</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+                </div>
+              <div className='submenu'>
+              <div className='Onclickhover '>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.Sale} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Sale</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
               </div>
               <div className='Onclickhover'>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/stock"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.Stock} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Stock</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+              </div>
+              </div>
+              
+            </div>
+
+            <div className='Menu'>
+            <div className='Menu Onclickhover'>
+             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/powder"} style={{width:"100%"}}>
+              <ListItem button>
+                <div>
+                  <Myimg  url={img.Supply} size={45}></Myimg>
+                  <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Supply</h4>
+                </div>
+               
+              </ListItem>
+             </Link>
+             </div>
+              <div className='submenu'>
+              <div className='Onclickhover '>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/crud"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.Supply} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>crud</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+              </div>
+              {/* <div className='Onclickhover'>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/order"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.Order} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Order</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+              </div> */}
+              </div>
+              
+            </div>
+            <div className='Menu'>
+            <div className='Menu Onclickhover'>
              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} style={{width:"100%"}}>
               <ListItem button>
                 <div>
-                  <Myimg  url={img.User} size={40}></Myimg>
+                  <Myimg  url={img.User} size={45}></Myimg>
                   <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Admin</h4>
                 </div>
                
               </ListItem>
              </Link>
              </div>
+              <div className='submenu'>
+              <div className='Onclickhover '>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.User} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Users</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+              </div>
+              <div className='Onclickhover'>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.User} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Crud</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+              </div>
+              </div>
+              
+            </div>
+            
+              
             
             {/* Wrapper ของ Loader ที่ตั้งค่า marginTop: auto; */}
             {/* <div style={{ marginTop: 'auto' }}>

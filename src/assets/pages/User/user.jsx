@@ -1,6 +1,6 @@
 import  { useState ,useEffect,createContext,useContext} from 'react'
 import App from '../../../App'
-import results_apis from '../../MockUpData/User';
+import results_apis from '../../MockUpData/Product/User';
 
 import myImage from '../../image';
 

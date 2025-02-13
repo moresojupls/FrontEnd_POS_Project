@@ -21,8 +21,8 @@ import Mybutton from './assets/Components/Button/button';
 
 
 // data
-import GreenTea from './assets/MockUpData/Greentea';
-import Favourite from './assets/MockUpData/Favourite';
+import GreenTea from './assets/MockUpData/Product/Greentea';
+import Favourite from './assets/MockUpData/Product/Favourite';
 
 
 

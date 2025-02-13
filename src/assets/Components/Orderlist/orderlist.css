@@ -1,6 +1,7 @@
 /* ::-webkit-scrollbar{
     width: 5px;
 }
+    
 
 
 ::-webkit-scrollbar-track{
@@ -12,11 +13,16 @@
     background: red; 
     border-radius: 5px;
   } */
-   */
+   
   /* Handle on hover */
   /* ::-webkit-scrollbar-thumb:hover {
     background: #b30000; 
   } */
+
+  :root{
+    --primary:#B17457
+    --TextColor:black
+ }
 
   .Orderlist{
     border: 2px solid var(--primary);

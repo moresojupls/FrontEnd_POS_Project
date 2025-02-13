@@ -1,8 +1,8 @@
-import img from '../image';
-const User = [{
+import img from '../../image';
+const Powder = [{
     id:0,
     img:img.User,
-    name:'JJ',
+    name:'Cup',
   
 
 },{
@@ -118,4 +118,4 @@ const User = [{
 
 }]
 
-export default User
+export default Powder

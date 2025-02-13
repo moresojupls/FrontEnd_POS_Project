@@ -57,7 +57,7 @@ function MyOrderlist() {
       <div className = 'd-flex Orderlist ' style={{ width:'30%', }}>
         <div style={{width:'100%'}}> 
   
-          <h2 >Order list</h2>
+          <h3>Order list</h3>
           <div style={{display:'flex',height:'360px'}}>
             <div style={{width:'100%',height:'100%',border:'2px',marginBottom:'20px',overflow:"scroll",display:'block'}}>
               <Pending_Order/>

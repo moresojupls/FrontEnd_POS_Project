@@ -7,7 +7,10 @@ import Logout from './image/Log out.png';
 import Trush from './image/Trush.png';
 import thaitea from './image/thaitea.png';
 import House from './image/House.png';
-
+import Supply from './image/supply.png';
+import Order from './image/order.png';
+import Sale from './image/sale.png';
+import Stock from './image/stock.png';
 
 // export Image
 export  default   {
@@ -17,7 +20,11 @@ export  default   {
     Logout,
     Trush,
     thaitea,
-    House
+    House,
+    Supply,
+    Order,
+    Sale,
+    Stock
 
 }
 
