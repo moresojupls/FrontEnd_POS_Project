@@ -102,7 +102,7 @@ function Purchase() {
         </div>
 
         </div>
-        <div style={{display:'flex',justifyContent:'center',justifyItems:'center',alignContent:'center'}}>
+        <div>
             {/* เมื่อเลือก QR Payment จะแสดงรูปภาพ QR */}
         {showQrImage && (
             <div style={{ marginLeft: "20px", display: "flex",justifyContent:'center',alignItems: "center", }}> {/* ขยับให้ภาพอยู่ห่างจากรายการเล็กน้อย */}
