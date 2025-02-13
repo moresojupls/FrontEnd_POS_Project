@@ -4,15 +4,17 @@ import  { useState,cache } from 'react'
 // import Button from 'react-bootstrap/Button';
 import { Button, ButtonGroup } from '@mui/material';
 import Modal from 'react-bootstrap/Modal';
+import Myimg from '../Image/img';
 import NumberInputBasic from '../Amount_label/Amount_label';
 import Pending_Order from '../Pending_Order/Pending_Order';
+import "./Card.css";
 
 function MyCard({ img, name, id, price,amount=1,total=0}) {
 
   const [show, setShow] = useState(false);
 
   // States for customization options
-  const [selectedMood, setSelectedMood] = useState(null);
+  const [selectedMood, setSelectedMood] = useState("Cold");
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedSugar, setSelectedSugar] = useState(50);
   const [toppings, setToppings] = useState({
@@ -86,26 +88,38 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
 </div>
 
   
-<Modal show={show} onHide={handleClose}>
+<Modal className={"custom-border-modal"} show={show} onHide={handleClose}  backdrop={"static"} centered keyboard >
         <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-          <div style={{ textAlign: "center" }}>
-            <img src={img} alt="" style={{ width: "35%", borderRadius: "8px" }} />
-            <h3>{name}</h3>
+        <Modal.Body >
+          <div style={{ textAlign: "left" }}>
+            <div style={{display:"flex"}}>
+              <Myimg url={img} size={180}/>
+              
+              <div className='m-3'>
+                <h1>{name}</h1>
+                
+                <h4>Discription</h4>
+
+                <h3>ราคา {price} บาท</h3>
+              </div>
+            </div>
+          
             <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "10px" }}>
   {/* แถวแรก: Mood กับ Size */}
-  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "80px" }}>
     {/* Mood */}
     <div style={{ flex: 1 }}>
       <h5>Mood</h5>
       <ButtonGroup>
         <Button
+          className='rounded-4 m-1'
           variant={selectedMood === "Hot" ? "contained" : "outlined"}
           onClick={() => setSelectedMood("Hot")}
         >
           🔥 Hot
         </Button>
         <Button
+          className='rounded-pill m-1'
           variant={selectedMood === "Cold" ? "contained" : "outlined"}
           onClick={() => setSelectedMood("Cold")}
         >
@@ -120,6 +134,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       <ButtonGroup>
         {["S", "M", "L"].map((size) => (
           <Button
+            className='rounded-4 m-1'
             key={size}
             variant={selectedSize === size ? "contained" : "outlined"}
             onClick={() => setSelectedSize(size)}
@@ -139,6 +154,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       <ButtonGroup>
         {[25, 50, 75, 100].map((level) => (
           <Button
+           className='rounded-4 m-1'
             key={level}
             variant={selectedSugar === level ? "contained" : "outlined"}
             onClick={() => setSelectedSugar(level)}
@@ -162,12 +178,13 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
         {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
           <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
             <input
+              className='checkbox-menu'
               type="checkbox"
               id={topping}
               value={topping}
               onChange={(e) => handleToppingChange(e.target.value, e.target.checked)}
             />
-            <label htmlFor={topping} style={{ marginLeft: "10px" }}>{topping}</label>
+            <label htmlFor={topping} >{topping}</label>
           </div>
         ))}
       </div>
@@ -177,12 +194,13 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
 
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button style={{ color: "white", background: "green" }} onClick={handleAddOrder}>
-            Done
-          </Button>
-          <Button style={{ color: "white", background: "red" }} onClick={handleClose}>
+        <Modal.Footer className='d-flex justify-content-center'>
+        
+          <Button className={"rounded-4 m-1 w-25"} style={{ color: "white", background: "red" }} onClick={handleClose}>
             Cancel
+          </Button>
+          <Button className={"rounded-4 m-1 w-25"} style={{ color: "white", background: "green" }} onClick={handleAddOrder}>
+            Done
           </Button>
         </Modal.Footer>
       </Modal>

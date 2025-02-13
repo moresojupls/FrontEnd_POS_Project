@@ -1,0 +1,31 @@
+:root{
+    --primary:#B17457;
+    --TextColor:#000000;
+    --Backgroundwhite:#ffffff;
+    --TextHover:#ffffff;
+    --TextColorContrast:#ffffff;
+    --BackgroundCard:#FAF7F0;
+}
+  
+
+.checkbox-menu{
+ 
+
+    cursor: pointer;
+ 
+    width: 50%;
+
+    
+
+}
+
+.checkbox-menu label{
+    width: 100px;
+
+}
+
+.custom-border-modal .modal-content{
+    border: var(--primary) solid 4px;
+    border-radius:8%;
+    background: var(--BackgroundCard);
+}
