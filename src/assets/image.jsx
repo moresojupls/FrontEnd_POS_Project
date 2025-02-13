@@ -10,7 +10,8 @@ import House from './image/House.png';
 import Qrcode from './image/qr-code.png';
 import cash from './image/cash.png';
 import atmcard from './image/atm_card.png'
-import promptpay_Champ from './image/promptpay_Champ.jpg' import Supply from './image/supply.png';
+import promptpay_Champ from './image/promptpay_Champ.jpg' 
+import Supply from './image/supply.png';
 import Order from './image/order.png';
 import Sale from './image/sale.png';
 import Stock from './image/stock.png';
