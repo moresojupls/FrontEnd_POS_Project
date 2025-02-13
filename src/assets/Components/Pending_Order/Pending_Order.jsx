@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Button, ButtonGroup } from '@mui/material';
+import './Pending_order.css';
 
 function Pending_Order() {
   const [orders, setOrders] = useState([]);
@@ -10,19 +11,19 @@ function Pending_Order() {
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedSugar, setSelectedSugar] = useState(50);
   const [toppings, setToppings] = useState({
-  ไข่มุก: false,
-  เยลลี่: false,
-  บุก: false,
-  วิปครีม: false,
-});
-const [quantity, setQuantity] = useState(1);
+    ไข่มุก: false,
+    เยลลี่: false,
+    บุก: false,
+    วิปครีม: false,
+  });
+  const [quantity, setQuantity] = useState(1);
 
   // โหลดข้อมูลจาก localStorage เมื่อ component ถูก mount
   useEffect(() => {
     const fetchOrders = () => {
-      
+
       const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
-   
+
       setOrders(storedOrders);
     };
 
@@ -55,11 +56,11 @@ const [quantity, setQuantity] = useState(1);
   // ฟังก์ชันสำหรับลบรายการ
   const handleDelete = (id) => {
     const updatedOrders = orders.filter((order) => order.id !== id); // ลบเฉพาะรายการที่ id ไม่ตรงกับที่เลือก
-    console.log('id : ',id)
+    console.log('id : ', id)
     setOrders(updatedOrders); // อัปเดต State ของ orders
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกการเปลี่ยนแปลงใน localStorage
   };
-  
+
 
   // บันทึกข้อมูลใหม่ใน localStorage และปิด Modal
   const handleSave = () => {
@@ -126,21 +127,24 @@ const [quantity, setQuantity] = useState(1);
               </button>
 
               {/* เนื้อหาในกล่อง */}
-              <div onClick={() => handleItemClick(order)} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px" }}>
-                
-                {/* แสดงรูปเล็กในกล่อง */}
-                <div>
-                <p>สินค้า: {order.name}</p>
-                <p>จํานวน: {order.amount}</p>
-                <p>ราคา: {order.total } บาท</p>
-                </div>
+              <div className='item_pending' onClick={() => handleItemClick(order)} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px" }}>
 
                 {/* แสดงรูปเล็กในกล่อง */}
                 <img
-                  src={order.img} 
-                  alt="Product" 
-                  style={{ width: "40px", height: "40px", borderRadius: "5px" }} 
+                  src={order.img}
+                  alt="Product"
+                  style={{ width: "60px", height: "100", borderRadius: "5px", display: "flex", }}
                 />
+                {/* แสดงรูปเล็กในกล่อง */}
+                <div>
+                  <p>สินค้า: {order.name}</p>
+                  <div style={{display:"inline"}}>
+                    <p>จํานวน: {order.amount}</p>
+                    <p>ราคา: {order.total} บาท</p>
+                  </div>
+                </div>
+
+
               </div>
             </div>
           ))
@@ -152,99 +156,99 @@ const [quantity, setQuantity] = useState(1);
       {/* Modal สำหรับแสดงข้อมูล */}
       {selectedOrder && (
         <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{selectedOrder.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div style={{ textAlign: "center" }}>
-            <img src={selectedOrder.img} alt="" style={{ width: "35%", borderRadius: "8px" }} />
-            <h3>{selectedOrder.name}</h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "10px" }}>
-              {/* Mood */}
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
-                <div style={{ flex: 1 }}>
-                  <h5>Mood</h5>
-                  <ButtonGroup>
-                    <Button
-                      variant={selectedMood === "Hot" ? "contained" : "outlined"}
-                      onClick={() => setSelectedMood("Hot")}
-                    >
-                      🔥 Hot
-                    </Button>
-                    <Button
-                      variant={selectedMood === "Cold" ? "contained" : "outlined"}
-                      onClick={() => setSelectedMood("Cold")}
-                    >
-                      ❄️ Cold
-                    </Button>
-                  </ButtonGroup>
-                </div>
-      
-                {/* Size */}
-                <div style={{ flex: 1 }}>
-                  <h5>Size</h5>
-                  <ButtonGroup>
-                    {["S", "M", "L"].map((size) => (
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedOrder.name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div style={{ textAlign: "center" }}>
+              <img src={selectedOrder.img} alt="" style={{ width: "35%", borderRadius: "8px" }} />
+              <h3>{selectedOrder.name}</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "10px" }}>
+                {/* Mood */}
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+                  <div style={{ flex: 1 }}>
+                    <h5>Mood</h5>
+                    <ButtonGroup>
                       <Button
-                        key={size}
-                        variant={selectedSize === size ? "contained" : "outlined"}
-                        onClick={() => setSelectedSize(size)}
+                        variant={selectedMood === "Hot" ? "contained" : "outlined"}
+                        onClick={() => setSelectedMood("Hot")}
                       >
-                        {size}
+                        🔥 Hot
                       </Button>
-                    ))}
-                  </ButtonGroup>
-                </div>
-              </div>
-      
-              {/* Sugar */}
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
-                <div style={{ flex: 1 }}>
-                  <h5>Sugar</h5>
-                  <ButtonGroup>
-                    {[25, 50, 75, 100].map((level) => (
                       <Button
-                        key={level}
-                        variant={selectedSugar === level ? "contained" : "outlined"}
-                        onClick={() => setSelectedSugar(level)}
+                        variant={selectedMood === "Cold" ? "contained" : "outlined"}
+                        onClick={() => setSelectedMood("Cold")}
                       >
-                        {level}%
+                        ❄️ Cold
                       </Button>
-                    ))}
-                  </ButtonGroup>
+                    </ButtonGroup>
+                  </div>
+
+                  {/* Size */}
+                  <div style={{ flex: 1 }}>
+                    <h5>Size</h5>
+                    <ButtonGroup>
+                      {["S", "M", "L"].map((size) => (
+                        <Button
+                          key={size}
+                          variant={selectedSize === size ? "contained" : "outlined"}
+                          onClick={() => setSelectedSize(size)}
+                        >
+                          {size}
+                        </Button>
+                      ))}
+                    </ButtonGroup>
+                  </div>
                 </div>
-      
-                {/* Topping */}
-                <div style={{ flex: 1 }}>
-                  <h5>Topping</h5>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
-                    {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
-                      <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
-                        <input
-                          type="checkbox"
-                          id={topping}
-                          value={topping}
-                          checked={toppings[topping]}
-                          onChange={(e) => setToppings({ ...toppings, [topping]: e.target.checked })}
-                        />
-                        <label htmlFor={topping} style={{ marginLeft: "10px" }}>{topping}</label>
-                      </div>
-                    ))}
+
+                {/* Sugar */}
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+                  <div style={{ flex: 1 }}>
+                    <h5>Sugar</h5>
+                    <ButtonGroup>
+                      {[25, 50, 75, 100].map((level) => (
+                        <Button
+                          key={level}
+                          variant={selectedSugar === level ? "contained" : "outlined"}
+                          onClick={() => setSelectedSugar(level)}
+                        >
+                          {level}%
+                        </Button>
+                      ))}
+                    </ButtonGroup>
+                  </div>
+
+                  {/* Topping */}
+                  <div style={{ flex: 1 }}>
+                    <h5>Topping</h5>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+                      {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
+                        <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                          <input
+                            type="checkbox"
+                            id={topping}
+                            value={topping}
+                            checked={toppings[topping]}
+                            onChange={(e) => setToppings({ ...toppings, [topping]: e.target.checked })}
+                          />
+                          <label htmlFor={topping} style={{ marginLeft: "10px" }}>{topping}</label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button style={{ color: "white", background: "green" }} onClick={handleSave}>
-            Save Changes
-          </Button>
-          <Button style={{ color: "white", background: "red" }} onClick={handleClose}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button style={{ color: "white", background: "green" }} onClick={handleSave}>
+              Save Changes
+            </Button>
+            <Button style={{ color: "white", background: "red" }} onClick={handleClose}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );
