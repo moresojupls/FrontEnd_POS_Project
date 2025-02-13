@@ -18,22 +18,19 @@ function MyOrderlist() {
 
   const handleAddOrder = () => {
     const newOrder = {
-      id,
-      name,
-      img,
-      price,
-      selectedMood,
-      selectedSize,
-      selectedSugar,
-      toppings,
-      quantity,
-      total
+      id, name, img, price, selectedMood, selectedSize, selectedSugar, toppings, quantity, total
     };
+    
     const storedOrders = JSON.parse(localStorage.getItem("order_list")) || [];
-    localStorage.setItem("order_list", JSON.stringify([...storedOrders, newOrder]));
+    storedOrders.push(newOrder);  // เพิ่มคำสั่งซื้อลงไปใน array
+    localStorage.setItem("order_list", JSON.stringify(storedOrders));  // บันทึกกลับลง localStorage
+    
+    console.log("Stored Orders after add: ", storedOrders);  // ตรวจสอบข้อมูลที่บันทึก
+  
+    window.dispatchEvent(new Event("storage"));  // แจ้ง Pending_Order ว่ามีการอัพเดต
     setShow(false);
-    window.dispatchEvent(new Event("storage")); // แจ้ง Pending_Order
   };
+  
   
 
   const Mybutton = ({ size, process, topic, color, redirectTo }) => {

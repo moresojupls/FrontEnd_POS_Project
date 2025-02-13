@@ -10,6 +10,7 @@ import House from './image/House.png';
 import Qrcode from './image/qr-code.png';
 import cash from './image/cash.png';
 import atmcard from './image/atm_card.png'
+import promptpay_Champ from './image/promptpay_Champ.jpg' 
 
 // export Image
 export  default   {
@@ -22,7 +23,8 @@ export  default   {
     House,
     Qrcode,
     cash,
-    atmcard
+    atmcard,
+    promptpay_Champ
 
 }
 
