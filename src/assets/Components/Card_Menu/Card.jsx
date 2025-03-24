@@ -24,6 +24,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
     วิปครีม: false,
   });
   const [quantity, setQuantity] = useState(1);
+  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -47,7 +48,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       total,
     };
    
-
+    
     const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
     // console.log(localStorage.getItem("order_list"));
     const sameorder = storedOrders.filter((value,index)=>value.id == newOrder.id);
@@ -56,9 +57,10 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       const findorder = storedOrders.find((value,index)=>
         value.id == newOrder.id
       );
-      findorder.amount +=1;
-      findorder.total = findorder.amount * findorder.price;
-      console.log(findorder)
+     
+      findorder.amount = findorder.amount + quantity;
+      findorder.total = findorder.amount * Number(findorder.price);
+      console.log('dasfaf',findorder.total)
       updatedOrders = [...storedOrders];
 
     }else{
@@ -71,18 +73,28 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
   };
 
-  price = 10;
+  const handleIncrease = () => {
+    setQuantity(quantity + 1);  // เพิ่มจำนวน
+  };
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);  // ลดจำนวน ถ้าจำนวนมากกว่า 1
+    }
+  };
+
+
   return (
     <>
       
-  <div className="card-wrapper" style={{ width: "240px", display: 'inline-block' }}>
-    <div className="card" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer',border: '1px solid #FF5733' }}
+  <div className="card-wrapper" style={{ width: "260px", display: 'inline-block' }}>
+    <div className="card" style={{ display: 'flex',alignItems: 'center', cursor: 'pointer',border: '1px solid #FF5733',height:"100%" }}
         onClick={handleShow} // เพิ่ม onClick ตรงนี้
         >
-      <img src={img} alt="Not Found Img" style={{ width: '100%', borderRadius: "8px" }} />
+      <img src={img || "https://i0.wp.com/learn.onemonth.com/wp-content/uploads/2017/08/1-10.png?fit=845%2C503&ssl=1https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPBuxmi4ZuZtcqpZC0ipa-5mwlpJbXmDQotQ&s"} alt="Not Found Img" style={{height:'100px', width: '100%', borderRadius: "8px" }} />
       <div style={{ marginLeft: '10px', textAlign: 'center', flex: 1 }}>
-      <h6> Name : {name} </h6>
-      <h5><b> Price : {price !== undefined ? 'Price' : ''}{price} </b> </h5>
+      <h6>  {name} </h6>
+      <h5><b>  {price !== undefined ? price : ''}  Bath </b> </h5>
     </div>
   </div>
 </div>
@@ -100,7 +112,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
                 
                 <h4>Discription</h4>
 
-                <h3>ราคา {price} บาท</h3>
+                <h3>ราคา { price} บาท</h3>
               </div>
             </div>
           
@@ -187,6 +199,21 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
             <label htmlFor={topping} >{topping}</label>
           </div>
         ))}
+      </div>
+    </div>
+  </div>
+  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+    {/* Sugar */}
+    <div style={{ flex: 1 }}>
+      
+    </div>
+
+    {/* Topping */}
+    <div style={{ flex: 3 }}>
+      <div className="quantity-container">
+        <button className="quantity-btn decrease" onClick={handleDecrease}>-</button>
+        <span className="quantity-display">{quantity}</span>
+        <button className="quantity-btn increase" onClick={handleIncrease}>+</button>
       </div>
     </div>
   </div>

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Button, ButtonGroup } from '@mui/material';
+import Myimg from '../Image/img';
 import './Pending_order.css';
 
 function Pending_Order() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null); // เก็บข้อมูลรายการที่คลิก
-  const [showModal, setShowModal] = useState(false); // state สำหรับ Modal
+  const [show, setShow] = useState(false); // state สำหรับ Modal
+  const [image,setImage] = useState(null);
+  const [price,setPrice]= useState(null);
   const [selectedMood, setSelectedMood] = useState(null);
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedSugar, setSelectedSugar] = useState(50);
@@ -48,7 +51,10 @@ function Pending_Order() {
       วิปครีม: false,
     });
     setQuantity(order.quantity || 1);
-    setShowModal(true);
+    setImage(order.img);
+    setPrice(order.price);
+    setShow(true);
+    {console.log(order)}
   };
 
   // ฟังก์ชันสำหรับลบรายการ
@@ -57,6 +63,7 @@ function Pending_Order() {
     console.log('id : ', id)
     setOrders(updatedOrders); // อัปเดต State ของ orders
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกการเปลี่ยนแปลงใน localStorage
+    window.dispatchEvent(new Event("storage"));
   };
 
 
@@ -76,13 +83,13 @@ function Pending_Order() {
       );
       setOrders(updatedOrders);
       window.localStorage.setItem("order_list", JSON.stringify(updatedOrders));
-      setShowModal(false);
+      setShow(false);
     }
   };
 
   // ปิด Modal โดยไม่บันทึก
   const handleClose = () => {
-    setShowModal(false);
+    setShow(false);
     setSelectedOrder(null);
   };
 
@@ -129,6 +136,7 @@ function Pending_Order() {
 
                 {/* แสดงรูปเล็กในกล่อง */}
                 <img
+                
                   src={order.img}
                   alt="Product"
                   style={{ width: "60px", height: "100", borderRadius: "5px", display: "flex", }}
@@ -153,100 +161,217 @@ function Pending_Order() {
 
       {/* Modal สำหรับแสดงข้อมูล */}
       {selectedOrder && (
-        <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{selectedOrder.name}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div style={{ textAlign: "center" }}>
-              <img src={selectedOrder.img} alt="" style={{ width: "35%", borderRadius: "8px" }} />
-              <h3>{selectedOrder.name}</h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "10px" }}>
-                {/* Mood */}
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
-                  <div style={{ flex: 1 }}>
-                    <h5>Mood</h5>
-                    <ButtonGroup>
-                      <Button
-                        variant={selectedMood === "Hot" ? "contained" : "outlined"}
-                        onClick={() => setSelectedMood("Hot")}
-                      >
-                        🔥 Hot
-                      </Button>
-                      <Button
-                        variant={selectedMood === "Cold" ? "contained" : "outlined"}
-                        onClick={() => setSelectedMood("Cold")}
-                      >
-                        ❄️ Cold
-                      </Button>
-                    </ButtonGroup>
-                  </div>
+        // <Modal show={showModal} onHide={handleClose}>
+        //   <Modal.Header closeButton>
+        //     <Modal.Title>{selectedOrder.name}</Modal.Title>
+        //   </Modal.Header>
+        //   <Modal.Body>
+        //     <div style={{ textAlign: "center" }}>
+        //       <img src={selectedOrder.img} alt="" style={{ width: "35%", borderRadius: "8px" }} />
+        //       <h3>{selectedOrder.name}</h3>
+        //       <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "10px" }}>
+        //         {/* Mood */}
+        //         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+        //           <div style={{ flex: 1 }}>
+        //             <h5>Mood</h5>
+        //             <ButtonGroup>
+        //               <Button
+        //                 variant={selectedMood === "Hot" ? "contained" : "outlined"}
+        //                 onClick={() => setSelectedMood("Hot")}
+        //               >
+        //                 🔥 Hot
+        //               </Button>
+        //               <Button
+        //                 variant={selectedMood === "Cold" ? "contained" : "outlined"}
+        //                 onClick={() => setSelectedMood("Cold")}
+        //               >
+        //                 ❄️ Cold
+        //               </Button>
+        //             </ButtonGroup>
+        //           </div>
 
-                  {/* Size */}
-                  <div style={{ flex: 1 }}>
-                    <h5>Size</h5>
-                    <ButtonGroup>
-                      {["S", "M", "L"].map((size) => (
-                        <Button
-                          key={size}
-                          variant={selectedSize === size ? "contained" : "outlined"}
-                          onClick={() => setSelectedSize(size)}
-                        >
-                          {size}
-                        </Button>
-                      ))}
-                    </ButtonGroup>
-                  </div>
-                </div>
+        //           {/* Size */}
+        //           <div style={{ flex: 1 }}>
+        //             <h5>Size</h5>
+        //             <ButtonGroup>
+        //               {["S", "M", "L"].map((size) => (
+        //                 <Button
+        //                   key={size}
+        //                   variant={selectedSize === size ? "contained" : "outlined"}
+        //                   onClick={() => setSelectedSize(size)}
+        //                 >
+        //                   {size}
+        //                 </Button>
+        //               ))}
+        //             </ButtonGroup>
+        //           </div>
+        //         </div>
 
-                {/* Sugar */}
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
-                  <div style={{ flex: 1 }}>
-                    <h5>Sugar</h5>
-                    <ButtonGroup>
-                      {[25, 50, 75, 100].map((level) => (
-                        <Button
-                          key={level}
-                          variant={selectedSugar === level ? "contained" : "outlined"}
-                          onClick={() => setSelectedSugar(level)}
-                        >
-                          {level}%
-                        </Button>
-                      ))}
-                    </ButtonGroup>
-                  </div>
+        //         {/* Sugar */}
+        //         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+        //           <div style={{ flex: 1 }}>
+        //             <h5>Sugar</h5>
+        //             <ButtonGroup>
+        //               {[25, 50, 75, 100].map((level) => (
+        //                 <Button
+        //                   key={level}
+        //                   variant={selectedSugar === level ? "contained" : "outlined"}
+        //                   onClick={() => setSelectedSugar(level)}
+        //                 >
+        //                   {level}%
+        //                 </Button>
+        //               ))}
+        //             </ButtonGroup>
+        //           </div>
 
-                  {/* Topping */}
-                  <div style={{ flex: 1 }}>
-                    <h5>Topping</h5>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
-                      {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
-                        <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
-                          <input
-                            type="checkbox"
-                            id={topping}
-                            value={topping}
-                            checked={toppings[topping]}
-                            onChange={(e) => setToppings({ ...toppings, [topping]: e.target.checked })}
-                          />
-                          <label htmlFor={topping} style={{ marginLeft: "10px" }}>{topping}</label>
-                        </div>
-                      ))}
+        //           {/* Topping */}
+        //           <div style={{ flex: 1 }}>
+        //             <h5>Topping</h5>
+        //             <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+        //               {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
+        //                 <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+        //                   <input
+        //                     type="checkbox"
+        //                     id={topping}
+        //                     value={topping}
+        //                     checked={toppings[topping]}
+        //                     onChange={(e) => setToppings({ ...toppings, [topping]: e.target.checked })}
+        //                   />
+        //                   <label htmlFor={topping} style={{ marginLeft: "10px" }}>{topping}</label>
+        //                 </div>
+        //               ))}
+        //             </div>
+        //           </div>
+        //         </div>
+        //       </div>
+        //     </div>
+        //   </Modal.Body>
+        //   <Modal.Footer>
+          
+        //     <Button style={{ color: "white", background: "red" }} onClick={handleClose}>
+        //       Cancel
+        //     </Button>
+        //     <Button style={{ color: "white", background: "green" }} onClick={handleSave}>
+        //       Save Changes
+        //     </Button>
+        //   </Modal.Footer>
+        // </Modal>
+      <Modal className={"custom-border-modal"} show={show} onHide={handleClose}  backdrop={"static"} centered keyboard >
+              <Modal.Header closeButton></Modal.Header>
+              <Modal.Body >
+                <div style={{ textAlign: "left" }}>
+                  <div style={{display:"flex"}}>
+                    <Myimg url={image} size={180}/>
+                    
+                    <div className='m-3'>
+                      <h1>{name}</h1>
+                      
+                      <h4>Discription</h4>
+      
+                      <h3>ราคา {price} บาท</h3>
                     </div>
                   </div>
+                
+                  <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "10px" }}>
+        {/* แถวแรก: Mood กับ Size */}
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "80px" }}>
+          {/* Mood */}
+          <div style={{ flex: 1 }}>
+            <h5>Mood</h5>
+            <ButtonGroup>
+              <Button
+                className='rounded-4 m-1'
+                variant={selectedMood === "Hot" ? "contained" : "outlined"}
+                onClick={() => setSelectedMood("Hot")}
+              >
+                🔥 Hot
+              </Button>
+              <Button
+                className='rounded-pill m-1'
+                variant={selectedMood === "Cold" ? "contained" : "outlined"}
+                onClick={() => setSelectedMood("Cold")}
+              >
+                ❄️ Cold
+              </Button>
+            </ButtonGroup>
+          </div>
+      
+          {/* Size */}
+          <div style={{ flex: 1 }}>
+            <h5>Size</h5>
+            <ButtonGroup>
+              {["S", "M", "L"].map((size) => (
+                <Button
+                  className='rounded-4 m-1'
+                  key={size}
+                  variant={selectedSize === size ? "contained" : "outlined"}
+                  onClick={() => setSelectedSize(size)}
+                >
+                  {size}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </div>
+        </div>
+      
+        {/* แถวที่สอง: Sugar กับ Topping */}
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+          {/* Sugar */}
+          <div style={{ flex: 1 }}>
+            <h5>Sugar</h5>
+            <ButtonGroup>
+              {[25, 50, 75, 100].map((level) => (
+                <Button
+                 className='rounded-4 m-1'
+                  key={level}
+                  variant={selectedSugar === level ? "contained" : "outlined"}
+                  onClick={() => setSelectedSugar(level)}
+                >
+                  {level}%
+                </Button>
+              ))}
+            </ButtonGroup>
+          </div>
+      
+          {/* Topping */}
+          <div style={{ flex: 1 }}>
+            <h5>Topping</h5>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)", // แบ่งเป็น 2 คอลัมน์
+                gap: "10px", // ระยะห่างระหว่างแต่ละช่อง
+              }}
+            >
+              {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
+                <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                  <input
+                    className='checkbox-menu'
+                    type="checkbox"
+                    id={topping}
+                    value={topping}
+                    onChange={(e) => setToppings(e.target.value, e.target.checked)}
+                  />
+                  <label htmlFor={topping} >{topping}</label>
                 </div>
-              </div>
+              ))}
             </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button style={{ color: "white", background: "green" }} onClick={handleSave}>
-              Save Changes
-            </Button>
-            <Button style={{ color: "white", background: "red" }} onClick={handleClose}>
-              Cancel
-            </Button>
-          </Modal.Footer>
-        </Modal>
+          </div>
+        </div>
+      </div>
+      
+                </div>
+              </Modal.Body>
+              <Modal.Footer className='d-flex justify-content-center'>
+              
+                <Button className={"rounded-4 m-1 w-25"} style={{ color: "white", background: "red" }} onClick={handleClose}>
+                  Cancel
+                </Button>
+                <Button className={"rounded-4 m-1 w-20"} style={{ color: "white", background: "green" }} onClick={handleSave}>
+                  Save changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
       )}
     </div>
   );
