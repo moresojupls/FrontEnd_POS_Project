@@ -24,6 +24,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
     วิปครีม: false,
   });
   const [quantity, setQuantity] = useState(1);
+  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

@@ -49,6 +49,7 @@ function Pending_Order() {
     });
     setQuantity(order.quantity || 1);
     setShowModal(true);
+    {console.log(order)}
   };
 
   // ฟังก์ชันสำหรับลบรายการ
@@ -129,6 +130,7 @@ function Pending_Order() {
 
                 {/* แสดงรูปเล็กในกล่อง */}
                 <img
+                
                   src={order.img}
                   alt="Product"
                   style={{ width: "60px", height: "100", borderRadius: "5px", display: "flex", }}
