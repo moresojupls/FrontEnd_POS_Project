@@ -57,7 +57,8 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       const findorder = storedOrders.find((value,index)=>
         value.id == newOrder.id
       );
-      findorder.amount +=1;
+     
+      findorder.amount = findorder.amount + quantity;
       findorder.total = findorder.amount * Number(findorder.price);
       console.log('dasfaf',findorder.total)
       updatedOrders = [...storedOrders];
@@ -70,6 +71,16 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders));
     setShow(false);
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
+  };
+
+  const handleIncrease = () => {
+    setQuantity(quantity + 1);  // เพิ่มจำนวน
+  };
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);  // ลดจำนวน ถ้าจำนวนมากกว่า 1
+    }
   };
 
 
@@ -188,6 +199,21 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
             <label htmlFor={topping} >{topping}</label>
           </div>
         ))}
+      </div>
+    </div>
+  </div>
+  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+    {/* Sugar */}
+    <div style={{ flex: 1 }}>
+      
+    </div>
+
+    {/* Topping */}
+    <div style={{ flex: 3 }}>
+      <div className="quantity-container">
+        <button className="quantity-btn decrease" onClick={handleDecrease}>-</button>
+        <span className="quantity-display">{quantity}</span>
+        <button className="quantity-btn increase" onClick={handleIncrease}>+</button>
       </div>
     </div>
   </div>

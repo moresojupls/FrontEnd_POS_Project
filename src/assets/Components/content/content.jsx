@@ -53,12 +53,15 @@ function Mycontent({results,btn}) {
           {
             
           // Item list code
-            result.map(element => (
+            result ? result.map(element => (
           
               <MyCard  key={element.product_id} id={element.product_id} img = { element.product_img } name = { element.product_name } price = { Number(element.price) } img = {element.image_url} />
                 
-            ))
+            )): "No data"
+
+
           }
+          {console.log('result',result)}
         </div>
        
       </div>

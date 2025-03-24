@@ -63,6 +63,7 @@ function Pending_Order() {
     console.log('id : ', id)
     setOrders(updatedOrders); // อัปเดต State ของ orders
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกการเปลี่ยนแปลงใน localStorage
+    window.dispatchEvent(new Event("storage"));
   };
 
 

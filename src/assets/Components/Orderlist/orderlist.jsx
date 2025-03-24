@@ -122,7 +122,7 @@ function MyOrderlist() {
         </p>
         <p className="mb-2" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ marginRight: '10px' }}>Tax:</span>
-          <span style={{ marginLeft: '10px' }}>{(total * 0.07).toFixed(2)} บาท</span>
+          <span style={{ marginLeft: '10px' }}>{total != 0 ?(total * 0.07).toFixed(2):0} บาท</span>
         </p>
         <p className="font-bold" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ marginRight: '10px' }}>Total:</span>
