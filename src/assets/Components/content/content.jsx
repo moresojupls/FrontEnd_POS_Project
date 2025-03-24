@@ -46,7 +46,7 @@ function Mycontent({results,btn}) {
        btn != undefined ? btn.map((element)=>(<Link  style={{height:"200px"}} className="Catagory"  to={window.location.pathname.replace(window.location.href.split('/')[window.location.href.split('/').length-1],element)}>{element}</Link>)) :''
       }
      
-        <div style={{marginTop:"15px",height:'80%',width:'100%',display:"flex",flexWrap:"wrap",justifyContent:"left"}}>
+        <div style={{marginTop:"15px",height:'10%',width:'100%',display:"flex",flexWrap:"wrap",justifyContent:"left"}}>
           
         
 

@@ -241,11 +241,12 @@ function Pending_Order() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button style={{ color: "white", background: "green" }} onClick={handleSave}>
-              Save Changes
-            </Button>
+          
             <Button style={{ color: "white", background: "red" }} onClick={handleClose}>
               Cancel
+            </Button>
+            <Button style={{ color: "white", background: "green" }} onClick={handleSave}>
+              Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
