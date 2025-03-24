@@ -58,8 +58,8 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
         value.id == newOrder.id
       );
       findorder.amount +=1;
-      findorder.total = findorder.amount * findorder.price;
-      console.log(findorder)
+      findorder.total = findorder.amount * Number(findorder.price);
+      console.log('dasfaf',findorder.total)
       updatedOrders = [...storedOrders];
 
     }else{
@@ -101,7 +101,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
                 
                 <h4>Discription</h4>
 
-                <h3>ราคา {price} บาท</h3>
+                <h3>ราคา { price} บาท</h3>
               </div>
             </div>
           

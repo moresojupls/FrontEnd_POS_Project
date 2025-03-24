@@ -10,12 +10,12 @@ import { useNavigate } from 'react-router-dom';
 
 function MyOrderlist() {
 
-  // useEffect(()=>{
-  //   window.location.pathname.split('/')[2] == 'product' ? setUrl(true):setUrl(false)
-  //   console.log('url ', window.location.pathname.split('/')[2])
-  // },[])
+  
   const navigate = useNavigate(); // ใช้ hook สำหรับการ Redirect
-
+  const [total,setTotal]= useState();
+  const [show,setShow] = useState();
+  const [sum,setSum] = useState(0);
+ 
   const handleAddOrder = () => {
     const newOrder = {
       id, name, img, price, selectedMood, selectedSize, selectedSugar, toppings, quantity, total
@@ -32,7 +32,23 @@ function MyOrderlist() {
   };
   
   
+  useEffect(()=>{
+    const updateTotal = () => {
+      const storedOrders = JSON.parse(localStorage.getItem("order_list")) || [];
+      const newTotal = storedOrders.reduce((sum, order) => sum + order.total, 0);
+      setTotal(newTotal);
+      setSum(newTotal + (newTotal * 0.07))
+    };
 
+    updateTotal();
+
+    window.addEventListener("storage", updateTotal);
+
+    return () => {
+      window.removeEventListener("storage", updateTotal);
+    };
+
+  },[])
   const Mybutton = ({ size, process, topic, color, redirectTo }) => {
     //const history = useHistory(); // ใช้ useHistory สำหรับการ redirect
   
@@ -102,15 +118,15 @@ function MyOrderlist() {
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '5px',margin:'10px' }}>
         <p className="mb-2" style={{ fontSize: '25px', display: 'flex' ,justifyContent: 'space-between'}}>
           <span style={{ marginRight: '10px' }}>SubTotal:</span>
-          <span style={{ marginLeft: '10px' }}>45 บาท</span>
+          <span style={{ marginLeft: '10px' }}>{total} บาท</span>
         </p>
         <p className="mb-2" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ marginRight: '10px' }}>Tax:</span>
-          <span style={{ marginLeft: '10px' }}>5 บาท</span>
+          <span style={{ marginLeft: '10px' }}>{(total * 0.07).toFixed(2)} บาท</span>
         </p>
         <p className="font-bold" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ marginRight: '10px' }}>Total:</span>
-          <span style={{ marginLeft: '10px' }}>50 บาท</span>
+          <span style={{ marginLeft: '10px' }}>{sum} บาท</span>
         </p>
         </div>
 
