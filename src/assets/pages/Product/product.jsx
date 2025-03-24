@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from 'react'
 import App from '../../../App'
-import Favourite from '../../MockUpData/Product/Favourite';
-import GreenTea from '../../MockUpData/Product/Greentea';
+
 import ProductBtn from './productbtn';
 import Mycontent from '../../Components/content/content';
 import MyOrderlist from '../../Components/Orderlist/orderlist';
@@ -12,6 +11,7 @@ function ProductPage() {
   const [path, setPath] = useState();
   const [result, setResult] = useState();
   const [load, setLoad] = useState(false);
+
 
 
   if (pathafterCatagory.toLowerCase() !== path) setPath(pathafterCatagory)
@@ -65,8 +65,11 @@ function ProductPage() {
   if (load) {
     return (
       <>
-
-        <Mycontent results={result !== undefined ? result : ''} btn={ProductBtn} />
+        <div style={{"display":"flex"}}>
+          <Mycontent results={result !== undefined ? result : ''} btn={ProductBtn} />
+          {/* <MyOrderlist setStateOrderlist={Orderlist}/> */}
+        </div>
+        
       </>
 
     )

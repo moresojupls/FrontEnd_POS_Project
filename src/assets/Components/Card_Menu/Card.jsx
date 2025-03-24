@@ -47,7 +47,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       total,
     };
    
-
+    
     const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
     // console.log(localStorage.getItem("order_list"));
     const sameorder = storedOrders.filter((value,index)=>value.id == newOrder.id);
@@ -75,14 +75,14 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
   return (
     <>
       
-  <div className="card-wrapper" style={{ width: "240px", display: 'inline-block' }}>
-    <div className="card" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer',border: '1px solid #FF5733' }}
+  <div className="card-wrapper" style={{ width: "260px", display: 'inline-block' }}>
+    <div className="card" style={{ display: 'flex',alignItems: 'center', cursor: 'pointer',border: '1px solid #FF5733',height:"100%" }}
         onClick={handleShow} // เพิ่ม onClick ตรงนี้
         >
-      <img src={img} alt="Not Found Img" style={{ width: '100%', borderRadius: "8px" }} />
+      <img src={img || "https://i0.wp.com/learn.onemonth.com/wp-content/uploads/2017/08/1-10.png?fit=845%2C503&ssl=1https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPBuxmi4ZuZtcqpZC0ipa-5mwlpJbXmDQotQ&s"} alt="Not Found Img" style={{height:'100px', width: '100%', borderRadius: "8px" }} />
       <div style={{ marginLeft: '10px', textAlign: 'center', flex: 1 }}>
-      <h6> Name : {name} </h6>
-      <h5><b> Price : {price !== undefined ? price : ''} </b> </h5>
+      <h6>  {name} </h6>
+      <h5><b>  {price !== undefined ? price : ''}  Bath </b> </h5>
     </div>
   </div>
 </div>

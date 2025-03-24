@@ -15,7 +15,6 @@ import './App.css'
 
 import Mynavbar from './assets/Components/Navbar/navbar';
 import MySidebar from './assets/Components/Sidebar/sidebar';
-import MyOrderlist from './assets/Components/Orderlist/orderlist';
 import Mycontent from './assets/Components/content/content';
 import Mybutton from './assets/Components/Button/button';
 
@@ -58,14 +57,15 @@ function App() {
         <div className='d-flex justify-content-center'  style={{width:'100%',height:'90%' }}>
           <MySidebar />
           
-          <div style={{width:'80%'}}>
+          <div style={{width:'100%'}}>
            
             <Outlet/>
+            
             {/* <Mycontent catagory={result !== undefined ? result:"Favourite"}/> */}
             
           </div>
           {/* <button onClick={()=>Or()}>Side</button> */}
-          <MyOrderlist setStateOrderlist={Orderlist}/>
+          {/* <MyOrderlist setStateOrderlist={Orderlist}/> */}
         </div>
     </div>
   )
