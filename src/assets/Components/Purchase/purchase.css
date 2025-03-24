@@ -1,0 +1,22 @@
+.btn {
+    display: flex;
+    flex-direction: column;  /* ให้รูปอยู่ด้านบนและข้อความอยู่ด้านล่าง */
+    align-items: center;     /* จัดกลางทั้งแนวนอน */
+    justify-content: center; /* จัดกลางทั้งแนวตั้ง */
+    padding: 10px 20px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    background-color: #FFE8AD;
+    cursor: pointer;
+  }
+  
+  .btn-image {
+    width: 50px; /* ปรับขนาดรูป */
+    height: 50px; /* ปรับขนาดรูป */
+    margin-bottom: 10px; /* เพิ่มระยะห่างระหว่างรูปกับข้อความ */
+  }
+  
+  .btn-text {
+    font-size: 14px;
+    text-align: center;
+  }
