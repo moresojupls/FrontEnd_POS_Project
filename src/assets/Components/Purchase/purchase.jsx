@@ -84,7 +84,7 @@ function Purchase() {
           ) : (
             <p>No orders</p>
           )}
-        <h3>ยอดรวม: {orders.reduce((sum, order) => sum + order.total, 0)} บาท</h3>
+        <h3>ยอดรวม: {(orders.reduce((sum, order) => sum + order.total, 0)*0.07)+orders.reduce((sum, order) => sum + order.total, 0) } บาท</h3>
         </div>
 
         {/* QR Code Display */}
