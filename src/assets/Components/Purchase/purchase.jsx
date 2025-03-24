@@ -2,135 +2,119 @@ import React, { useEffect, useState } from 'react';
 import Myimg from '../Image/img';
 import image from "../../image";
 import { useNavigate } from 'react-router-dom';
+import Numpad from '../Numpad/Numpad'; // ✅ นำเข้า Numpad
+
 
 function Purchase() {
-  const [orders, setOrders] = useState([]); // เพิ่มการประกาศ setOrders
-  const [showQrImage, setShowQrImage] = useState(false); // state สำหรับควบคุมการแสดงภาพ QR
+  const [orders, setOrders] = useState([]);
+  const [showQrImage, setShowQrImage] = useState(false);
+  const [showNumpad, setShowNumpad] = useState(false); // ✅ state ควบคุมการแสดง numpad
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedOrders = JSON.parse(localStorage.getItem("order_list")) || [];
-    setOrders(storedOrders);  // ตั้งค่าจาก localStorage
+    setOrders(storedOrders);
   }, []);
 
-  // ฟังก์ชันที่จัดการการชำระเงินและการแสดงภาพ QR
+  // ฟังก์ชันที่จัดการการชำระเงิน
   const handlePayment = (type) => {
     if (type === "Qrcode") {
-      setShowQrImage(true); // เมื่อเลือก QR Payment ให้แสดงภาพ
+      setShowQrImage(true);
+      setShowNumpad(false);
+    } else if (type === "cash") {
+      setShowNumpad(true);
+      setShowQrImage(false);
     } else {
-      setShowQrImage(false); // ซ่อนภาพ QR เมื่อเลือกการชำระเงินแบบอื่น
+      setShowQrImage(false);
+      setShowNumpad(false);
     }
-  };
-
-  // ปุ่มกลับ
-  const Mybutton = ({ size, process, topic, color }) => {
-    const handleClick = () => {
-      process(); // เรียกฟังก์ชัน process ที่ส่งเข้ามา (เช่น alert)
-    };
-
-    const buttonStyle = {
-      width: `${size}px`, 
-      backgroundColor: color, 
-      padding: '10px',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      fontSize: '16px',
-      color: '#fff',
-    };
-
-    return (
-      <button style={buttonStyle} onClick={handleClick}>
-        {topic}
-      </button>
-    );
   };
 
   return (
     <div className="purchase-container" style={{ padding: "20px" }}>
       <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px' }}>
-        <Mybutton
-          size={"80"}
-          process={() => {
-            navigate('/FrontEnd_POS_Project'); // ⬅️ เมื่อกด Done ให้เปลี่ยนหน้า
+        <button
+          style={{
+            width: "80px",
+            backgroundColor: "#6495ED",
+            padding: "10px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: "16px",
+            color: "#fff",
           }}
-          topic={"Back"}
-          color={"#6495ED"}
-        />
+          onClick={() => navigate('/FrontEnd_POS_Project')}
+        >
+          Back
+        </button>
       </div>
 
-    {/* รายการสั่งซื้อ และภาพ QR Payment */}
-    <div style={{display:'flex',flexDirection:'row'}}>
-<       div style={{
-            display: "flex",  // ใช้ Flexbox เพื่อให้เป็นแถว
-            justifyContent: "space-between",  // ทำให้รายการอยู่ทางซ้ายและภาพ QR ไปทางขวา
-            alignItems: "center",  // จัดให้อยู่ในแนวเดียวกัน
-            border: '2px solid #B17457',
-            borderRadius: '5px',
-            width: '50%',
-            maxHeight: '1000px',
-            overflowY: 'auto',
-            marginTop: '10px',
-            padding: '10px',
+      {/* รายการสั่งซื้อ */}
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          border: '2px solid #B17457',
+          borderRadius: '5px',
+          width: '50%',
+          maxHeight: '400px',
+          overflowY: 'auto',
+          marginTop: '10px',
+          padding: '10px',
         }}>
-        {/* รายการสั่งซื้อ */}
-        <div style={{ flex: 1 }}> {/* ทำให้รายการสั่งซื้ออยู่ทางซ้าย */}
-            <h3>Purchase Orders</h3>
-            {orders.length > 0 ? (
+          <h3>Purchase Orders</h3>
+          {orders.length > 0 ? (
             orders.map((order, index) => (
-                <div
-                key={index}
-                style={{
-                    border: '2px solid #A91006',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: '10px',
-                    margin: '10px 0',
-                    padding: '10px',
-                    borderRadius: '5px',
-                }}
-                >
+              <div key={index} style={{
+                border: '2px solid #A91006',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '10px',
+                margin: '10px 0',
+                padding: '10px',
+                borderRadius: '5px',
+              }}>
                 <p>สินค้า: {order.name}</p>
                 <p>จำนวน: {order.amount}</p>
                 <p>ราคา: {order.total}</p>
-                </div>
+              </div>
             ))
-            ) : (
+          ) : (
             <p>No orders</p>
-            )}
+          )}
+        <h3>ยอดรวม: {orders.reduce((sum, order) => sum + order.total, 0)} บาท</h3>
         </div>
 
-        </div>
-        <div>
-            {/* เมื่อเลือก QR Payment จะแสดงรูปภาพ QR */}
+        {/* QR Code Display */}
         {showQrImage && (
-            <div style={{ marginLeft: "20px", display: "flex",justifyContent:'center',alignItems: "center", }}> {/* ขยับให้ภาพอยู่ห่างจากรายการเล็กน้อย */}
+          <div style={{ marginLeft: "20px", display: "flex", justifyContent: 'center', alignItems: "center" }}>
             <Myimg size={400} url={image.promptpay_Champ} />
-            </div>
+          </div>
         )}
-        </div>
-    </div>
-      <br />
-      <br />
-      <br />
 
-      {/* ปุ่มชำระเงิน */}
-      <section className="payment-buttons" style={{ display: "flex", justifyContent: "flex-start", flexDirection: 'row', gap: "20px" }}>
+        {/* แสดง numpad เมื่อเลือก cash */}
+        {showNumpad && (
+        <div style={{ marginLeft: "20px", display: "flex", justifyContent: 'center', alignItems: "center" }}>
+          <Numpad />
+        </div>
+        )}
+      </div>
+      
+      <section className="payment-buttons" style={{ display: "flex",gap: "20px", marginTop: "20px" }}>
         {["cash", "Qrcode", "atmcard"].map((type) => (
           <button
             key={type}
-            className="btn"
             style={{
               backgroundColor: "#FFE8AD",
               border: "2px solid #F27951",
               borderRadius: "8px",
               padding: "12px",
               fontWeight: "bold",
-              transition: "background-color 0.3s",
               cursor: "pointer"
             }}
-            onClick={() => handlePayment(type)} // ใช้ handlePayment ที่ประกาศใน component หลัก
+            onClick={() => handlePayment(type)}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#FFD37D"}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#FFE8AD"}
           >
@@ -141,6 +125,7 @@ function Purchase() {
           </button>
         ))}
       </section>
+
     </div>
   );
 }
