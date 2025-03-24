@@ -71,7 +71,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
   };
 
-  price = 10;
+
   return (
     <>
       
@@ -82,7 +82,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       <img src={img} alt="Not Found Img" style={{ width: '100%', borderRadius: "8px" }} />
       <div style={{ marginLeft: '10px', textAlign: 'center', flex: 1 }}>
       <h6> Name : {name} </h6>
-      <h5><b> Price : {price !== undefined ? 'Price' : ''}{price} </b> </h5>
+      <h5><b> Price : {price !== undefined ? price : ''} </b> </h5>
     </div>
   </div>
 </div>
