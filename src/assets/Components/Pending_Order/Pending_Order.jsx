@@ -21,17 +21,15 @@ function Pending_Order() {
   // โหลดข้อมูลจาก localStorage เมื่อ component ถูก mount
   useEffect(() => {
     const fetchOrders = () => {
-
       const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
-
       setOrders(storedOrders);
     };
-
-    // fetchOrders();
-
+  
+    fetchOrders(); // 🔥 ต้องเรียกตอนแรกเพื่อโหลดข้อมูลที่เคยบันทึกไว้
+  
     // ฟัง event 'storage' เพื่อดักการเปลี่ยนแปลงใน localStorage
     window.addEventListener("storage", fetchOrders);
-
+  
     return () => {
       window.removeEventListener("storage", fetchOrders);
     };

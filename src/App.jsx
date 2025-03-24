@@ -66,9 +66,6 @@ function App() {
           </div>
           {/* <button onClick={()=>Or()}>Side</button> */}
           <MyOrderlist setStateOrderlist={Orderlist}/>
-         
-          
-
         </div>
     </div>
   )

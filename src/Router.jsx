@@ -13,6 +13,7 @@ import Productstock from './assets/pages/Product/productstock';
 import SupplyPage from './assets/pages/Supply/supply'; 
 import NotFound from './assets/pages/NotFound/notfound';
 import User from './assets/MockUpData/Product/User';
+import Purchase from './assets/Components/Purchase/purchase'
 
 
 
@@ -55,11 +56,16 @@ function MyRouter() {
       
       
             </Route>
+            <Route path="purchase" element={<Purchase />} />
+            <Route path="*" element={<NotFound />} /> {/* สำหรับหน้าที่ไม่พบ */}
         </Routes>
     </BrowserRouter>
     
 
     
+    
+
+  
   )
 }
 
