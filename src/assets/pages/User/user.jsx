@@ -56,7 +56,7 @@ function Userpage() {
    
   // }
   
-  return ( load === true ? <BubbleTeaShop result={result.result}/> :<h1>loading .....</h1>)
+  // return ( load === true ? <BubbleTeaShop result={result}/> :<h1>loading .....</h1>)
     
   
 }
