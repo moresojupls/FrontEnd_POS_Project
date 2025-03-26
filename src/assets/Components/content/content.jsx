@@ -61,7 +61,7 @@ function Mycontent({results,btn}) {
 
 
           }
-          {console.log('result',result)}
+        
         </div>
        
       </div>
