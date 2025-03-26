@@ -6,7 +6,7 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = () => {
+const BubbleTeaShop = (result) => {
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -17,8 +17,13 @@ const BubbleTeaShop = () => {
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
   useEffect(() => {
     setFilteredData(data);
+   
   }, [data]);
-
+  useEffect(()=>{
+    setData(result.result);
+    setFilteredData(result.result);
+    console.log('result ',result.result)
+  },[])
   // ฟังก์ชันค้นหา
   const handleSearch = (values) => {
     if (!values.searchText) {
@@ -39,7 +44,28 @@ const BubbleTeaShop = () => {
     searchForm.resetFields();
     setFilteredData(data);
   };
+  const updateItemApi = (newItem) =>{
 
+  }
+  const createItemApi = (newItem) => {
+    fetch("http://127.0.0.1:4000/Products/create",{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newItem)
+      
+    }).then((res)=>{
+      if (!res.ok) {
+        throw new Error('การเชื่อมต่อ API ล้มเหลว');
+      }
+      return res.json();
+    }).then((data)=>{
+      message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
+    }).catch((error) => {
+      message.error(`เกิดข้อผิดพลาด: ${error.message}`);
+    });
+  }
   const columns = [
     {
       title: 'รหัสสินค้า',
@@ -85,14 +111,14 @@ const BubbleTeaShop = () => {
     },
     {
       title: 'สร้างเมื่อ',
-      dataIndex: 'create_at',
-      key: 'create_at',
+      dataIndex: 'created_at',
+      key: 'created_at',
       width: 150,
     },
     {
       title: 'อัปเดตเมื่อ',
-      dataIndex: 'update_at',
-      key: 'update_at',
+      dataIndex: 'updated_at',
+      key: 'updated_at',
       width: 150,
     },
     {
@@ -115,8 +141,9 @@ const BubbleTeaShop = () => {
           />
         </Space>
       ),
-      width: 120,
     },
+  
+    
   ];
 
   const showCreateModal = () => {
@@ -146,16 +173,28 @@ const BubbleTeaShop = () => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     
     if (currentItem) {
+      
       const updatedData = data.map(item => 
-        item.product_id === currentItem.product_id 
+        item.product_id == currentItem.product_id 
           ? { 
-              ...values, 
               product_id: currentItem.product_id,
-              create_at: currentItem.create_at,
-              update_at: now 
+              ...values, 
+              create_dated: currentItem.create_at,
+              update_dated: now 
             } 
           : item
+         
       );
+    
+  
+      fetch("http://127.0.0.1:4000/Products/update",{
+        method: 'PATCH',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      })
+      console.log('dasdasd',values);
       setData(updatedData);
       setFilteredData(updatedData);
       message.success('อัปเดตสินค้าสำเร็จแล้ว');
@@ -164,13 +203,17 @@ const BubbleTeaShop = () => {
         ...values,
         active: values.active !== undefined ? values.active : true,
         product_id: `${data.length + 1}`,
-        create_at: now,
-        update_at: now,
+        create_ated: now,
+        update_ated: now,
       };
+      console.log('new item :',newItem);
       const newData = [...data, newItem];
+      console.log('new Data ',newData);
       setData(newData);
       setFilteredData(newData);
-      message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
+      // create new data by api
+      createItemApi(newItem);
+     
     }
     setIsModalVisible(false);
   };
@@ -252,6 +295,15 @@ const BubbleTeaShop = () => {
             active: true
           }}
         >
+          <Form.Item
+            hidden="true"
+            label="ชื่อสินค้า"
+            name="product_id"
+            rules={[{ required: true, message: 'กรุณากรอกชื่อสินค้า' }]}
+          >
+            <Input placeholder="เช่น ชานมไข่มุกคลาสสิก" />
+          </Form.Item>
+         
           <Form.Item
             label="ชื่อสินค้า"
             name="product_name"
