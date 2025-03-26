@@ -1,4 +1,5 @@
 import  { useState ,useEffect,createContext,useContext} from 'react'
+import BubbleTeaShop from '../../Components/CRUD/CRUD'
 import App from '../../../App'
 import results_apis from '../../MockUpData/Product/User';
 
@@ -24,17 +25,21 @@ function Userpage() {
     
 
   const [result,setResult] = useState();
+  const [load, setLoad] =useState(false);
 
   useEffect(()=>{
-    
-    window.localStorage.removeItem('result_order')
-    setResult({"member":results_apis});
-      
+    fetch('http://127.0.0.1:4000/employees/employees').then(res=>{
+      return res.json()
+    }).then((result)=>{
+      setResult(result)
+      setLoad(true)
+    })
+
       
     
   },[])
 
-  if(result !== undefined) console.log('result : ',result);
+ 
 
  
   
@@ -51,19 +56,9 @@ function Userpage() {
    
   // }
   
-  return (
-    <>
-      <h1>User</h1>
-
-      {/* <UseContext.Provider value={{col:[],result:result !== undefined ? result:[]}}>
-        <App></App>
-      </UseContext.Provider>
-     */}
-      {/* <button onClick={() => Addvalue()}>+</button> */}
-    </>
-    // <App content={[]}></App>
-   
-  )
+  return ( load === true ? <BubbleTeaShop result={result.result}/> :<h1>loading .....</h1>)
+    
+  
 }
 
 export default Userpage
