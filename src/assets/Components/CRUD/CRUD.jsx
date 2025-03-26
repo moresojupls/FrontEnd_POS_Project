@@ -185,6 +185,7 @@ const BubbleTeaShop = (result) => {
           : item
          
       );
+      values.product = currentItem.product_id
   
       fetch("http://127.0.0.1:4000/Products/update",{
         method: 'PATCH',
@@ -193,7 +194,7 @@ const BubbleTeaShop = (result) => {
         },
         body: JSON.stringify(values)
       })
-    
+      console.log('dasdasd',values);
       setData(updatedData);
       setFilteredData(updatedData);
       message.success('อัปเดตสินค้าสำเร็จแล้ว');
@@ -294,6 +295,15 @@ const BubbleTeaShop = (result) => {
             active: true
           }}
         >
+          <Form.Item
+            hidden="true"
+            label="ชื่อสินค้า"
+            name="product_id"
+            rules={[{ required: true, message: 'กรุณากรอกชื่อสินค้า' }]}
+          >
+            <Input placeholder="เช่น ชานมไข่มุกคลาสสิก" />
+          </Form.Item>
+         
           <Form.Item
             label="ชื่อสินค้า"
             name="product_name"
