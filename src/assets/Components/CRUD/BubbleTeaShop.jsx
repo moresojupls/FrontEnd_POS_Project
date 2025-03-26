@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, Switch, message } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import '../../Components/CRUD/BubbleTeaShop.css';
 
 const { Option } = Select;
@@ -109,11 +110,11 @@ const BubbleTeaShop = () => {
             onClick={() => showEditModal(record)}
           />
           <Button 
-            type="primary" 
-            danger 
-            shape="circle" 
-            icon={<DeleteOutlined />} 
-            onClick={() => handleDelete(record.product_id)}
+          type="primary" 
+          danger 
+          shape="circle" 
+          icon={<DeleteOutlined />} 
+          onClick={() => handleDelete(record.product_id)}
           />
         </Space>
       ),
@@ -137,11 +138,32 @@ const BubbleTeaShop = () => {
     setIsModalVisible(false);
   };
 
-  const handleDelete = (product_id) => {
-    const newData = data.filter(item => item.product_id !== product_id);
-    setData(newData);
-    setFilteredData(newData);
-    message.success('ลบสินค้าสำเร็จแล้ว');
+  // ในคอมโพเนนต์ของคุณ
+  const handleDelete = (productId) => {
+    // หาข้อมูลสินค้าจาก productId เพื่อเอาชื่อมาแสดง
+    const productToDelete = data.find(item => item.product_id === productId);
+    
+    Modal.confirm({
+      title: 'ยืนยันการลบ',
+      content: (
+        <div>
+          <p>คุณกำลังจะลบสินค้า: {productToDelete?.product_name || 'รหัส ' + productId}</p>
+          <p>การกระทำนี้ไม่สามารถยกเลิกได้</p>
+        </div>
+      ),
+      okText: 'ลบ',
+      okType: 'danger',
+      cancelText: 'ไม่ลบ',
+      icon: <ExclamationCircleOutlined />,
+      centered: true,
+      onOk() {
+        // ฟังก์ชันลบจริงๆ
+        const newData = data.filter(item => item.product_id !== productId);
+        setData(newData);
+        setFilteredData(newData);
+        message.success('ลบสินค้าสำเร็จแล้ว');
+      }
+    });
   };
 
   const onFinish = (values) => {
