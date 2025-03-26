@@ -185,7 +185,7 @@ const BubbleTeaShop = (result) => {
           : item
          
       );
-      values.product = currentItem.product_id
+    
   
       fetch("http://127.0.0.1:4000/Products/update",{
         method: 'PATCH',
