@@ -1,4 +1,4 @@
-import BubbleTeaShop from '../../Components/CRUD/CRUD'
+import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop'
 export default function Productstock(){
     return (
         <BubbleTeaShop/>

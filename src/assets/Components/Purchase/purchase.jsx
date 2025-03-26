@@ -4,7 +4,6 @@ import image from "../../image";
 import { useNavigate } from 'react-router-dom';
 import Numpad from '../Numpad/Numpad'; // ✅ นำเข้า Numpad
 
-
 function Purchase() {
   const [orders, setOrders] = useState([]);
   const [showQrImage, setShowQrImage] = useState(false);
@@ -31,8 +30,8 @@ function Purchase() {
   };
 
   return (
-    <div className="purchase-container" style={{ padding: "20px" }}>
-      <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px' }}>
+    <div className="purchase-container" style={{ padding: "20px", }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px', }}>
         <button
           style={{
             width: "80px",
@@ -75,6 +74,10 @@ function Purchase() {
                 margin: '10px 0',
                 padding: '10px',
                 borderRadius: '5px',
+                width: "100%",
+                minHeight: "60px",
+                // maxHeight: "20px",
+                // overflow: "auto"
               }}>
                 <p>สินค้า: {order.name}</p>
                 <p>จำนวน: {order.amount}</p>

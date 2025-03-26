@@ -21,16 +21,18 @@ const BubbleTeaShop = () => {
 
   // ฟังก์ชันค้นหา
   const handleSearch = (values) => {
-    if (!values.searchText) {
+    const searchText = values.searchText?.trim().toLowerCase() || "";
+  
+    if (!searchText) {
       setFilteredData(data);
       return;
     }
-    
+  
     const filtered = data.filter(item =>
-      item.product_name.toLowerCase().includes(values.searchText.toLowerCase()) ||
-      item.description.toLowerCase().includes(values.searchText.toLowerCase()) ||
-      item.category.toLowerCase().includes(values.searchText.toLowerCase())
+      item.product_name.toLowerCase().includes(searchText) ||
+      item.description?.toLowerCase().includes(searchText) // ตรวจสอบว่ามี description ก่อน
     );
+  
     setFilteredData(filtered);
   };
 
@@ -180,26 +182,19 @@ const BubbleTeaShop = () => {
       <div className="header">
         <h1>ระบบจัดการเมนูชานมไข่มุก</h1>
         <div className="actions">
-          <Form form={searchForm} onFinish={handleSearch} layout="inline" style={{ marginRight: 16 }}>
-            <Form.Item name="searchText" style={{ marginRight: 8 }}>
-              <Input 
-                placeholder="ค้นหาสินค้า..." 
-                prefix={<SearchOutlined />} 
-                style={{ width: 200 }}
-              />
-            </Form.Item>
-            <Button 
-              type="default" 
-              htmlType="submit"
-              icon={<SearchOutlined />}
-              style={{ marginRight: 8 }}
-            >
+        <Form form={searchForm} onFinish={handleSearch} layout="inline">
+          <Form.Item name="searchText">
+          <Input 
+            placeholder="ค้นหาสินค้า..." 
+            prefix={<SearchOutlined />} 
+            style={{ width: 200 }} 
+            onPressEnter={() => searchForm.submit()} // กด Enter เพื่อค้นหา
+          />
+          </Form.Item>
+            <Button type="default" htmlType="submit" icon={<SearchOutlined />}>
               ค้นหา
             </Button>
-            <Button 
-              type="default" 
-              onClick={resetSearch}
-            >
+            <Button type="default" onClick={resetSearch}>
               ล้างการค้นหา
             </Button>
           </Form>
