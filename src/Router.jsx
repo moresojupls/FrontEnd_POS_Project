@@ -35,6 +35,7 @@ function MyRouter() {
             <Route path="/FrontEnd_POS_Project" element={<App />}>
                 <Route index element={<HomePage />}  />
                 <Route   path="User"  element={<Userpage />}/>
+              
                 <Route   path="Product/Stock"  element={<Productstock />}/>
     
                 {/* <Route  path={'Supply/crud'}  element={<ProductPage/>} />

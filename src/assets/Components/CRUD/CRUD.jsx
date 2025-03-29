@@ -145,6 +145,8 @@ const BubbleTeaShop = (result) => {
   
     
   ];
+  const selectOption = ["Milk Tea","Fruit Tea","General"]
+  
 
   const showCreateModal = () => {
     setCurrentItem(null);
@@ -339,11 +341,12 @@ const BubbleTeaShop = (result) => {
             rules={[{ required: true, message: 'กรุณาเลือกหมวดหมู่' }]}
           >
             <Select>
-              <Option value="ชานม">ชานม</Option>
-              <Option value="ชาเขียว">ชาเขียว</Option>
-              <Option value="ชาผลไม้">ชาผลไม้</Option>
-              <Option value="กาแฟ">กาแฟ</Option>
-              <Option value="อื่นๆ">อื่นๆ</Option>
+              {
+              selectOption.map(result=>
+                <Option key={result} value={result}>{result}</Option>
+              )}
+             
+              
             </Select>
           </Form.Item>
 
