@@ -1,4 +1,4 @@
-import BubbleTeaShop from '../../Components/CRUD/CRUD'
+import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop'
 import {useState,useEffect} from 'react'
 
 export default function Productstock(){

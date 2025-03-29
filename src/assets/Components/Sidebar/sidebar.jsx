@@ -103,6 +103,37 @@ function MySidebar() {
               </div>
               
             </div>
+            
+
+            {/* History page */}
+            <div className='Menu'>
+              <div className='Menu Onclickhover'>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.LogoBrand} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>History</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+                </div>
+              <div className='submenu'>
+              <div className='Onclickhover '>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History/Transactions"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.Sale} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Transactions</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+              </div>
+              </div>
+              
+            </div>
+            
 
             <div className='Menu'>
             <div className='Menu Onclickhover'>
@@ -156,7 +187,7 @@ function MySidebar() {
              </div>
               <div className='submenu'>
               <div className='Onclickhover '>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/favourite"} >
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} >
                   <ListItem button width='100rem' >
                     <div>
                       <Myimg  url={img.User} size={45}></Myimg>

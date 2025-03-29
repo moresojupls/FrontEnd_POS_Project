@@ -7,13 +7,15 @@ import SupplyBtn from './assets/pages/Supply/supplybtn';
 
 // page
 import HomePage from './assets/pages/Home/home';
-import Userpage from '../src/assets/pages/User/user';
+import Userpage from './assets/pages/User/user';
 import ProductPage from './assets/pages/Product/product';
 import Productstock from './assets/pages/Product/productstock'; 
 import SupplyPage from './assets/pages/Supply/supply'; 
 import NotFound from './assets/pages/NotFound/notfound';
 import User from './assets/MockUpData/Product/User';
 import Purchase from './assets/Components/Purchase/purchase'
+import HistoryPage from '../src/assets/pages/History/HistoryPage';
+
 
 
 
@@ -35,6 +37,8 @@ function MyRouter() {
             <Route path="/FrontEnd_POS_Project" element={<App />}>
                 <Route index element={<HomePage />}  />
                 <Route   path="User"  element={<Userpage />}/>
+                <Route   path="History"  element={<HistoryPage />}/>
+                <Route   path="History/Transactions"  element={<HistoryPage />}/>
                 <Route   path="Product/Stock"  element={<Productstock />}/>
     
                 {/* <Route  path={'Supply/crud'}  element={<ProductPage/>} />

@@ -316,7 +316,7 @@ const BubbleTeaShop = (result) => {
             hidden="true"
             label="ชื่อสินค้า"
             name="product_id"
-            rules={[{ required: true, message: 'กรุณากรอกชื่อสินค้า' }]}
+            // rules={[{message: 'กรุณากรอกชื่อสินค้า' }]}
           >
             <Input placeholder="เช่น ชานมไข่มุกคลาสสิก" />
           </Form.Item>
