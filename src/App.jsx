@@ -46,12 +46,13 @@ function App() {
 
 
 
- 
+  
 
   function Or(){
     return setOrderlist(!Orderlist)
   }
   return(
+    
       <div style={{width:'100%',height:'100vh' ,overflow:'hidden'}}>
         <Mynavbar className='d-flex '/>
         <div className='d-flex justify-content-center'  style={{width:'100%',height:'90%' }}>
