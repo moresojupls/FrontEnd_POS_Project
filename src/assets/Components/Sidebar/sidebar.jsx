@@ -179,7 +179,7 @@ function MySidebar() {
               <ListItem button>
                 <div>
                   <Myimg  url={img.User} size={45}></Myimg>
-                  <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Admin</h4>
+                  <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Employee</h4>
                 </div>
                
               </ListItem>

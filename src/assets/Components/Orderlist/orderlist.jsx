@@ -135,9 +135,10 @@ function MyOrderlist() {
           process={() => alert("hold order")} 
           topic={"Hold Order"}
           color={"#FFB38E"}/>
-        
+     
         <Mybutton size={"80"} 
         process={() => { 
+          if(total ==0 ) return 0
           navigate('/purchase'); // ⬅️ เมื่อกด Done ให้เปลี่ยนหน้า
         }} 
         topic={"done"}

@@ -7,14 +7,47 @@ import Numpad from '../Numpad/Numpad';
 function Purchase() {
   const [orders, setOrders] = useState([]);
   const [showQrImage, setShowQrImage] = useState(false);
-  const [showNumpad, setShowNumpad] = useState(false);
+  const [showNumpad, setShowNumpad] = useState(false); // ✅ state ควบคุมการแสดง numpad
+  const totalAmount = orders.reduce((sum, order) => sum + order.amount, 0);
+  const newTotal = orders.reduce((sum, order) => sum + order.total, 0);
   const navigate = useNavigate();
-
+  const user =  JSON.parse(localStorage.getItem("user")) ;
   useEffect(() => {
     const storedOrders = JSON.parse(localStorage.getItem("order_list")) || [];
     setOrders(storedOrders);
   }, []);
 
+ 
+
+  const payment = ()=>{
+    console.log('user ',user)
+    fetch("http://127.0.0.1:4000/Transactions/create",{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify({
+        "Transaction_id": 1,
+        "Employee_id": user.id,
+        "Product_id": 1,
+        "Quantity": totalAmount+(totalAmount*0.07),
+        "Total_price": newTotal,
+
+      })
+    }).then((res)=>{
+      if(res.status == 200){
+        console.log("Success")
+      }
+    }).catch((res)=>{
+      if(res.status == 404){
+        console.log('Not Found')
+      }
+    }).finally(()=>{
+      navigate('/FrontEnd_POS_Project');
+    })
+  }
+
+  // ฟังก์ชันที่จัดการการชำระเงิน
   const handlePayment = (type) => {
     if (type === "Qrcode") {
       setShowQrImage(true);
@@ -73,33 +106,29 @@ function Purchase() {
           padding: '15px',
           overflow: 'hidden'
         }}>
-          <h3 style={{ marginTop: 0 }}>รายการสั่งซื้อ</h3>
-          
-          <div style={{
-            flex: 1,
-            overflowY: 'auto',
-            marginBottom: '15px'
-          }}>
-            {orders.length > 0 ? (
-              orders.map((order, index) => (
-                <div key={index} style={{
-                  border: '2px solid #A91006',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  margin: '10px 0',
-                  padding: '10px',
-                  borderRadius: '5px',
-                }}>
-                  <p>สินค้า: {order.name}</p>
-                  <p>จำนวน: {order.amount}</p>
-                  <p>ราคา: {order.total} บาท</p>
-                </div>
-              ))
-            ) : (
-              <p>ไม่มีรายการสินค้า</p>
-            )}
-          </div>
+          <h3>Purchase Orders</h3>
+          {orders.length > 0 ? (
+            orders.map((order, index) => (
+              <div key={index} style={{
+                border: '2px solid #A91006',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '10px',
+                margin: '10px 0',
+                padding: '10px',
+                borderRadius: '5px',
+              }}>
+                <p>สินค้า: {order.name}</p>
+                <p>จำนวน: {order.amount}</p>
+                <p>ราคา: {order.total}</p>
+              </div>
+            ))
+          ) : (
+            <p>No orders</p>
+          )}
+        <h3>ยอดรวม:  {newTotal+(newTotal*0.07) } บาท</h3>
+        </div>
 
           <div style={{
             borderTop: '1px solid #ccc',
@@ -128,6 +157,8 @@ function Purchase() {
             <p style={{ color: '#666' }}>เลือกวิธีการชำระเงิน</p>
           )}
         </div>
+        )}
+        
       </div>
 
       {/* ปุ่มชำระเงิน */}
@@ -160,7 +191,29 @@ function Purchase() {
             </div>
           </button>
         ))}
+        <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px' }}>
+        <button
+          style={{
+            width: "80px",
+            backgroundColor: "green",
+            padding: "10px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: "16px",
+            color: "#fff",
+          }}
+          onClick={() => {
+            payment();
+            
+          }}
+        >
+          Success
+        </button>
       </div>
+      </section>
+      
+
     </div>
   );
 }

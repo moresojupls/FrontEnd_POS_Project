@@ -39,6 +39,7 @@ function MyRouter() {
                 <Route   path="User"  element={<Userpage />}/>
                 <Route   path="History"  element={<HistoryPage />}/>
                 <Route   path="History/Transactions"  element={<HistoryPage />}/>
+              
                 <Route   path="Product/Stock"  element={<Productstock />}/>
     
                 {/* <Route  path={'Supply/crud'}  element={<ProductPage/>} />
