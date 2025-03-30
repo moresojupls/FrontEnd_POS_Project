@@ -83,8 +83,8 @@ export default function Productstock(){
             setLoad(true);
         })
     },[])
-    console.log('result : ',result)
-    return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
+    
+     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
     
     
 }
