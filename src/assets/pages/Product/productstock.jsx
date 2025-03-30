@@ -11,13 +11,14 @@ export default function Productstock(){
           title: 'รหัสสินค้า',
           dataIndex: 'product_id',
           key: 'product_id',
-      
+          type: 'input',
           width: 100,
         },
         {
           title: 'ชื่อสินค้า',
           dataIndex: 'product_name',
           key: 'product_name',
+          type: 'input',
           render: (text) => <strong>{text}</strong>,
         },
         {

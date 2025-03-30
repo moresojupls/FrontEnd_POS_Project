@@ -156,8 +156,8 @@ const BubbleTeaShop = ({result,column}) => {
     </Form.Item>
     )
     if(res.type == "active") return (<Form.Item
-      label="สถานะ"
-      name="active"
+      label={res.title}
+      name={res.key}
       valuePropName="checked"
     >
       <Switch 
@@ -165,14 +165,14 @@ const BubbleTeaShop = ({result,column}) => {
         unCheckedChildren="ปิดขาย"
       />
     </Form.Item>)
-    return (
-      <Form.Item
-      label={res.title}
-      name={res.key}
-      rules={[{ required: true, message: `กรุณากรอก${res.title}` }]}
-    >
-      <Input placeholder={res.title} />
-    </Form.Item>)
+    // return (
+    //   <Form.Item
+    //   label={res.title}
+    //   name={res.key}
+    //   rules={[{ required: true, message: `กรุณากรอก${res.title}` }]}
+    // >
+    //   <Input placeholder={res.title} />
+    // </Form.Item>)
 
   }
 
@@ -219,7 +219,7 @@ const BubbleTeaShop = ({result,column}) => {
       setData(newData);
       setFilteredData(newData);
       // // create new data by api
-       createItemApi(newItem);
+      createItemApi(newItem);
      
     }
     setIsModalVisible(false);
@@ -306,17 +306,9 @@ const BubbleTeaShop = ({result,column}) => {
           {
             createModal(res)
           }
-          {/* <Form.Item
-            hidden=""
-            label={res.title}
-            name={res.key}
-            rules={[{ required: true, message: 'กรุณากรอกชื่อสินค้า' }]}
-          >
-            <Input placeholder="เช่น ชานมไข่มุกคลาสสิก" />
-          </Form.Item> */}
+         
           </>
-          )
-        )}
+          ))}
           
          
           {/* <Form.Item

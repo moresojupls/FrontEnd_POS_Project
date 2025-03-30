@@ -27,7 +27,7 @@ function Userpage() {
     title: 'ชื่อ',
     dataIndex: 'employee_name',
     key: 'employee_name',
-    type: 'text',
+    type: 'input',
     width: 100,
     render: (text) => <strong>{text}</strong>,
   },
