@@ -268,7 +268,7 @@ const BubbleTeaShop = ({result,column}) => {
           dataSource={filteredData}
           pagination={{ pageSize: 5 }} 
           bordered
-          scroll={{ x: 1300 }}
+          scroll={{ x: 300 }}
         />
       </Card>
       

@@ -18,38 +18,40 @@ function Userpage() {
  
   const column = [{
     title: 'รหัสผู้ใช้',
-    dataIndex: 'product_id',
-    key: 'product_id',
+    dataIndex: 'employee_id',
+    key: 'employee_id',
     type: 'input',
     width: 100,
   },
   {
     title: 'ชื่อ',
-    dataIndex: 'product_name',
-    key: 'product_name',
+    dataIndex: 'employee_name',
+    key: 'employee_name',
     type: 'text',
+    width: 100,
     render: (text) => <strong>{text}</strong>,
   },
   {
     title: 'นามสกุล',
-    dataIndex: 'description',
-    key: 'description',
+    dataIndex: 'employee_lastname',
+    key: 'employee_lastname',
     type: 'input',
+    width: 100,
     ellipsis: true,
   },
   {
     title: 'email',
-    dataIndex: 'price',
-    key: 'price',
+    dataIndex: 'email',
+    key: 'email',
     type: 'textArea',
-    render: (price) => `${price} บาท`,
-    width: 100,
+    render: (email) => `${email} `,
+    width: 200,
   },
   {
     title: 'phone',
-    dataIndex: 'category',
-    key: 'category',
-    width: 120,
+    dataIndex: 'phone',
+    key: 'phone',
+    width: 160,
   },
   {
     title: 'สถานะ',
@@ -63,20 +65,21 @@ function Userpage() {
     ),
     width: 100,
   },
-  {
-    title: 'สร้างเมื่อ',
-    dataIndex: 'created_at',
-    key: 'created_at',
-    type:'null',
-    width: 150,
-  },
-  {
-    title: 'อัปเดตเมื่อ',
-    dataIndex: 'updated_at',
-    key: 'updated_at',
-    type:'null',
-    width: 150,
-  },]
+  // {
+  //   title: 'สร้างเมื่อ',
+  //   dataIndex: 'created_at',
+  //   key: 'created_at',
+  //   type:'null',
+  //   width: 150,
+  // },
+  // {
+  //   title: 'อัปเดตเมื่อ',
+  //   dataIndex: 'updated_at',
+  //   key: 'updated_at',
+  //   type:'null',
+  //   width: 150,
+  // },
+]
 
   function PageinationData(item){
     setResult(item)
@@ -94,6 +97,7 @@ function Userpage() {
     }).then((result)=>{
       setResult(result)
       setLoad(true)
+      console.log('result :',result)
     })
 
       
