@@ -124,6 +124,58 @@ const BubbleTeaShop = ({result,column}) => {
     message.success('ลบสินค้าสำเร็จแล้ว');
   };
 
+  const createModal =(res)=>{
+    if(res.type == "null") return(<></>)
+    if(res.type == "select")return ( <Form.Item
+      label="หมวดหมู่"
+      name="category"
+      rules={[{ required: true, message: 'กรุณาเลือกหมวดหมู่' }]}
+    >
+      <Select defaultValue={selectOption[0]}>
+        {
+        selectOption.map(result=>
+          <Option key={result} value={result}>{result}</Option>
+        )}
+       
+        
+      </Select>
+    </Form.Item>)
+    if(res.type == "input") return ( <Form.Item
+      label={res.title}
+      name={res.key}
+      rules={[{ required: true, message: `กรุณากรอก${res.title}` }]}
+    >
+      <Input placeholder={res.title} />
+    </Form.Item>)
+    if(res.type == "textArea") return (
+      <Form.Item
+      label={res.title}
+      name={res.key}
+    >
+      <TextArea rows={3} placeholder={res.title} />
+    </Form.Item>
+    )
+    if(res.type == "active") return (<Form.Item
+      label="สถานะ"
+      name="active"
+      valuePropName="checked"
+    >
+      <Switch 
+        checkedChildren="เปิดขาย" 
+        unCheckedChildren="ปิดขาย"
+      />
+    </Form.Item>)
+    return (
+      <Form.Item
+      label={res.title}
+      name={res.key}
+      rules={[{ required: true, message: `กรุณากรอก${res.title}` }]}
+    >
+      <Input placeholder={res.title} />
+    </Form.Item>)
+
+  }
+
   const onFinish = (values) => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     
@@ -250,24 +302,32 @@ const BubbleTeaShop = ({result,column}) => {
             active: true
           }}
         >
-          <Form.Item
-            hidden="true"
-            label="ชื่อสินค้า"
-            name="product_id"
-            rules={[{  message: 'กรุณากรอกชื่อสินค้า' }]}
+          {column.map(res=>(<>
+          {
+            createModal(res)
+          }
+          {/* <Form.Item
+            hidden=""
+            label={res.title}
+            name={res.key}
+            rules={[{ required: true, message: 'กรุณากรอกชื่อสินค้า' }]}
           >
             <Input placeholder="เช่น ชานมไข่มุกคลาสสิก" />
-          </Form.Item>
+          </Form.Item> */}
+          </>
+          )
+        )}
+          
          
-          <Form.Item
+          {/* <Form.Item
             label="ชื่อสินค้า"
             name="product_name"
             rules={[{ required: true, message: 'กรุณากรอกชื่อสินค้า' }]}
           >
             <Input placeholder="เช่น ชานมไข่มุกคลาสสิก" />
-          </Form.Item>
+          </Form.Item> */}
 
-          <Form.Item
+          {/* <Form.Item
             label="คำอธิบาย"
             name="description"
           >
@@ -312,7 +372,7 @@ const BubbleTeaShop = ({result,column}) => {
               checkedChildren="เปิดขาย" 
               unCheckedChildren="ปิดขาย"
             />
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </Modal>
     </div>

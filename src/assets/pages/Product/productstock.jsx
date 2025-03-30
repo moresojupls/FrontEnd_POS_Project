@@ -11,6 +11,7 @@ export default function Productstock(){
           title: 'รหัสสินค้า',
           dataIndex: 'product_id',
           key: 'product_id',
+      
           width: 100,
         },
         {
@@ -23,6 +24,7 @@ export default function Productstock(){
           title: 'คำอธิบาย',
           dataIndex: 'description',
           key: 'description',
+          type:'textArea',
           ellipsis: true,
         },
         {
@@ -35,6 +37,7 @@ export default function Productstock(){
         {
           title: 'หมวดหมู่',
           dataIndex: 'category',
+          type:'select',
           key: 'category',
           width: 120,
         },
@@ -42,6 +45,7 @@ export default function Productstock(){
           title: 'สถานะ',
           dataIndex: 'active',
           key: 'active',
+          type:'active',
           render: (active) => (
             <Tag color={active ? 'green' : 'red'}>
               {active ? 'เปิดขาย' : 'ปิดขาย'}
@@ -53,12 +57,14 @@ export default function Productstock(){
           title: 'สร้างเมื่อ',
           dataIndex: 'created_at',
           key: 'created_at',
+          type: 'null',
           width: 150,
         },
         {
           title: 'อัปเดตเมื่อ',
           dataIndex: 'updated_at',
           key: 'updated_at',
+          type: 'null',
           width: 150,
         },]
    
