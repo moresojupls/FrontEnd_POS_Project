@@ -6,7 +6,8 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = (result) => {
+const BubbleTeaShop = ({result,column}) => {
+  const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -20,11 +21,41 @@ const BubbleTeaShop = (result) => {
    
   }, [data]);
   useEffect(()=>{
-    setData(result.result);
-    setFilteredData(result.result);
-    console.log('result ',result.result)
+    setData(result);
+    setFilteredData(result);
+    if(column !== undefined) setColumn(column);
+    console.log('console.log(columnTable)',columnTable)
+    
   },[])
-  // ฟังก์ชันค้นหา
+  
+  // ฟังก์ชันค้นหา match two column between own page column and crud column
+  
+  const columns =  [...columnTable,...[{
+    title: 'การดำเนินการ',
+    key: 'action',
+    render: (_, record) => (
+      <Space size="middle">
+        <Button 
+          type="primary" 
+          shape="circle" 
+          icon={<EditOutlined />} 
+          onClick={() => showEditModal(record)}
+        />
+        <Button 
+          type="primary" 
+          danger 
+          shape="circle" 
+          icon={<DeleteOutlined />} 
+          onClick={() => handleDelete(record.product_id)}
+        />
+      </Space>
+    ),
+  },]]
+  
+   
+  
+    
+  
   const handleSearch = (values) => {
     if (!values.searchText) {
       setFilteredData(data);
@@ -66,85 +97,7 @@ const BubbleTeaShop = (result) => {
       message.error(`เกิดข้อผิดพลาด: ${error.message}`);
     });
   }
-  const columns = [
-    {
-      title: 'รหัสสินค้า',
-      dataIndex: 'product_id',
-      key: 'product_id',
-      width: 100,
-    },
-    {
-      title: 'ชื่อสินค้า',
-      dataIndex: 'product_name',
-      key: 'product_name',
-      render: (text) => <strong>{text}</strong>,
-    },
-    {
-      title: 'คำอธิบาย',
-      dataIndex: 'description',
-      key: 'description',
-      ellipsis: true,
-    },
-    {
-      title: 'ราคา',
-      dataIndex: 'price',
-      key: 'price',
-      render: (price) => `${price} บาท`,
-      width: 100,
-    },
-    {
-      title: 'หมวดหมู่',
-      dataIndex: 'category',
-      key: 'category',
-      width: 120,
-    },
-    {
-      title: 'สถานะ',
-      dataIndex: 'active',
-      key: 'active',
-      render: (active) => (
-        <Tag color={active ? 'green' : 'red'}>
-          {active ? 'เปิดขาย' : 'ปิดขาย'}
-        </Tag>
-      ),
-      width: 100,
-    },
-    {
-      title: 'สร้างเมื่อ',
-      dataIndex: 'created_at',
-      key: 'created_at',
-      width: 150,
-    },
-    {
-      title: 'อัปเดตเมื่อ',
-      dataIndex: 'updated_at',
-      key: 'updated_at',
-      width: 150,
-    },
-    {
-      title: 'การดำเนินการ',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <Button 
-            type="primary" 
-            shape="circle" 
-            icon={<EditOutlined />} 
-            onClick={() => showEditModal(record)}
-          />
-          <Button 
-            type="primary" 
-            danger 
-            shape="circle" 
-            icon={<DeleteOutlined />} 
-            onClick={() => handleDelete(record.product_id)}
-          />
-        </Space>
-      ),
-    },
-  
-    
-  ];
+ 
   const selectOption = ["Milk Tea","Fruit Tea","General"]
   
 
@@ -170,6 +123,58 @@ const BubbleTeaShop = (result) => {
     setFilteredData(newData);
     message.success('ลบสินค้าสำเร็จแล้ว');
   };
+
+  const createModal =(res)=>{
+    if(res.type == "null") return(<></>)
+    if(res.type == "select")return ( <Form.Item
+      label="หมวดหมู่"
+      name="category"
+      rules={[{ required: true, message: 'กรุณาเลือกหมวดหมู่' }]}
+    >
+      <Select defaultValue={selectOption[0]}>
+        {
+        selectOption.map(result=>
+          <Option key={result} value={result}>{result}</Option>
+        )}
+       
+        
+      </Select>
+    </Form.Item>)
+    if(res.type == "input") return ( <Form.Item
+      label={res.title}
+      name={res.key}
+      rules={[{ required: true, message: `กรุณากรอก${res.title}` }]}
+    >
+      <Input placeholder={res.title} />
+    </Form.Item>)
+    if(res.type == "textArea") return (
+      <Form.Item
+      label={res.title}
+      name={res.key}
+    >
+      <TextArea rows={3} placeholder={res.title} />
+    </Form.Item>
+    )
+    if(res.type == "active") return (<Form.Item
+      label={res.title}
+      name={res.key}
+      valuePropName="checked"
+    >
+      <Switch 
+        checkedChildren="เปิดขาย" 
+        unCheckedChildren="ปิดขาย"
+      />
+    </Form.Item>)
+    // return (
+    //   <Form.Item
+    //   label={res.title}
+    //   name={res.key}
+    //   rules={[{ required: true, message: `กรุณากรอก${res.title}` }]}
+    // >
+    //   <Input placeholder={res.title} />
+    // </Form.Item>)
+
+  }
 
   const onFinish = (values) => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -214,7 +219,7 @@ const BubbleTeaShop = (result) => {
       setData(newData);
       setFilteredData(newData);
       // // create new data by api
-       createItemApi(newItem);
+      createItemApi(newItem);
      
     }
     setIsModalVisible(false);
@@ -257,17 +262,17 @@ const BubbleTeaShop = (result) => {
           </Button>
         </div>
       </div>
-
       <Card className="menu-card">
         <Table 
           columns={columns} 
           dataSource={filteredData}
           pagination={{ pageSize: 5 }} 
           bordered
-          scroll={{ x: 1300 }}
+          scroll={{ x: 300 }}
         />
       </Card>
-
+      
+      
       <Modal
         title={currentItem ? "แก้ไขสินค้า" : "เพิ่มสินค้าใหม่"}
         visible={isModalVisible}
@@ -297,24 +302,24 @@ const BubbleTeaShop = (result) => {
             active: true
           }}
         >
-          <Form.Item
-            hidden="true"
-            label="ชื่อสินค้า"
-            name="product_id"
-            rules={[{  message: 'กรุณากรอกชื่อสินค้า' }]}
-          >
-            <Input placeholder="เช่น ชานมไข่มุกคลาสสิก" />
-          </Form.Item>
+          {column.map(res=>(<>
+          {
+            createModal(res)
+          }
          
-          <Form.Item
+          </>
+          ))}
+          
+         
+          {/* <Form.Item
             label="ชื่อสินค้า"
             name="product_name"
             rules={[{ required: true, message: 'กรุณากรอกชื่อสินค้า' }]}
           >
             <Input placeholder="เช่น ชานมไข่มุกคลาสสิก" />
-          </Form.Item>
+          </Form.Item> */}
 
-          <Form.Item
+          {/* <Form.Item
             label="คำอธิบาย"
             name="description"
           >
@@ -359,7 +364,7 @@ const BubbleTeaShop = (result) => {
               checkedChildren="เปิดขาย" 
               unCheckedChildren="ปิดขาย"
             />
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </Modal>
     </div>
