@@ -7,6 +7,9 @@ import SimpleSlider from '../../Components/Carousel/Carousel';
 
 function HomePage() {
     const [user,setUser] = useState(); 
+    const a =()=>{
+        localStorage.removeItem('user');
+    }
     useEffect(()=>{
         const userData = localStorage.getItem("user");
         
@@ -19,7 +22,7 @@ function HomePage() {
             }).then((result)=>{
                 // setUser(result.result[0])
                 localStorage.setItem("user",JSON.stringify({"id":result.result[0].employee_id,
-                    "name":result.result[0].employee_name,
+                    "name":result.result[1].employee_name,
                     "gender":"man"
                 }));
                 setUser(localStorage.getItem("users"))
@@ -34,7 +37,7 @@ function HomePage() {
     
     return (
         <div style={{maxWidth:'800px'}}>
-  
+            <button onClick={a}>Click</button>
         {console.log('user :',JSON.parse(localStorage.getItem("user")))}
             <SimpleSlider/>
  

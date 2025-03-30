@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { 
   Box, 
   Button, 
@@ -24,6 +24,24 @@ function Userpage() {
     email: '',
     phone: ''
   });
+
+  const [result, setResult] = useState();
+  const [load, setLoad] = useState(false);
+      useEffect(()=>{
+          fetch("http://127.0.0.1:4000/employees/employees").then(response=>{
+              if(!response.ok){
+                  throw Error("Connection failed"); 
+              }
+              return response.json()
+          }).then((result)=>{
+              if(!result.statusCode == 200){
+                  throw Error("Connection failed");
+              }
+              setResult(result);
+              setLoad(true);
+          })
+      },[])
+      console.log('result : ',result)
 
   // สถานะสำหรับ Snackbar
   const [snackbar, setSnackbar] = useState({ 
@@ -108,6 +126,13 @@ function Userpage() {
   };
 
   return (
+    <>
+    {(result != undefined? result.result.map((res)=>(
+      <>
+        <h1>{res.employee_id}</h1>
+        <h1>{res.employee_name}</h1>
+      </>
+    )):<h1>T</h1>)}
     <Box sx={{ p: 3 }}>
       {/* DynamicCRUD โดยส่งปุ่ม "เพิ่มพนักงานใหม่" เข้าไปแทนที่ปุ่ม Add New */}
       <DynamicCRUD 
@@ -196,6 +221,7 @@ function Userpage() {
         </Alert>
       </Snackbar>
     </Box>
+    </>
   );
 }
 

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Myimg from '../Image/img';
 import image from "../../image";
 import { useNavigate } from 'react-router-dom';
-import Numpad from '../Numpad/Numpad';
+import Numpad from '../Numpad/Numpad'; // ✅ นำเข้า Numpad
+
 
 function Purchase() {
   const [orders, setOrders] = useState([]);
@@ -61,50 +62,38 @@ function Purchase() {
     }
   };
 
-  // คำนวณยอดรวมทั้งหมด
-  const totalAmount = orders.reduce((sum, order) => sum + order.total, 0);
-  const totalWithVat = (totalAmount * 0.07) + totalAmount;
-
   return (
-    <div className="purchase-container" style={{ 
-      padding: "20px 20px 20px 0", // ลบ padding ด้านซ้าย
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100vh',
-      boxSizing: 'border-box'
-    }}>
-      {/* ปุ่มกลับ */}
-      <button
-      style={{
-        width: "80px",
-        backgroundColor: "#6495ED",
-        padding: "10px",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer",
-        fontSize: "16px",
-        color: "#fff",}}
+    <div className="purchase-container" style={{ padding: "20px" }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px' }}>
+        <button
+          style={{
+            width: "80px",
+            backgroundColor: "#6495ED",
+            padding: "10px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: "16px",
+            color: "#fff",
+          }}
           onClick={() => navigate('/FrontEnd_POS_Project')}
         >
-        กลับ
-      </button>
+          Back
+        </button>
+      </div>
 
-      {/* ส่วนแสดงผลหลัก */}
-      <div style={{ 
-        display: 'flex', 
-        flex: 1,
-        gap: '20px',
-        minHeight: 0 // สำหรับการจัดการ overflow
-      }}>
-        {/* รายการสินค้า */}
+      {/* รายการสั่งซื้อ */}
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div style={{
-          flex: 1,
           display: "flex",
           flexDirection: "column",
           border: '2px solid #B17457',
           borderRadius: '5px',
-          padding: '15px',
-          overflow: 'hidden'
+          width: '50%',
+          maxHeight: '400px',
+          overflowY: 'auto',
+          marginTop: '10px',
+          padding: '10px',
         }}>
           <h3>Purchase Orders</h3>
           {orders.length > 0 ? (
@@ -130,44 +119,23 @@ function Purchase() {
         <h3>ยอดรวม:  {newTotal+(newTotal*0.07) } บาท</h3>
         </div>
 
-          <div style={{
-            borderTop: '1px solid #ccc',
-            paddingTop: '10px',
-            marginTop: 'auto'
-          }}>
-            <h3>ยอดรวม: {totalWithVat.toFixed(2)} บาท</h3>
+        {/* QR Code Display */}
+        {showQrImage && (
+          <div style={{ marginLeft: "20px", display: "flex", justifyContent: 'center', alignItems: "center" }}>
+            <Myimg size={400} url={image.promptpay_Champ} />
           </div>
-        </div>
+        )}
 
-        {/* ส่วนแสดง QR Code หรือ Numpad */}
-        <div style={{
-          width: '400px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          border: '2px solid #ddd',
-          borderRadius: '5px',
-          padding: '20px'
-        }}>
-          {showQrImage ? (
-            <Myimg size={350} url={image.promptpay_Champ} />
-          ) : showNumpad ? (
-            <Numpad />
-          ) : (
-            <p style={{ color: '#666' }}>เลือกวิธีการชำระเงิน</p>
-          )}
+        {/* แสดง numpad เมื่อเลือก cash */}
+        {showNumpad && (
+        <div style={{ marginLeft: "20px", display: "flex", justifyContent: 'center', alignItems: "center" }}>
+          <Numpad />
         </div>
         )}
         
       </div>
-
-      {/* ปุ่มชำระเงิน */}
-      <div style={{ 
-        display: "flex",
-        gap: "20px", 
-        marginTop: "20px",
-        justifyContent: 'center'
-      }}>
+      
+      <section className="payment-buttons" style={{ display: "flex",gap: "20px", marginTop: "20px" }}>
         {["cash", "Qrcode", "atmcard"].map((type) => (
           <button
             key={type}
@@ -177,8 +145,7 @@ function Purchase() {
               borderRadius: "8px",
               padding: "12px",
               fontWeight: "bold",
-              cursor: "pointer",
-              width: '120px'
+              cursor: "pointer"
             }}
             onClick={() => handlePayment(type)}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#FFD37D"}
@@ -186,8 +153,7 @@ function Purchase() {
           >
             <Myimg size={60} url={image[type]} />
             <div style={{ fontSize: "14px", color: "#333", marginTop: "5px" }}>
-              {type === "Qrcode" ? "QR Payment" : 
-               type === "cash" ? "เงินสด" : "บัตร ATM"}
+              {type === "Qrcode" ? "QR Payment" : type.charAt(0).toUpperCase() + type.slice(1)}
             </div>
           </button>
         ))}
