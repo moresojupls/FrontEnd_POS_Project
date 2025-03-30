@@ -6,7 +6,8 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = (result) => {
+const BubbleTeaShop = ({result,column}) => {
+  const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -20,11 +21,41 @@ const BubbleTeaShop = (result) => {
    
   }, [data]);
   useEffect(()=>{
-    setData(result.result);
-    setFilteredData(result.result);
-    console.log('result ',result.result)
+    setData(result);
+    setFilteredData(result);
+    if(column !== undefined) setColumn(column);
+    console.log('console.log(columnTable)',columnTable)
+    
   },[])
-  // ฟังก์ชันค้นหา
+  
+  // ฟังก์ชันค้นหา match two column between own page column and crud column
+  
+  const columns =  [...columnTable,...[{
+    title: 'การดำเนินการ',
+    key: 'action',
+    render: (_, record) => (
+      <Space size="middle">
+        <Button 
+          type="primary" 
+          shape="circle" 
+          icon={<EditOutlined />} 
+          onClick={() => showEditModal(record)}
+        />
+        <Button 
+          type="primary" 
+          danger 
+          shape="circle" 
+          icon={<DeleteOutlined />} 
+          onClick={() => handleDelete(record.product_id)}
+        />
+      </Space>
+    ),
+  },]]
+  
+   
+  
+    
+  
   const handleSearch = (values) => {
     if (!values.searchText) {
       setFilteredData(data);
@@ -66,85 +97,7 @@ const BubbleTeaShop = (result) => {
       message.error(`เกิดข้อผิดพลาด: ${error.message}`);
     });
   }
-  const columns = [
-    {
-      title: 'รหัสสินค้า',
-      dataIndex: 'product_id',
-      key: 'product_id',
-      width: 100,
-    },
-    {
-      title: 'ชื่อสินค้า',
-      dataIndex: 'product_name',
-      key: 'product_name',
-      render: (text) => <strong>{text}</strong>,
-    },
-    {
-      title: 'คำอธิบาย',
-      dataIndex: 'description',
-      key: 'description',
-      ellipsis: true,
-    },
-    {
-      title: 'ราคา',
-      dataIndex: 'price',
-      key: 'price',
-      render: (price) => `${price} บาท`,
-      width: 100,
-    },
-    {
-      title: 'หมวดหมู่',
-      dataIndex: 'category',
-      key: 'category',
-      width: 120,
-    },
-    {
-      title: 'สถานะ',
-      dataIndex: 'active',
-      key: 'active',
-      render: (active) => (
-        <Tag color={active ? 'green' : 'red'}>
-          {active ? 'เปิดขาย' : 'ปิดขาย'}
-        </Tag>
-      ),
-      width: 100,
-    },
-    {
-      title: 'สร้างเมื่อ',
-      dataIndex: 'created_at',
-      key: 'created_at',
-      width: 150,
-    },
-    {
-      title: 'อัปเดตเมื่อ',
-      dataIndex: 'updated_at',
-      key: 'updated_at',
-      width: 150,
-    },
-    {
-      title: 'การดำเนินการ',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <Button 
-            type="primary" 
-            shape="circle" 
-            icon={<EditOutlined />} 
-            onClick={() => showEditModal(record)}
-          />
-          <Button 
-            type="primary" 
-            danger 
-            shape="circle" 
-            icon={<DeleteOutlined />} 
-            onClick={() => handleDelete(record.product_id)}
-          />
-        </Space>
-      ),
-    },
-  
-    
-  ];
+ 
   const selectOption = ["Milk Tea","Fruit Tea","General"]
   
 
@@ -257,7 +210,6 @@ const BubbleTeaShop = (result) => {
           </Button>
         </div>
       </div>
-
       <Card className="menu-card">
         <Table 
           columns={columns} 
@@ -267,7 +219,8 @@ const BubbleTeaShop = (result) => {
           scroll={{ x: 1300 }}
         />
       </Card>
-
+      
+      
       <Modal
         title={currentItem ? "แก้ไขสินค้า" : "เพิ่มสินค้าใหม่"}
         visible={isModalVisible}

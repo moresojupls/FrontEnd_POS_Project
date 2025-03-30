@@ -43,20 +43,7 @@ function Userpage() {
 
  
   
-  // useEffect(()=>{
-  //   if(!Validator.ValueUndefined(result)) console.log('result : ',result);
-   
-
-  // },[result])
-  // function Addvalue(){
-    
-  //   return  results_api.getApi().then((value)=>{
-  //     setCount(value)
-  //    })
-   
-  // }
-  
-  // return ( load === true ? <BubbleTeaShop result={result}/> :<h1>loading .....</h1>)
+  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
     
   
 }
