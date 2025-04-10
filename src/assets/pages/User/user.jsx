@@ -1,4 +1,6 @@
 import { useState,useEffect } from 'react';
+import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop'
+import { Tag } from 'antd';
 import { 
   Box, 
   Button, 
@@ -125,104 +127,84 @@ function Userpage() {
     setSnackbar(prev => ({ ...prev, open: false }));
   };
 
-  return (
-    <>
-    {(result != undefined? result.result.map((res)=>(
-      <>
-        <h1>{res.employee_id}</h1>
-        <h1>{res.employee_name}</h1>
-      </>
-    )):<h1>T</h1>)}
-    <Box sx={{ p: 3 }}>
-      {/* DynamicCRUD โดยส่งปุ่ม "เพิ่มพนักงานใหม่" เข้าไปแทนที่ปุ่ม Add New */}
-      <DynamicCRUD 
-        fields={employeeFields}
-        title="Employees Management"
-        customData={employees} // ส่งข้อมูลปัจจุบันเข้าไป
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          onClick={handleAddEmployee}
-          sx={{ textTransform: 'none' }}
-        >
-          เพิ่มพนักงานใหม่
-        </Button>
-      </DynamicCRUD>
+  const column = [{
+    title: 'รหัสผู้ใช้',
+    dataIndex: 'employee_id',
+    key: 'employee_id',
+    type: 'input',
+    width: 100,
+  },
+  {
+    title: 'ชื่อ',
+    dataIndex: 'employee_name',
+    key: 'employee_name',
+    type: 'input',
+    width: 100,
+    render: (text) => <strong>{text}</strong>,
+  },
+  {
+    title: 'นามสกุล',
+    dataIndex: 'employee_lastname',
+    key: 'employee_lastname',
+    type: 'input',
+    width: 100,
+    ellipsis: true,
+  },
+  {
+    title: 'email',
+    dataIndex: 'email',
+    key: 'email',
+    type: 'textArea',
+    render: (email) => `${email}` ,
+    width: 200,
+  },
+  {
+    title: 'phone',
+    dataIndex: 'phone',
+    key: 'phone',
+    type: 'input',
+    width: 100,
+  },
+  {
+    title: 'region',
+    dataIndex: 'region',
+    key: 'region',
+    type: 'input',
+    width: 100,
+  },
+  {
+    title: 'salary',
+    dataIndex: 'salary',
+    key: 'salary',
+    type: 'input',
+    width: 100,
+  },
+  {
+    title: 'สถานะ',
+    dataIndex: 'active',
+    type:'active',
+    key: 'active',
+    render: (active) => (
+      <Tag color={active ? 'green' : 'red'}>
+        {active ? 'เปิดขาย' : 'ปิดขาย'}
+      </Tag>
+    ),
+    width: 100,
+  }]
 
-      {/* ฟอร์มเพิ่มพนักงาน */}
-      <Dialog open={openAddForm} onClose={handleCloseAddForm} maxWidth="sm" fullWidth>
-        <DialogTitle>เพิ่มพนักงานใหม่</DialogTitle>
-        <DialogContent>
-          <Box component="form" sx={{ mt: 2 }}>
-            <TextField
-              margin="normal"
-              fullWidth
-              label="ชื่อพนักงาน"
-              name="name"
-              value={newEmployee.name}
-              onChange={handleInputChange}
-              required
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              label="ตำแหน่ง"
-              name="position"
-              value={newEmployee.position}
-              onChange={handleInputChange}
-              required
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              label="อีเมล"
-              name="email"
-              type="email"
-              value={newEmployee.email}
-              onChange={handleInputChange}
-              required
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              label="โทรศัพท์"
-              name="phone"
-              value={newEmployee.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseAddForm} color="secondary">
-            ยกเลิก
-          </Button>
-          <Button onClick={handleSubmit} color="primary" variant="contained">
-            บันทึก
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Snackbar สำหรับแสดงข้อความแจ้งเตือน */}
-      <Snackbar 
-        open={snackbar.open} 
-        autoHideDuration={6000} 
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
-          severity={snackbar.severity}
-          sx={{ width: '100%' }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Box>
-    </>
-  );
+  // return (
+  //   <>
+  //   {/* {(result != undefined? result.result.map((res)=>(
+  //     <>
+  //       <h1>{res.employee_id}</h1>
+  //       <h1>{res.employee_name}</h1>
+  //     </>
+  //   )):<h1>T</h1>)} */}
+    
+  //    return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
+  //   </>
+  // );
+  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
 }
 
 export default Userpage;

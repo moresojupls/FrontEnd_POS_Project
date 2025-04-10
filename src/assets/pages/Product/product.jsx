@@ -15,7 +15,7 @@ function ProductPage() {
 
 
   if (pathafterCatagory.toLowerCase() !== path) setPath(pathafterCatagory)
-  useEffect(() => {
+   useEffect(() => {
     fetch("http://127.0.0.1:4000/Products/Products").then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -24,10 +24,9 @@ function ProductPage() {
     }).then(result =>{
       setResult(result.result)
       setLoad(true)
-  })
-  
+  })},
 
-  }, [])
+  [])
   useEffect(() => {
     setPath(pathafterCatagory.toLowerCase())
     switch (pathafterCatagory.toLowerCase()) {

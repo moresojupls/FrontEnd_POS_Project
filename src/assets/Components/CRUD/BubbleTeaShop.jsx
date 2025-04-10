@@ -205,10 +205,42 @@ const BubbleTeaShop = ({result,column}) => {
     
     if (currentItem) {
       
+      // const updatedData = data.map(item => 
+      //   item.employee_id == currentItem.employee_id 
+      //     ? { 
+      //         employee_id: currentItem.employee_id,
+      //         ...values, 
+      //         create_dated: currentItem.create_at,
+      //         update_dated: now 
+      //       } 
+      //     : item
+         
+      // );
+    
+  
+      // fetch("http://127.0.0.1:4000/employees/update", {
+      //   method: 'PATCH',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({})
+      // })
+      // .then(response => response.json())
+      // .then(data => {
+      //   console.log('Update Success:', data);
+      //   setData(updatedData);
+      //   setFilteredData(updatedData);
+      //   message.success('อัปเดตพนักงานสำเร็จแล้ว');
+      // })
+      // .catch(error => {
+      //   console.error('Error updating employee:', error);
+      //   message.error('เกิดข้อผิดพลาดในการอัปเดตข้อมูล');
+      // });
+
       const updatedData = data.map(item => 
-        item.product_id == currentItem.product_id 
+        item.employee_id == currentItem.employee_id 
           ? { 
-              product_id: currentItem.product_id,
+              employee_id: currentItem.employee_id,
               ...values, 
               create_dated: currentItem.create_at,
               update_dated: now 
@@ -218,7 +250,7 @@ const BubbleTeaShop = ({result,column}) => {
       );
     
   
-      fetch("http://127.0.0.1:4000/Products/update",{
+      fetch("http://127.0.0.1:4000/employees/update",{
         method: 'PATCH',
         headers:{
           'Content-Type': 'application/json'
@@ -229,6 +261,32 @@ const BubbleTeaShop = ({result,column}) => {
       setData(updatedData);
       setFilteredData(updatedData);
       message.success('อัปเดตสินค้าสำเร็จแล้ว');
+
+
+      // const updatedData = data.map(item => 
+      //   item.product_id == currentItem.product_id 
+      //     ? { 
+      //         product_id: currentItem.product_id,
+      //         ...values, 
+      //         create_dated: currentItem.create_at,
+      //         update_dated: now 
+      //       } 
+      //     : item
+         
+      // );
+    
+  
+      // fetch("http://127.0.0.1:4000/Products/update",{
+      //   method: 'PATCH',
+      //   headers:{
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(values)
+      // })
+      // console.log('dasdasd',values);
+      // setData(updatedData);
+      // setFilteredData(updatedData);
+      // message.success('อัปเดตสินค้าสำเร็จแล้ว');
     } else {
       const newItem = {
         ...values,
