@@ -40,7 +40,7 @@ function SupplyPage() {
   
   return (
     <>
-      <Mycontent results={result !== undefined?result:''} btn={Btn}/>
+      <Mycontent results={result !== undefined?result:''} btn={Btn} page={"supply"}/>
     </>
   
   )

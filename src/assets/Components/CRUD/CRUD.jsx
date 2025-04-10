@@ -6,7 +6,7 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = ({result,column}) => {
+const BubbleTeaShop = ({result,column,page}) => {
   const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
@@ -75,27 +75,92 @@ const BubbleTeaShop = ({result,column}) => {
     searchForm.resetFields();
     setFilteredData(data);
   };
-  const updateItemApi = (newItem) =>{
-
+ 
+  const createItemApi = (newItem) =>{
+    console.log('create item :',page);
+    switch(page){
+      case "product":
+        fetch("http://127.0.0.1:4000/Products/create",{
+            method: 'POST',
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newItem)
+            
+          }).then((res)=>{
+            if (!res.ok) {
+              throw new Error('การเชื่อมต่อ API ล้มเหลว');
+            }
+            return res.json();
+          }).then((data)=>{
+            
+            message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
+          }).catch((error) => {
+            message.error(`เกิดข้อผิดพลาด: ${error.message}`);
+          });
+        break;
+      case "employee":
+        fetch("http://127.0.0.1:4000/Employees/create",{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newItem)
+          
+        }).then((res)=>{
+          if (!res.ok) {
+            throw new Error('การเชื่อมต่อ API ล้มเหลว');
+          }
+          return res.json();
+        }).then((data)=>{
+          
+          message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
+        }).catch((error) => {
+          message.error(`เกิดข้อผิดพลาด: ${error.message}`);
+        });
+        break;
+      default:
+        break;
+    }
+  
   }
-  const createItemApi = (newItem) => {
-    fetch("http://127.0.0.1:4000/Products/create",{
-      method: 'POST',
+  const updateItemApi = (newItem) => {
+    console.log('page :',page);
+    switch(page){
+      case "product":
+        productItemApi(newItem);
+        break;
+      case "employee":
+        employeeItemApi(newItem);
+        break;
+      default:
+        break;
+    }
+
+    
+  }
+  const productItemApi = (newItem)=>{
+     return fetch("http://127.0.0.1:4000/Products/update",{
+      method: 'PATCH',
       headers:{
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(newItem)
       
-    }).then((res)=>{
-      if (!res.ok) {
-        throw new Error('การเชื่อมต่อ API ล้มเหลว');
-      }
-      return res.json();
-    }).then((data)=>{
-      message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
-    }).catch((error) => {
-      message.error(`เกิดข้อผิดพลาด: ${error.message}`);
-    });
+    })
+   
+  }
+
+  const employeeItemApi = (newItem)=>{
+    console.log('item :',newItem);
+    
+    return fetch("http://127.0.0.1:4000/employees/update",{
+      method: 'PATCH',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newItem)
+    })
   }
  
   const selectOption = ["Milk Tea","Fruit Tea","General"]
@@ -126,10 +191,17 @@ const BubbleTeaShop = ({result,column}) => {
 
   const createModal =(res)=>{
     if(res.type == "null") return(<></>)
+    if(res.readonly  ) return ( <Form.Item
+        label={res.title}
+        name={res.key} 
+      hidden
+      >
+        <Input placeholder={res.title} readOnly hidden />
+      </Form.Item>)
     if(res.type == "select")return ( <Form.Item
       label="หมวดหมู่"
       name="category"
-      rules={[{ required: true, message: 'กรุณาเลือกหมวดหมู่' }]}
+      rules={[{  message: 'กรุณาเลือกหมวดหมู่' }]}
     >
       <Select defaultValue={selectOption[0]}>
         {
@@ -142,7 +214,7 @@ const BubbleTeaShop = ({result,column}) => {
     </Form.Item>)
     if(res.type == "input") return ( <Form.Item
       label={res.title}
-      name={res.key}
+      name={res.key} 
       rules={[{ required: true, message: `กรุณากรอก${res.title}` }]}
     >
       <Input placeholder={res.title} />
@@ -176,32 +248,26 @@ const BubbleTeaShop = ({result,column}) => {
 
   }
 
-  const onFinish = (values) => {
+  const onFinish =  (values) => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    
+    console.log('value :',values)
     if (currentItem) {
-      
+ 
       const updatedData = data.map(item => 
-        item.product_id == currentItem.product_id 
+        item[column[0].key] == currentItem[column[0].key] 
           ? { 
-              product_id: currentItem.product_id,
-              ...values, 
-              create_dated: currentItem.create_at,
-              update_dated: now 
+              employee_id: currentItem.employee_id,
+              ...values,
+              created_at: currentItem.create_at,
+              updated_at: now 
             } 
           : item
          
-      );
+      )
     
-  
-      fetch("http://127.0.0.1:4000/Products/update",{
-        method: 'PATCH',
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values)
-      })
-      console.log('dasdasd',values);
+      console.log('values :',updatedData)
+      updateItemApi(values);
+      console.log('dasdasd',updatedData);
       setData(updatedData);
       setFilteredData(updatedData);
       message.success('อัปเดตสินค้าสำเร็จแล้ว');
@@ -209,17 +275,18 @@ const BubbleTeaShop = ({result,column}) => {
       const newItem = {
         ...values,
         active: values.active !== undefined ? values.active : true,
-        product_id: `${data.length + 1}`,
-        create_ated: now,
-        update_ated: now,
+        // product_id: `${data.length + 1}`,
+        created_at: now,
+        updated_at: now,
       };
       console.log('new item :',newItem);
       const newData = [...data, newItem];
       console.log('new Data ',newData);
+      createItemApi(newItem);
       setData(newData);
       setFilteredData(newData);
       // // create new data by api
-      createItemApi(newItem);
+      
      
     }
     setIsModalVisible(false);
