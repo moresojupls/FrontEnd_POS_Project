@@ -21,7 +21,7 @@ function Userpage() {
     dataIndex: 'employee_id',
     key: 'employee_id',
     type: 'input',
-    width: 100,
+    width: 80,
   },
   {
     title: 'ชื่อ',
@@ -45,13 +45,28 @@ function Userpage() {
     key: 'email',
     type: 'textArea',
     render: (email) => `${email} `,
-    width: 200,
+    width: 180,
   },
   {
     title: 'phone',
     dataIndex: 'phone',
     key: 'phone',
-    width: 160,
+    type:'input',
+    width: 140,
+  },
+  {
+    title: 'position',
+    dataIndex: 'position',
+    key: 'position',
+    type:'input',
+    width: 100,
+  },
+  {
+    title: 'salary',
+    dataIndex: 'salary',
+    key: 'salary',
+    type:'input',
+    width: 100,
   },
   {
     title: 'สถานะ',
@@ -65,6 +80,8 @@ function Userpage() {
     ),
     width: 100,
   },
+
+ 
   // {
   //   title: 'สร้างเมื่อ',
   //   dataIndex: 'created_at',

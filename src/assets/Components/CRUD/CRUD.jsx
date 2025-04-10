@@ -92,6 +92,7 @@ const BubbleTeaShop = ({result,column}) => {
       }
       return res.json();
     }).then((data)=>{
+      
       message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
     }).catch((error) => {
       message.error(`เกิดข้อผิดพลาด: ${error.message}`);
@@ -182,10 +183,10 @@ const BubbleTeaShop = ({result,column}) => {
     if (currentItem) {
       
       const updatedData = data.map(item => 
-        item.product_id == currentItem.product_id 
+        item.employee_id == currentItem.employee_id 
           ? { 
-              product_id: currentItem.product_id,
-              ...values, 
+              employee_id: currentItem.employee_id,
+              ...values,
               create_dated: currentItem.create_at,
               update_dated: now 
             } 
@@ -193,15 +194,15 @@ const BubbleTeaShop = ({result,column}) => {
          
       );
     
-  
-      fetch("http://127.0.0.1:4000/Products/update",{
+      console.log('values :',values)
+      fetch("http://127.0.0.1:4000/employees/update",{
         method: 'PATCH',
         headers:{
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(values)
       })
-      console.log('dasdasd',values);
+      console.log('dasdasd',updatedData);
       setData(updatedData);
       setFilteredData(updatedData);
       message.success('อัปเดตสินค้าสำเร็จแล้ว');
@@ -209,7 +210,7 @@ const BubbleTeaShop = ({result,column}) => {
       const newItem = {
         ...values,
         active: values.active !== undefined ? values.active : true,
-        product_id: `${data.length + 1}`,
+        // product_id: `${data.length + 1}`,
         create_ated: now,
         update_ated: now,
       };
@@ -219,7 +220,7 @@ const BubbleTeaShop = ({result,column}) => {
       setData(newData);
       setFilteredData(newData);
       // // create new data by api
-      createItemApi(newItem);
+      // createItemApi(newItem);
      
     }
     setIsModalVisible(false);

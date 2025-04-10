@@ -94,7 +94,7 @@ function MySidebar() {
                   <ListItem button width='100rem' >
                     <div>
                       <Myimg  url={img.Stock} size={45}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Stock</h4>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Menu</h4>
                     </div>
                   
                   </ListItem>
@@ -116,18 +116,32 @@ function MySidebar() {
               </ListItem>
              </Link>
              </div>
-              <div className='submenu'>
+            <div className='submenu'>
               <div className='Onclickhover '>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/crud"} >
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/powder"} >
                   <ListItem button width='100rem' >
                     <div>
                       <Myimg  url={img.Supply} size={45}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>crud</h4>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>stock</h4>
                     </div>
                   
                   </ListItem>
                 </Link>
+                
               </div>
+              <div className='Onclickhover '>
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/powder"} >
+                  <ListItem button width='100rem' >
+                    <div>
+                      <Myimg  url={img.Supply} size={45}></Myimg>
+                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>vender</h4>
+                    </div>
+                  
+                  </ListItem>
+                </Link>
+                
+              </div>
+              
               {/* <div className='Onclickhover'>
               <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/order"} >
                   <ListItem button width='100rem' >
