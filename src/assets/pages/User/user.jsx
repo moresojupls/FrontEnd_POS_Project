@@ -22,6 +22,7 @@ function Userpage() {
     key: 'employee_id',
     type: 'input',
     width: 80,
+    readonly: true,
   },
   {
     title: 'ชื่อ',
@@ -125,7 +126,7 @@ function Userpage() {
 
  
   
-  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
+  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column}  page={"employee"} /> :<h1>Loadding.... </h1>)
     
   
 }
