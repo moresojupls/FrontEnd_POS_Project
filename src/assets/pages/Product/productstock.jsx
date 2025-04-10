@@ -11,8 +11,8 @@ export default function Productstock(){
           title: 'รหัสสินค้า',
           dataIndex: 'product_id',
           key: 'product_id',
-          type: 'input',
           width: 100,
+          readonly: true,
         },
         {
           title: 'ชื่อสินค้า',
@@ -32,8 +32,8 @@ export default function Productstock(){
           title: 'ราคา',
           dataIndex: 'price',
           key: 'price',
-          render: (price) => `${price} บาท`,
-          width: 100,
+          type:'input',
+          width: 70,
         },
         {
           title: 'หมวดหมู่',
@@ -85,7 +85,7 @@ export default function Productstock(){
         })
     },[])
     
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
+     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"}/> :<h1>Loadding.... </h1>)
     
     
 }

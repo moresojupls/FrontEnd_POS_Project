@@ -78,7 +78,7 @@ function ProductPage() {
     return (
       <>
         <div style={{"display":"flex"}}>
-          <Mycontent results={result !== undefined ? result : ''} btn={ProductBtn} />
+          <Mycontent results={result !== undefined ? result : ''} btn={ProductBtn}  page={"product"}/>
           {/* <MyOrderlist setStateOrderlist={Orderlist}/> */}
         </div>
         

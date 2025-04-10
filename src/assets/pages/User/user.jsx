@@ -131,8 +131,9 @@ function Userpage() {
     title: 'รหัสผู้ใช้',
     dataIndex: 'employee_id',
     key: 'employee_id',
-    type: 'input',
-    width: 100,
+
+    width: 80,
+    readonly: true,
   },
   {
     title: 'ชื่อ',
@@ -155,28 +156,28 @@ function Userpage() {
     dataIndex: 'email',
     key: 'email',
     type: 'textArea',
-    render: (email) => `${email}` ,
-    width: 200,
+    render: (email) => `${email} `,
+    width: 180,
   },
   {
     title: 'phone',
     dataIndex: 'phone',
     key: 'phone',
-    type: 'input',
-    width: 100,
+    type:'input',
+    width: 140,
   },
   {
-    title: 'region',
-    dataIndex: 'region',
-    key: 'region',
-    type: 'input',
+    title: 'position',
+    dataIndex: 'position',
+    key: 'position',
+    type:'input',
     width: 100,
   },
   {
     title: 'salary',
     dataIndex: 'salary',
     key: 'salary',
-    type: 'input',
+    type:'input',
     width: 100,
   },
   {
@@ -190,21 +191,55 @@ function Userpage() {
       </Tag>
     ),
     width: 100,
-  }]
+  },
 
-  // return (
-  //   <>
-  //   {/* {(result != undefined? result.result.map((res)=>(
-  //     <>
-  //       <h1>{res.employee_id}</h1>
-  //       <h1>{res.employee_name}</h1>
-  //     </>
-  //   )):<h1>T</h1>)} */}
+ 
+  // {
+  //   title: 'สร้างเมื่อ',
+  //   dataIndex: 'created_at',
+  //   key: 'created_at',
+  //   type:'null',
+  //   width: 150,
+  // },
+  // {
+  //   title: 'อัปเดตเมื่อ',
+  //   dataIndex: 'updated_at',
+  //   key: 'updated_at',
+  //   type:'null',
+  //   width: 150,
+  // },
+]
+
+  function PageinationData(item){
+    setResult(item)
+  }
+  
+  
     
-  //    return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
-  //   </>
-  // );
-  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} /> :<h1>Loadding.... </h1>)
+
+  const [result,setResult] = useState();
+  const [load, setLoad] =useState(false);
+
+  useEffect(()=>{
+    fetch('http://127.0.0.1:4000/employees/employees').then(res=>{
+      return res.json()
+    }).then((result)=>{
+      setResult(result)
+      setLoad(true)
+      console.log('result :',result)
+    })
+
+      
+    
+  },[])
+
+ 
+
+ 
+  
+  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column}  page={"employee"} /> :<h1>Loadding.... </h1>)
+    
+  
 }
 
 export default Userpage;
