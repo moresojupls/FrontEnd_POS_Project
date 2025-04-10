@@ -20,7 +20,7 @@ function Userpage() {
     title: 'รหัสผู้ใช้',
     dataIndex: 'employee_id',
     key: 'employee_id',
-    type: 'input',
+
     width: 80,
     readonly: true,
   },

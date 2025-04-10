@@ -76,13 +76,65 @@ const BubbleTeaShop = ({result,column,page}) => {
     setFilteredData(data);
   };
  
-  const createItemApi = (newItem) => {
-    console.log('page :',page);
-    if(page == "product"){
-      productItemApi(newItem);
+  const createItemApi = (newItem) =>{
+    console.log('create item :',page);
+    switch(page){
+      case "product":
+        fetch("http://127.0.0.1:4000/Products/create",{
+            method: 'POST',
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newItem)
+            
+          }).then((res)=>{
+            if (!res.ok) {
+              throw new Error('การเชื่อมต่อ API ล้มเหลว');
+            }
+            return res.json();
+          }).then((data)=>{
+            
+            message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
+          }).catch((error) => {
+            message.error(`เกิดข้อผิดพลาด: ${error.message}`);
+          });
+        break;
+      case "employee":
+        fetch("http://127.0.0.1:4000/Employees/create",{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newItem)
+          
+        }).then((res)=>{
+          if (!res.ok) {
+            throw new Error('การเชื่อมต่อ API ล้มเหลว');
+          }
+          return res.json();
+        }).then((data)=>{
+          
+          message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
+        }).catch((error) => {
+          message.error(`เกิดข้อผิดพลาด: ${error.message}`);
+        });
+        break;
+      default:
+        break;
     }
-    if(page == "employee"){
-       employeeItemApi(newItem);
+  
+  }
+  const updateItemApi = (newItem) => {
+    console.log('page :',page);
+    switch(page){
+      case "product":
+        productItemApi(newItem);
+        break;
+      case "employee":
+        employeeItemApi(newItem);
+        break;
+      default:
+        break;
     }
 
     
@@ -96,28 +148,12 @@ const BubbleTeaShop = ({result,column,page}) => {
       body: JSON.stringify(newItem)
       
     })
-    // fetch("http://127.0.0.1:4000/Products/create",{
-    //   method: 'POST',
-    //   headers:{
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(newItem)
-      
-    // }).then((res)=>{
-    //   if (!res.ok) {
-    //     throw new Error('การเชื่อมต่อ API ล้มเหลว');
-    //   }
-    //   return res.json();
-    // }).then((data)=>{
-      
-    //   message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
-    // }).catch((error) => {
-    //   message.error(`เกิดข้อผิดพลาด: ${error.message}`);
-    // });
+   
   }
 
   const employeeItemApi = (newItem)=>{
     console.log('item :',newItem);
+    
     return fetch("http://127.0.0.1:4000/employees/update",{
       method: 'PATCH',
       headers:{
@@ -155,17 +191,17 @@ const BubbleTeaShop = ({result,column,page}) => {
 
   const createModal =(res)=>{
     if(res.type == "null") return(<></>)
-    if(res.readonly && res.type == "input" ) return ( <Form.Item
+    if(res.readonly  ) return ( <Form.Item
         label={res.title}
         name={res.key} 
-        rules={[{  message: `กรุณากรอก${res.title}` }]}
+      hidden
       >
-        <Input placeholder={res.title} readOnly />
+        <Input placeholder={res.title} readOnly hidden />
       </Form.Item>)
     if(res.type == "select")return ( <Form.Item
       label="หมวดหมู่"
       name="category"
-      rules={[{ required: true, message: 'กรุณาเลือกหมวดหมู่' }]}
+      rules={[{  message: 'กรุณาเลือกหมวดหมู่' }]}
     >
       <Select defaultValue={selectOption[0]}>
         {
@@ -176,7 +212,7 @@ const BubbleTeaShop = ({result,column,page}) => {
         
       </Select>
     </Form.Item>)
-    if(res.type == "input" ) return ( <Form.Item
+    if(res.type == "input") return ( <Form.Item
       label={res.title}
       name={res.key} 
       rules={[{ required: true, message: `กรุณากรอก${res.title}` }]}
@@ -214,7 +250,7 @@ const BubbleTeaShop = ({result,column,page}) => {
 
   const onFinish =  (values) => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-   
+    console.log('value :',values)
     if (currentItem) {
  
       const updatedData = data.map(item => 
@@ -230,7 +266,7 @@ const BubbleTeaShop = ({result,column,page}) => {
       )
     
       console.log('values :',updatedData)
-      createItemApi(values);
+      updateItemApi(values);
       console.log('dasdasd',updatedData);
       setData(updatedData);
       setFilteredData(updatedData);
@@ -246,10 +282,11 @@ const BubbleTeaShop = ({result,column,page}) => {
       console.log('new item :',newItem);
       const newData = [...data, newItem];
       console.log('new Data ',newData);
+      createItemApi(newItem);
       setData(newData);
       setFilteredData(newData);
       // // create new data by api
-      createItemApi(newItem);
+      
      
     }
     setIsModalVisible(false);

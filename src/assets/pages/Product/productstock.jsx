@@ -11,7 +11,6 @@ export default function Productstock(){
           title: 'รหัสสินค้า',
           dataIndex: 'product_id',
           key: 'product_id',
-          type: 'input',
           width: 100,
           readonly: true,
         },
