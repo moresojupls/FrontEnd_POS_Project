@@ -51,15 +51,16 @@ function App() {
       useEffect(()=>{
           if (userData) {
             setUser(JSON.parse(userData)); // ✅ Safe parsing
-            console.log(user);
-            localStorage.removeItem("user");
+            
+            // localStorage.removeItem("user");
         } else {
       
            
             const token = ()=>{
                 navigate('/login');
             }
-            if(userData == null){
+            console.log('User',userData)
+            if(userData == null || userData == undefined){
                 token();
             }
         }

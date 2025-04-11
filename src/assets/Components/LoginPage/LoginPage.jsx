@@ -3,18 +3,27 @@ import React, { useState } from 'react';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaGoogle, FaFacebook } from 'react-icons/fa';
 import { GiCoffeeCup } from 'react-icons/gi';
 
-const LoginPage = () => {
-  const userData = localStorage.getItem("user");
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login submitted:', { email, password, rememberMe });
-  };
-  
+function LoginPage() {
+ 
+ 
+  const login =async()=>{
+    await fetch('http://127.0.0.1:4000/employees/login',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({
+        "email":"dwf",
+        "password":"123456789"
+      })
+    }).then((res)=>{
+      return res.json();
+    }).then((result)=>{
+      localStorage.setItem("user",JSON.stringify(result));
+    
+    })
+  }
   return (
     <div className="login-container">
       {/* ฟองไข่มุกตกแต่ง */}

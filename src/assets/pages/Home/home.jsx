@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 function HomePage() {
-    const [user,setUser] = useState(); 
-    const navigate = useNavigate();
+    
     useEffect(()=>{
+      
         
             // fetch('http://127.0.0.1:4000/employees/employees').then((res)=>{
             //     return res.json()
