@@ -15,7 +15,8 @@ import { useState,useEffect } from 'react';
 function Mynavbar() {
   function UserDisplay(){
     const  user =  JSON.parse(localStorage.getItem("user")) || null;
-    if(user != null) return `${user.gender === 'man'?'Mr':'Miss'} ${user.name} `;
+ 
+    if(user != null) return `${user.gender === 'man'?'Mr':'Miss'} ${user.result.user} `;
   }
   function DateNow(){
     const date = new Date();
