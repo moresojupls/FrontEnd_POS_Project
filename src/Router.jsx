@@ -16,6 +16,7 @@ import NotFound from './assets/pages/NotFound/notfound';
 import User from './assets/MockUpData/Product/User';
 import Purchase from './assets/Components/Purchase/purchase'
 import LoginPage from './assets/Components/LoginPage/LoginPage';
+import LoginoutPage from './assets/Components/LoginPage/LoginoutPage';
 
 
 
@@ -60,6 +61,7 @@ function MyRouter() {
       
             </Route>
             <Route path="login" element={<LoginPage />} />
+            <Route path="loginout" element={<LoginoutPage />} />
             <Route path="purchase" element={<Purchase />} />
             <Route path="*" element={<NotFound />} /> {/* สำหรับหน้าที่ไม่พบ */}
         </Routes>

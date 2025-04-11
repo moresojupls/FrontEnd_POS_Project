@@ -173,6 +173,25 @@ function MySidebar() {
               
               
             </div>
+
+            <div className='Menu'>
+            <div className='Menu Onclickhover'>
+             <Link to={'/loginout'} style={{width:"100%"}}>
+              <ListItem button>
+                <div>
+                  <Myimg  url={img.User} size={45}></Myimg>
+                  <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Log out</h4>
+                </div>
+               
+              </ListItem>
+             </Link>
+             </div>
+             
+             
+              
+              
+            </div>
+            
             
               
             
