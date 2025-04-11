@@ -4,7 +4,7 @@
 // Library
 import { useState,useEffect } from 'react'
 import { Outlet,Router,Routes,Route,Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -36,16 +36,34 @@ function App() {
  
   const [result,setResult] = useState();
   const [Orderlist,setOrderlist] = useState(true);
+  const [user,setUser] = useState(); 
   
  
   // set up for page
  
- 
+  const navigate = useNavigate();
 
 
 
 
 
+  const userData = localStorage.getItem("user");
+      useEffect(()=>{
+          if (userData) {
+            setUser(JSON.parse(userData)); // ✅ Safe parsing
+            console.log(user);
+            // localStorage.removeItem("user");
+        } else {
+      
+           
+            const token = ()=>{
+                navigate('/login');
+            }
+            if(userData == null){
+                token();
+            }
+        }
+        },[])
   
 
   function Or(){
