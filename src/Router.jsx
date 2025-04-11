@@ -1,5 +1,6 @@
 // library
 import { useId } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { BrowserRouter , Router,Routes,Route  } from 'react-router-dom';
 import App from './App';
 import ProductBtn from './assets/pages/Product/productbtn';
@@ -14,6 +15,7 @@ import SupplyPage from './assets/pages/Supply/supply';
 import NotFound from './assets/pages/NotFound/notfound';
 import User from './assets/MockUpData/Product/User';
 import Purchase from './assets/Components/Purchase/purchase'
+import LoginPage from './assets/Components/LoginPage/LoginPage';
 
 
 
@@ -26,8 +28,8 @@ function MyRouter() {
         // history.push('/your-route');
     };
 
-    
-    
+
+   
     return (
     <BrowserRouter>
         <Routes>
@@ -53,10 +55,11 @@ function MyRouter() {
                         <Route  path={'Supply/'+element}  element={<SupplyPage/>} />
                     ))
                 }
-                
-      
+               
+         
       
             </Route>
+            <Route path="login" element={<LoginPage />} />
             <Route path="purchase" element={<Purchase />} />
             <Route path="*" element={<NotFound />} /> {/* สำหรับหน้าที่ไม่พบ */}
         </Routes>
