@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, Switch, message } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import '../../Components/CRUD/BubbleTeaShop.css';
 
 const { Option } = Select;
@@ -57,16 +58,18 @@ const BubbleTeaShop = ({result,column,page}) => {
     
   
   const handleSearch = (values) => {
-    if (!values.searchText) {
+    const searchText = values.searchText?.trim().toLowerCase() || "";
+  
+    if (!searchText) {
       setFilteredData(data);
       return;
     }
-    
+  
     const filtered = data.filter(item =>
-      item.product_name.toLowerCase().includes(values.searchText.toLowerCase()) ||
-      item.description.toLowerCase().includes(values.searchText.toLowerCase()) ||
-      item.category.toLowerCase().includes(values.searchText.toLowerCase())
+      item.product_name.toLowerCase().includes(searchText) ||
+      item.description?.toLowerCase().includes(searchText) // ตรวจสอบว่ามี description ก่อน
     );
+  
     setFilteredData(filtered);
   };
 
@@ -182,11 +185,32 @@ const BubbleTeaShop = ({result,column,page}) => {
     setIsModalVisible(false);
   };
 
-  const handleDelete = (product_id) => {
-    const newData = data.filter(item => item.product_id !== product_id);
-    setData(newData);
-    setFilteredData(newData);
-    message.success('ลบสินค้าสำเร็จแล้ว');
+  // ในคอมโพเนนต์ของคุณ
+  const handleDelete = (productId) => {
+    // หาข้อมูลสินค้าจาก productId เพื่อเอาชื่อมาแสดง
+    const productToDelete = data.find(item => item.product_id === productId);
+    
+    Modal.confirm({
+      title: 'ยืนยันการลบ',
+      content: (
+        <div>
+          <p>คุณกำลังจะลบสินค้า: {productToDelete?.product_name || 'รหัส ' + productId}</p>
+          <p>การกระทำนี้ไม่สามารถยกเลิกได้</p>
+        </div>
+      ),
+      okText: 'ลบ',
+      okType: 'danger',
+      cancelText: 'ไม่ลบ',
+      icon: <ExclamationCircleOutlined />,
+      centered: true,
+      onOk() {
+        // ฟังก์ชันลบจริงๆ
+        const newData = data.filter(item => item.product_id !== productId);
+        setData(newData);
+        setFilteredData(newData);
+        message.success('ลบสินค้าสำเร็จแล้ว');
+      }
+    });
   };
 
   const createModal =(res)=>{
@@ -271,6 +295,32 @@ const BubbleTeaShop = ({result,column,page}) => {
       setData(updatedData);
       setFilteredData(updatedData);
       message.success('อัปเดตสินค้าสำเร็จแล้ว');
+
+
+      // const updatedData = data.map(item => 
+      //   item.product_id == currentItem.product_id 
+      //     ? { 
+      //         product_id: currentItem.product_id,
+      //         ...values, 
+      //         create_dated: currentItem.create_at,
+      //         update_dated: now 
+      //       } 
+      //     : item
+         
+      // );
+    
+  
+      // fetch("http://127.0.0.1:4000/Products/update",{
+      //   method: 'PATCH',
+      //   headers:{
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(values)
+      // })
+      // console.log('dasdasd',values);
+      // setData(updatedData);
+      // setFilteredData(updatedData);
+      // message.success('อัปเดตสินค้าสำเร็จแล้ว');
     } else {
       const newItem = {
         ...values,
@@ -297,26 +347,19 @@ const BubbleTeaShop = ({result,column,page}) => {
       <div className="header">
         <h1>ระบบจัดการเมนูชานมไข่มุก</h1>
         <div className="actions">
-          <Form form={searchForm} onFinish={handleSearch} layout="inline" style={{ marginRight: 16 }}>
-            <Form.Item name="searchText" style={{ marginRight: 8 }}>
-              <Input 
-                placeholder="ค้นหาสินค้า..." 
-                prefix={<SearchOutlined />} 
-                style={{ width: 200 }}
-              />
-            </Form.Item>
-            <Button 
-              type="default" 
-              htmlType="submit"
-              icon={<SearchOutlined />}
-              style={{ marginRight: 8 }}
-            >
+        <Form form={searchForm} onFinish={handleSearch} layout="inline">
+          <Form.Item name="searchText">
+          <Input 
+            placeholder="ค้นหาสินค้า..." 
+            prefix={<SearchOutlined />} 
+            style={{ width: 200 }} 
+            onPressEnter={() => searchForm.submit()} // กด Enter เพื่อค้นหา
+          />
+          </Form.Item>
+            <Button type="default" htmlType="submit" icon={<SearchOutlined />}>
               ค้นหา
             </Button>
-            <Button 
-              type="default" 
-              onClick={resetSearch}
-            >
+            <Button type="default" onClick={resetSearch}>
               ล้างการค้นหา
             </Button>
           </Form>
