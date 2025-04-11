@@ -46,22 +46,22 @@ function Structure() {
 
   return(
    
-      <div style={{width:'100%',height:'100vh' ,overflow:'scroll'}}>
-        <Mynavbar className='d-flex '/>
-        <div className='d-flex '  style={{width:'100%',height:'90%' }}>
-          <MySidebar />
+    //   <div style={{width:'100%',height:'100vh' ,overflow:'scroll'}}>
+    //     <Mynavbar className='d-flex '/>
+    //     <div className='d-flex '  style={{width:'100%',height:'90%' }}>
+    //       <MySidebar />
           
-          <div style={{width:'60%'}}>
+    //       <div style={{width:'60%'}}>
            
      
-            {/* <Mycontent catagory={result !== undefined ? result:"Favourite"}/> */}
-            <SimpleSlider/>
-          </div>
-          <MyOrderlist/>
+    //         {/* <Mycontent catagory={result !== undefined ? result:"Favourite"}/> */}
+    //         <SimpleSlider/>
+    //       </div>
+    //       <MyOrderlist/>
           
 
-        </div>
-    </div>
+    //     </div>
+    // </div>
    
    
    
