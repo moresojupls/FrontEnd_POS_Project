@@ -52,7 +52,7 @@ function App() {
           if (userData) {
             setUser(JSON.parse(userData)); // ✅ Safe parsing
             console.log(user);
-            // localStorage.removeItem("user");
+            localStorage.removeItem("user");
         } else {
       
            

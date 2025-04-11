@@ -16,6 +16,7 @@ import NotFound from './assets/pages/NotFound/notfound';
 import User from './assets/MockUpData/Product/User';
 import Purchase from './assets/Components/Purchase/purchase'
 import LoginPage from './assets/Components/LoginPage/LoginPage';
+import HistoryPage from './assets/pages/History/HistoryPage';
 
 
 

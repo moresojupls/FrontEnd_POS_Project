@@ -213,12 +213,6 @@ function Userpage() {
   function PageinationData(item){
     setResult(item)
   }
-  
-  
-    
-
-  const [result,setResult] = useState();
-  const [load, setLoad] =useState(false);
 
   useEffect(()=>{
     fetch('http://127.0.0.1:4000/employees/employees').then(res=>{
