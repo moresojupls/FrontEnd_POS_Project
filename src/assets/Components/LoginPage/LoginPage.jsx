@@ -56,7 +56,7 @@ function LoginPage() {
           <div className="form-group">
             <label htmlFor="password">รหัสผ่าน</label>
             <div className="input-group">
-              <FaLock className="input-icon" />
+              <FaLock clasxsName="input-icon" />
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
