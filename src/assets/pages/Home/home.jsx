@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 function HomePage() {
-    
+    const navigate = useNavigate()
+    const userData = localStorage.getItem("user");
     useEffect(()=>{
       
         
@@ -24,7 +25,7 @@ function HomePage() {
             //     // localStorage.setItem("user", JSON.stringify(user));
             // })
             // console.log("user :",user)
-        
+            console.log('UU ser',userData)
         
     },[])
  
@@ -32,6 +33,7 @@ function HomePage() {
     
     return (
         <div style={{maxWidth:'800px'}}>
+            {/* {localStorage.removeItem("user")} */}
             {/* <button onClick={}>Click</button> */}
         {console.log('user :',JSON.parse(localStorage.getItem("user")))}
             <SimpleSlider/>
