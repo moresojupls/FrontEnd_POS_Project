@@ -16,7 +16,7 @@ function Mynavbar() {
   function UserDisplay(){
     const  user =  JSON.parse(localStorage.getItem("user")) || null;
     //localStorage.removeItem('user');
-   // if(user != null) return `${user.gender === 'man'?'Mr':'Miss'} ${user.result.user} `;
+    if(user != null) return `${user.gender === 'man'?'Mr':'Miss'} ${user.result.user} `;
   }
   function DateNow(){
     const date = new Date();
