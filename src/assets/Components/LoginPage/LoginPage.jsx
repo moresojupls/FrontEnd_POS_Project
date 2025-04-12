@@ -26,7 +26,7 @@ function LoginPage() {
         'Content-Type': 'application/json'
       },
       body:JSON.stringify({
-        "email":"somporn@example.com",
+        "email":"dwf",
         "password":"123456789"
       })
     }).then((res)=>{
