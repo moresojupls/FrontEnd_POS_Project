@@ -16,10 +16,12 @@ import { ImportExport } from '@mui/icons-material';
 
 //  paddingTop: '10px', position: 'fixed', left: 5, top: '100px' 
 function MySidebar() {
-
+  const userData = localStorage.getItem("user");
+  const [permission,setpermission]=useState();
   var [respone,setrespone]= useState(false);
 
   useEffect(() => {
+    setpermission(JSON.parse(userData).result.permission);
     function handleResize() {
       // Update the state or perform any other actions when the
       // browser is resized
@@ -89,50 +91,58 @@ function MySidebar() {
                   </ListItem>
                 </Link>
               </div>
+              
               <div className='Onclickhover'>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/stock"} >
-                  <ListItem button width='100rem' >
-                    <div>
-                      <Myimg  url={img.Stock} size={45}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Menu</h4>
-                    </div>
-                  
-                  </ListItem>
+                <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/product/stock"} >
+                    <ListItem button width='100rem' >
+                      <div>
+                        <Myimg  url={img.Stock} size={45}></Myimg>
+                        <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Menu</h4>
+                      </div>
+                    
+                    </ListItem>
                 </Link>
               </div>
+              
+              
+              
               </div>
               
             </div>
             
 
+
             {/* History page */}
+            {permission != 'admin'? <></>:
             <div className='Menu'>
-              <div className='Menu Onclickhover'>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History"} >
-                  <ListItem button width='100rem' >
-                    <div>
-                      <Myimg  url={img.LogoBrand} size={45}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>History</h4>
-                    </div>
-                  
-                  </ListItem>
-                </Link>
-                </div>
-              <div className='submenu'>
-              <div className='Onclickhover '>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History/Transactions"} >
-                  <ListItem button width='100rem' >
-                    <div>
-                      <Myimg  url={img.Sale} size={45}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Transactions</h4>
-                    </div>
-                  
-                  </ListItem>
-                </Link>
+            <div className='Menu Onclickhover'>
+            <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History"} >
+                <ListItem button width='100rem' >
+                  <div>
+                    <Myimg  url={img.LogoBrand} size={45}></Myimg>
+                    <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>History</h4>
+                  </div>
+                
+                </ListItem>
+              </Link>
               </div>
-              </div>
-              
+            <div className='submenu'>
+            <div className='Onclickhover '>
+            <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History/Transactions"} >
+                <ListItem button width='100rem' >
+                  <div>
+                    <Myimg  url={img.Sale} size={45}></Myimg>
+                    <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Transactions</h4>
+                  </div>
+                
+                </ListItem>
+              </Link>
             </div>
+            </div>
+            
+          </div>
+            }
+            
             
 
             <div className='Menu'>
@@ -187,6 +197,7 @@ function MySidebar() {
               </div>
               
             </div>
+            {permission != 'admin' ?<></>:
             <div className='Menu'>
             <div className='Menu Onclickhover'>
              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} style={{width:"100%"}}>
@@ -199,21 +210,12 @@ function MySidebar() {
               </ListItem>
              </Link>
              </div>
-              <div className='submenu'>
-              <div className='Onclickhover '>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} >
-                  <ListItem button width='100rem' >
-                    <div>
-                      <Myimg  url={img.User} size={45}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Users</h4>
-                    </div>
-                  
-                  </ListItem>
-                </Link>
-              </div>
-              </div>
+              
+         
               
             </div>
+            }
+            
 
             <div className='Menu'>
             <div className='Menu Onclickhover'>
