@@ -11,6 +11,7 @@ function LoginPage() {
    const [password, setPassword] = useState('');
    const [showPassword, setShowPassword] = useState(false);
    const [rememberMe, setRememberMe] = useState(false);
+   const [showError,setError] = useState(false);
    const  navigator = useNavigate();
  
    const handleSubmit = (e) => {
@@ -26,13 +27,19 @@ function LoginPage() {
       },
       body:JSON.stringify({
         "email":"dwf",
-        "password":"a"
+        "password":"123456789"
       })
     }).then((res)=>{
       return res.json();
     }).then((result)=>{
+      if(result.statuscode != 200) throw('Error')
+      setError(false);
       localStorage.setItem("user",JSON.stringify(result));
       navigator('/Frontend_POS_Project');
+    }).catch((err)=>{
+      setError(true);
+      // localStorage.removeItem("user");
+      console.log('err',err)
     })
   }
   return (
@@ -40,7 +47,7 @@ function LoginPage() {
     {/* ฟองไข่มุกตกแต่ง */}
     <div className="bubble bubble-1"></div>
     <div className="bubble bubble-2"></div>
-    
+    {showError ?<h1>Welcome</h1>:<></>}
     <div className="login-card">
       <div className="login-header">
         <GiCoffeeCup className="bubble-icon" />
