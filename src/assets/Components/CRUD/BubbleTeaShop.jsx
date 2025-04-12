@@ -280,7 +280,7 @@ const BubbleTeaShop = ({result,column,page}) => {
       const updatedData = data.map(item => 
         item[column[0].key] == currentItem[column[0].key] 
           ? { 
-              employee_id: currentItem.employee_id,
+              // employee_id: currentItem.employee_id,
               ...values,
               created_at: currentItem.create_at,
               updated_at: now 

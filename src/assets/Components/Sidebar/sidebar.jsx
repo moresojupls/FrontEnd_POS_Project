@@ -210,19 +210,8 @@ function MySidebar() {
               </ListItem>
              </Link>
              </div>
-              <div className='submenu'>
-              <div className='Onclickhover '>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/user"} >
-                  <ListItem button width='100rem' >
-                    <div>
-                      <Myimg  url={img.User} size={45}></Myimg>
-                      <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Users</h4>
-                    </div>
-                  
-                  </ListItem>
-                </Link>
-              </div>
-              </div>
+              
+         
               
             </div>
             }
