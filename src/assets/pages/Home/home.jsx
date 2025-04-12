@@ -32,7 +32,7 @@ function HomePage() {
 
     
     return (
-        <div style={{maxWidth:'800px'}}>
+        <div style={{maxWidth:'1000px'}}>
             {/* {localStorage.removeItem("user")} */}
             {/* <button onClick={}>Click</button> */}
         {console.log('user :',JSON.parse(localStorage.getItem("user")))}

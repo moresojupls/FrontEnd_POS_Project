@@ -15,6 +15,9 @@ import Supply from './image/supply.png';
 import Order from './image/order.png';
 import Sale from './image/sale.png';
 import Stock from './image/stock.png';
+import MainMenu from './image/MainMenu.png'
+import FruitTea from './image/FruitTea.png'
+import Special from './image/SpecialMenu.png'
 
 // export Image
 export  default   {
@@ -32,7 +35,10 @@ export  default   {
     Supply,
     Order,
     Sale,
-    Stock
+    Stock,
+    MainMenu,
+    FruitTea,
+    Special
 
 }
 
