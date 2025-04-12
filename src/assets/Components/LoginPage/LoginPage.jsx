@@ -15,24 +15,24 @@ function LoginPage() {
    const  navigator = useNavigate();
  
    const handleSubmit = (e) => {
-     e.preventDefault();
-     console.log('Login submitted:', { email, password});
-   };
+    e.preventDefault();
+    login();
+  };
  
-  const login =async()=>{
-    await fetch('http://127.0.0.1:4000/employees/login',{
+  const login =()=>{
+    fetch('http://127.0.0.1:4000/employees/login',{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json'
       },
       body:JSON.stringify({
-        "email":"dwf",
-        "password":"123456789"
+        email: email,
+        password: password
       })
     }).then((res)=>{
       return res.json();
     }).then((result)=>{
-      if(result.statuscode != 200) throw('Error')
+      if(result.statuscode != 200) throw new Error('Login Failed')
       setError(false);
       localStorage.setItem("user",JSON.stringify(result));
       navigator('/Frontend_POS_Project');
@@ -106,7 +106,7 @@ function LoginPage() {
           <a href="#" className="forgot-password">ลืมรหัสผ่าน?</a>
         </div>
 
-        <button onClick={login} type="submit" className="login-button">
+        <button type="submit" className="login-button">
           เข้าสู่ระบบ
         </button>
       </form>
