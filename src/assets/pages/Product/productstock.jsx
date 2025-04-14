@@ -69,7 +69,7 @@ export default function Productstock(){
           width: 150,
         },]
    
-    
+    const selectOption = ["Milk Tea","Fruit Tea","General"]
     useEffect(()=>{
         fetch("http://127.0.0.1:4000/Products/Products/Table").then(response=>{
             if(!response.ok){
@@ -85,7 +85,7 @@ export default function Productstock(){
         })
     },[])
     
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"}/> :<h1>Loadding.... </h1>)
+     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"} selectOption={selectOption}/> :<h1>Loadding.... </h1>)
     
     
 }

@@ -7,7 +7,7 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = ({result,column,page}) => {
+const BubbleTeaShop = ({result,column,page,selectOption}) => {
   const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
@@ -25,7 +25,7 @@ const BubbleTeaShop = ({result,column,page}) => {
     setData(result);
     setFilteredData(result);
     if(column !== undefined) setColumn(column);
-    console.log('console.log(columnTable)',columnTable)
+    
     
   },[])
   
@@ -201,7 +201,7 @@ const BubbleTeaShop = ({result,column,page}) => {
     })
   }
  
-  const selectOption = ["Milk Tea","Fruit Tea","General"]
+  
   
 
   const showCreateModal = () => {

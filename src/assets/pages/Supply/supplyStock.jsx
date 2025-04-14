@@ -4,7 +4,7 @@ import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Ta
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 
 
-export default function supplyStock(){
+export default function SupplyStock(){
     const [result, setResult] = useState();
     const [load, setLoad] = useState(false);
     const column = [{
@@ -32,13 +32,13 @@ export default function supplyStock(){
           title: 'หมวดหมู่',
           dataIndex: 'category',
           key: 'category',
-          type:'input',
+          type:'select',
           width: 70,
         },
         {
           title: 'ราคา',
           dataIndex: 'price',
-          type:'select',
+          type:'input',
           key: 'price',
           width: 120,
         },
@@ -69,7 +69,7 @@ export default function supplyStock(){
           width: 150,
         },]
    
-    
+    const selectOption = ["General","Powder","Topping"]
     useEffect(()=>{
         fetch("http://127.0.0.1:4000/materials/materials/").then(response=>{
             if(!response.ok){
@@ -85,7 +85,8 @@ export default function supplyStock(){
         })
     },[])
     
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"supply"}/> :<h1>Loadding.... </h1>)
+      return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"supply"} selectOption={selectOption}/> :<h1>Loadding.... </h1>)
     
     
 }
+
