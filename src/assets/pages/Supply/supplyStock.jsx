@@ -29,18 +29,18 @@ export default function SupplyStock(){
           ellipsis: true,
         },
         {
-            title: 'ราคา',
-            dataIndex: 'price',
-            key: 'price',
-            type:'input',
-            width: 70,
+          title: 'หมวดหมู่',
+          dataIndex: 'category',
+          key: 'category',
+          type:'select',
+          width: 70,
         },
         {
-            title: 'หมวดหมู่',
-            dataIndex: 'category',
-            type:'select',
-            key: 'category',
-            width: 120,
+          title: 'ราคา',
+          dataIndex: 'price',
+          type:'input',
+          key: 'price',
+          width: 120,
         },
         {
           title: 'สถานะ',
@@ -69,7 +69,7 @@ export default function SupplyStock(){
           width: 150,
         },]
    
-    
+    const selectOption = ["General","Powder","Topping"]
     useEffect(()=>{
         fetch("http://127.0.0.1:4000/materials/materials/").then(response=>{
             if(!response.ok){
@@ -85,7 +85,8 @@ export default function SupplyStock(){
         })
     },[])
     
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"supply"}/> :<h1>Loadding.... </h1>)
+      return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"supply"} selectOption={selectOption}/> :<h1>Loadding.... </h1>)
     
     
 }
+
