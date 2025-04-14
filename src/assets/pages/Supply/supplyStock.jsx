@@ -4,7 +4,7 @@ import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Ta
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 
 
-export default function supplyStock(){
+export default function SupplyStock(){
     const [result, setResult] = useState();
     const [load, setLoad] = useState(false);
     const column = [{
@@ -29,18 +29,18 @@ export default function supplyStock(){
           ellipsis: true,
         },
         {
-          title: 'หมวดหมู่',
-          dataIndex: 'category',
-          key: 'category',
-          type:'input',
-          width: 70,
+            title: 'ราคา',
+            dataIndex: 'price',
+            key: 'price',
+            type:'input',
+            width: 70,
         },
         {
-          title: 'ราคา',
-          dataIndex: 'price',
-          type:'select',
-          key: 'price',
-          width: 120,
+            title: 'หมวดหมู่',
+            dataIndex: 'category',
+            type:'select',
+            key: 'category',
+            width: 120,
         },
         {
           title: 'สถานะ',
