@@ -147,7 +147,7 @@ function MySidebar() {
 
             <div className='Menu'>
             <div className='Menu Onclickhover'>
-             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/powder"} style={{width:"100%"}}>
+             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/stock"} style={{width:"100%"}}>
               <ListItem button>
                 <div>
                   <Myimg  url={img.Supply} size={45}></Myimg>
@@ -159,7 +159,7 @@ function MySidebar() {
              </div>
             <div className='submenu'>
               <div className='Onclickhover '>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/powder"} >
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/stock"} >
                   <ListItem button width='100rem' >
                     <div>
                       <Myimg  url={img.Supply} size={45}></Myimg>

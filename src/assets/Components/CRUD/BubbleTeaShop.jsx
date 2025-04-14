@@ -122,6 +122,26 @@ const BubbleTeaShop = ({result,column,page}) => {
           message.error(`เกิดข้อผิดพลาด: ${error.message}`);
         });
         break;
+      case "supply":
+        fetch("http://127.0.0.1:4000/materials/create",{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newItem)
+
+        }).then((res)=>{
+          if (!res.ok) {
+            throw new Error('การเชื่อมต่อ API ล้มเหลว');
+          }
+          return res.json();
+        }).then((data)=>{
+          
+          message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
+        }).catch((error) => {
+          message.error(`เกิดข้อผิดพลาด: ${error.message}`);
+        });
+        break;
       default:
         break;
     }
@@ -135,6 +155,9 @@ const BubbleTeaShop = ({result,column,page}) => {
         break;
       case "employee":
         employeeItemApi(newItem);
+        break;
+      case "supply":
+        supplyItemApi(newItem);
         break;
       default:
         break;
@@ -158,6 +181,18 @@ const BubbleTeaShop = ({result,column,page}) => {
     console.log('item :',newItem);
     
     return fetch("http://127.0.0.1:4000/employees/update",{
+      method: 'PATCH',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newItem)
+    })
+  }
+
+  const supplyItemApi = (newItem)=>{
+    console.log('item :',newItem);
+    
+    return fetch("http://127.0.0.1:4000/materials/update",{
       method: 'PATCH',
       headers:{
         'Content-Type': 'application/json'
