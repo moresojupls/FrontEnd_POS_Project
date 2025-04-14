@@ -56,15 +56,15 @@ export default function SupplyStock(){
         },
         {
           title: 'สร้างเมื่อ',
-          dataIndex: 'created_at',
-          key: 'created_at',
+          dataIndex: 'create_at',
+          key: 'create_at',
           type: 'null',
           width: 150,
         },
         {
           title: 'อัปเดตเมื่อ',
-          dataIndex: 'updated_at',
-          key: 'updated_at',
+          dataIndex: 'update_at',
+          key: 'update_at',
           type: 'null',
           width: 150,
         },]
