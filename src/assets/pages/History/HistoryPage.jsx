@@ -139,8 +139,13 @@ export default function HistoryPage() {
             dataIndex: 'toppings',
             key: 'toppings',
             render: status => (
+              
                 status.map(element => (
-                    <h4>{element.name}</h4>
+                  <>
+                    <h5>{element.name}</h5>
+                  </>
+                    
+                    
                 ))
                 
             ),

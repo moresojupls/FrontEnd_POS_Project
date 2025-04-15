@@ -9,7 +9,7 @@ import NumberInputBasic from '../Amount_label/Amount_label';
 import Pending_Order from '../Pending_Order/Pending_Order';
 import "./Card.css";
 
-function MyCard({ img, name, id, price,amount=1,total=0}) {
+function MyCard({ img, name, size,id, price,amount=1,total=0}) {
 
   const [show, setShow] = useState(false);
 
@@ -17,11 +17,12 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
   const [selectedMood, setSelectedMood] = useState("Cold");
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedSugar, setSelectedSugar] = useState(50);
+  ["Bubble", "Jelly", "konjac", "Whisp"]
   const [toppings, setToppings] = useState({
-    ไข่มุก: false,
-    เยลลี่: false,
-    บุก: false,
-    วิปครีม: false,
+    Bubble: false,
+    Jelly: false,
+    konjac: false,
+    Whisp: false,
   });
   const [quantity, setQuantity] = useState(1);
   
@@ -44,6 +45,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       selectedSugar,
       toppings,
       quantity,
+      size,
       amount,
       total,
     };
@@ -57,10 +59,11 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
       const findorder = storedOrders.find((value,index)=>
         value.id == newOrder.id
       );
-     
+      sameorder[0].quantity +=1
       findorder.amount = findorder.amount + quantity;
+      console.log('findorder',sameorder[0])
       findorder.total = findorder.amount * Number(findorder.price);
-      console.log('dasfaf',findorder.total)
+      console.log('dasfaf',quantity)
       updatedOrders = [...storedOrders];
 
     }else{
@@ -187,7 +190,7 @@ function MyCard({ img, name, id, price,amount=1,total=0}) {
           gap: "10px", // ระยะห่างระหว่างแต่ละช่อง
         }}
       >
-        {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
+        {["Bubble", "Jelly", "konjac", "Whisp"].map((topping, index) => (
           <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
             <input
               className='checkbox-menu'
