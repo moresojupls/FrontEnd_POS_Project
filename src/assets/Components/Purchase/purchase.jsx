@@ -26,7 +26,7 @@ function Purchase() {
       if(element.toppings[res]== true ) topping.push(element.toppings[res]== true ? res:'')
      })
      element.toppings = topping
-     console.log('key ',element.toppings)
+     console.log('element ',element)
 
   
     });
@@ -64,23 +64,23 @@ function Purchase() {
     //base 64
     const base64data = btoa(String.fromCharCode(...compressed));
     obj.Product_detail = base64data
-    // fetch("http://127.0.0.1:4000/Transactions/create",{
-    //   method:'POST',
-    //   headers:{
-    //     'Content-type':'application/json'
-    //   },
-    //   body:JSON.stringify(obj)
-    // }).then((res)=>{
-    //   if(res.status == 200){
-    //     console.log("Success")
-    //   }
-    // }).catch((res)=>{
-    //   if(res.status == 404){
-    //     console.log('Not Found')
-    //   }
-    // }).finally(()=>{
-    //   navigate('/FrontEnd_POS_Project');
-    // })
+    fetch("http://127.0.0.1:4000/Transactions/create",{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    }).then((res)=>{
+      if(res.status == 200){
+        console.log("Success")
+      }
+    }).catch((res)=>{
+      if(res.status == 404){
+        console.log('Not Found')
+      }
+    }).finally(()=>{
+      navigate('/FrontEnd_POS_Project');
+    })
   }
 
   // ฟังก์ชันที่จัดการการชำระเงิน
