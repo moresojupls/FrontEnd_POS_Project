@@ -68,14 +68,16 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
   
   const handleSearch = (values) => {
     const searchText = values.searchText?.trim().toLowerCase() || "";
-  
+    console.log('value',data)
     if (!searchText) {
       setFilteredData(data);
       return;
     }
   
     const filtered = data.filter(item =>
-      item.product_name.toLowerCase().includes(searchText) ||
+      item.mat_name?.toLowerCase().includes(searchText) ||
+      item.employee_name?.toLowerCase().includes(searchText) ||
+      item.product_name?.toLowerCase().includes(searchText) ||
       item.description?.toLowerCase().includes(searchText) // ตรวจสอบว่ามี description ก่อน
     );
   

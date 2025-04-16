@@ -163,7 +163,6 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);  // เพิ่มจำนวน
-    const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
     setPrice(()=>(cardPrice+(cardPrice/quantity)));
   
   };

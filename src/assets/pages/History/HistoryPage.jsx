@@ -32,9 +32,9 @@ export default function HistoryPage() {
         readonly: true,
       },
       {
-        title: 'ชื่อสินค้า',
-        dataIndex: 'product_name',
-        key: 'product_name',
+        title: 'รายละเอียด',
+        dataIndex: 'detail',
+        key: 'detail',
         type: 'detail',
         render:(_,record)=>(
             <Space size="middle">
