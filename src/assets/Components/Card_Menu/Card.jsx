@@ -163,13 +163,15 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);  // เพิ่มจำนวน
-    setPrice(()=>cardPrice+cardPrice);
+    const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
+    setPrice(()=>(cardPrice+(cardPrice/quantity)));
+  
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);  // ลดจำนวน ถ้าจำนวนมากกว่า 1
-      setPrice(()=>cardPrice-cardPrice);
+      setPrice(()=>cardPrice-(cardPrice/quantity));
     }
   };
 
