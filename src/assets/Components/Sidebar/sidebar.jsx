@@ -119,7 +119,7 @@ function MySidebar() {
             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History"} >
                 <ListItem button width='100rem' >
                   <div>
-                    <Myimg  url={img.LogoBrand} size={45}></Myimg>
+                    <Myimg  url={img.historybook} size={45}></Myimg>
                     <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>History</h4>
                   </div>
                 
@@ -171,7 +171,7 @@ function MySidebar() {
                 
               </div>
               <div className='Onclickhover '>
-              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/powder"} >
+              <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/supply/vendor"} >
                   <ListItem button width='100rem' >
                     <div>
                       <Myimg  url={img.Supply} size={45}></Myimg>
@@ -222,7 +222,7 @@ function MySidebar() {
              <Link to={'/loginout'} style={{width:"100%"}}>
               <ListItem button>
                 <div>
-                  <Myimg  url={img.User} size={45}></Myimg>
+                  <Myimg  url={img.logout} size={45}></Myimg>
                   <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Log out</h4>
                 </div>
                

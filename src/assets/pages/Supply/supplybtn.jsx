@@ -1,3 +1,3 @@
-const btn = ["powder","general","topping"];
+const btn = ["vendor"];
 
 export default btn
