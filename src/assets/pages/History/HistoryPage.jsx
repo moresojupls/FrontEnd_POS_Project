@@ -25,10 +25,10 @@ export default function HistoryPage() {
         setIsModalVisible(false);
     }
     const column = [{
-        title: 'transaction_id',
+        title: 'รหัสตําสั่งซื้อ',
         dataIndex: 'transaction_id',
         key: 'transaction_id',
-        width: 100,
+        width: 120,
         readonly: true,
       },
       {
@@ -66,7 +66,7 @@ export default function HistoryPage() {
         dataIndex: 'total_price',
         key: 'total_price',
         type:'input',
-        width: 70,
+        width: 100,
       },
       {
         title: 'quantity',
@@ -75,18 +75,18 @@ export default function HistoryPage() {
         key: 'quantity',
         width: 120,
       },
-      {
-        title: 'สถานะ',
-        dataIndex: 'active',
-        key: 'active',
-        type:'active',
-        render: (active) => (
-          <Tag color={active ? 'green' : 'red'}>
-            {active ? 'เปิดขาย' : 'ปิดขาย'}
-          </Tag>
-        ),
-        width: 100,
-      },
+      // {
+      //   title: 'สถานะ',
+      //   dataIndex: 'active',
+      //   key: 'active',
+      //   type:'active',
+      //   render: (active) => (
+      //     <Tag color={active ? 'green' : 'red'}>
+      //       {active ? 'เปิดขาย' : 'ปิดขาย'}
+      //     </Tag>
+      //   ),
+      //   width: 100,
+      // },
       {
         title: 'ทํารายการ',
         dataIndex: 'transaction_date',
@@ -212,7 +212,7 @@ export default function HistoryPage() {
                 </div>
                
             </Modal>
-            <BubbleTeaShop  result ={result.result} column = {column} page = {"product"}/>
+            <BubbleTeaShop  result ={result.result} column = {column} page = {"transaction"}/>
         </> :<h1>Loadding.... </h1>
     )
 
