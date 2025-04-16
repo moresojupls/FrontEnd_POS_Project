@@ -11,6 +11,7 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
   const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
+  const [detail,setDetail] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const [data, setData] = useState([]);
@@ -250,6 +251,15 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
 
   const createModal =(res)=>{
     if(res.type == "null") return(<></>)
+    if(res.type == "detail") return(
+      <Form.Item
+        label={res.title}
+        name={res.key} 
+      hidden
+      >
+       <button>Click</button>
+      </Form.Item>
+    )
     if(res.readonly  ) return ( <Form.Item
         label={res.title}
         name={res.key} 
@@ -512,6 +522,29 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
           </Form.Item> */}
         </Form>
       </Modal>
+
+      {/* <Modal
+                title={currentItem ? "" : "ดูรายการ"}
+                visible={detail}
+                onCancel={()=>{
+                  handleCancel()
+                }}
+                footer={[
+                 
+                //   <Button 
+                //     key="submit" 
+                //     type="primary" 
+                //     onClick={() => form.submit()}
+                //   >
+                //     {currentItem ? "อัปเดต" : "บันทึก"}
+                //   </Button>,
+                ]}
+                
+                width={700}
+                centered
+              >
+                <h1>{ }</h1>
+            </Modal> */}
     </div>
   );
 };
