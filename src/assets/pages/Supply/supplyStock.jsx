@@ -4,20 +4,20 @@ import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Ta
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 
 
-export default function Productstock(){
+export default function SupplyStock(){
     const [result, setResult] = useState();
     const [load, setLoad] = useState(false);
     const column = [{
           title: 'รหัสสินค้า',
-          dataIndex: 'product_id',
-          key: 'product_id',
+          dataIndex: 'mat_id',
+          key: 'mat_id',
           width: 100,
           readonly: true,
         },
         {
           title: 'ชื่อสินค้า',
-          dataIndex: 'product_name',
-          key: 'product_name',
+          dataIndex: 'mat_name',
+          key: 'mat_name',
           type: 'input',
           render: (text) => <strong>{text}</strong>,
         },
@@ -29,17 +29,17 @@ export default function Productstock(){
           ellipsis: true,
         },
         {
-          title: 'ราคา',
-          dataIndex: 'price',
-          key: 'price',
-          type:'input',
+          title: 'หมวดหมู่',
+          dataIndex: 'category',
+          key: 'category',
+          type:'select',
           width: 70,
         },
         {
-          title: 'หมวดหมู่',
-          dataIndex: 'category',
-          type:'select',
-          key: 'category',
+          title: 'ราคา',
+          dataIndex: 'price',
+          type:'input',
+          key: 'price',
           width: 120,
         },
         {
@@ -56,22 +56,22 @@ export default function Productstock(){
         },
         {
           title: 'สร้างเมื่อ',
-          dataIndex: 'created_at',
-          key: 'created_at',
+          dataIndex: 'create_at',
+          key: 'create_at',
           type: 'null',
           width: 150,
         },
         {
           title: 'อัปเดตเมื่อ',
-          dataIndex: 'updated_at',
-          key: 'updated_at',
+          dataIndex: 'update_at',
+          key: 'update_at',
           type: 'null',
           width: 150,
         },]
    
-    const selectOption = ["Milk Tea","Fruit Tea","General"]
+    const selectOption = ["General","Powder","Topping"]
     useEffect(()=>{
-        fetch("http://127.0.0.1:4000/Products/Products/Table").then(response=>{
+        fetch("http://127.0.0.1:4000/materials/materials/").then(response=>{
             if(!response.ok){
                 throw Error("Connection failed"); 
             }
@@ -85,7 +85,8 @@ export default function Productstock(){
         })
     },[])
     
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"} selectOption={selectOption}/> :<h1>Loadding.... </h1>)
+      return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"supply"} selectOption={selectOption}/> :<h1>Loadding.... </h1>)
     
     
 }
+

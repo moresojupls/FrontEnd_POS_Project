@@ -18,6 +18,7 @@ import Purchase from './assets/Components/Purchase/purchase'
 import LoginPage from './assets/Components/LoginPage/LoginPage';
 import LoginoutPage from './assets/Components/LoginPage/LoginoutPage';
 import HistoryPage from './assets/pages/History/HistoryPage';
+import SupplyStock from './assets/pages/Supply/supplyStock';
 
 
 
@@ -59,7 +60,7 @@ function MyRouter() {
                         <Route  path={'Supply/'+element}  element={<SupplyPage/>} />
                     ))
                 }
-               
+               <Route  path={'supply/stock'}  element={<SupplyStock/>} />
          
       
             </Route>
