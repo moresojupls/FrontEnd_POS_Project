@@ -20,7 +20,7 @@
     "@mui/icons-material": "^6.4.9",
     "@mui/material": "^6.4.9",
     "@mui/styled-engine-sc": "^6.1.5",
-    "antd": "^5.24.4",
+    "antd": "^5.24.7",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",

@@ -56,18 +56,39 @@ export default function SupplyStock(){
         },
         {
           title: 'สร้างเมื่อ',
-          dataIndex: 'create_at',
-          key: 'create_at',
-          type: 'null',
+          dataIndex: 'created_at',
+          key: 'created_at',
           width: 150,
+          render: (text) => {
+            const date = new Date(text);
+            return date.toLocaleString('th-TH', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+            });
+          },
         },
         {
           title: 'อัปเดตเมื่อ',
-          dataIndex: 'update_at',
-          key: 'update_at',
-          type: 'null',
+          dataIndex: 'updated_at',
+          key: 'updated_at',
           width: 150,
-        },]
+          render: (text) => {
+            const date = new Date(text);
+            return date.toLocaleString('th-TH', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+            });
+          },
+        }
+      ]
    
     const selectOption = ["General","Powder","Topping"]
     useEffect(()=>{

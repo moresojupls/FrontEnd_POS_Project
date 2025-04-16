@@ -18,6 +18,8 @@ import Stock from './image/stock.png';
 import MainMenu from './image/MainMenu.png'
 import FruitTea from './image/FruitTea.png'
 import Special from './image/SpecialMenu.png'
+import logout from './image/logout.png'
+import historybook from './image/history-book.png'
 
 // export Image
 export  default   {
@@ -38,7 +40,9 @@ export  default   {
     Stock,
     MainMenu,
     FruitTea,
-    Special
+    Special,
+    logout,
+    historybook
 
 }
 

@@ -58,16 +58,37 @@ export default function Productstock(){
           title: 'สร้างเมื่อ',
           dataIndex: 'created_at',
           key: 'created_at',
-          type: 'null',
           width: 150,
+          render: (text) => {
+            const date = new Date(text);
+            return date.toLocaleString('th-TH', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+            });
+          },
         },
         {
           title: 'อัปเดตเมื่อ',
           dataIndex: 'updated_at',
           key: 'updated_at',
-          type: 'null',
           width: 150,
-        },]
+          render: (text) => {
+            const date = new Date(text);
+            return date.toLocaleString('th-TH', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+            });
+          },
+        }
+      ]
    
     const selectOption = ["Milk Tea","Fruit Tea","General"]
     useEffect(()=>{
