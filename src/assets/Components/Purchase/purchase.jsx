@@ -3,6 +3,7 @@ import Myimg from '../Image/img';
 import image from "../../image";
 import { useNavigate } from 'react-router-dom';
 import Numpad from '../Numpad/Numpad'; // ✅ นำเข้า Numpad
+import pako from 'pako';
 
 
 function Purchase() {
@@ -15,26 +16,60 @@ function Purchase() {
   const user =  JSON.parse(localStorage.getItem("user")) ;
   useEffect(() => {
     const storedOrders = JSON.parse(localStorage.getItem("order_list")) || [];
+    storedOrders.forEach(element => {
+      const topping = [];
+      element.menu = element.name
+      element.size = "M"
+     console.log('element ',element.toppings)
+     Object.keys(element.toppings).forEach((res)=>{
+      console.log('ele',element.toppings[res])
+      if(element.toppings[res]== true ) topping.push(element.toppings[res]== true ? res:'')
+     })
+     element.toppings = topping
+     console.log('element ',element)
+
+  
+    });
+    
     setOrders(storedOrders);
+    
   }, []);
 
  
+  const obj = {
+    "Transaction_id": 1,
+    "Employee_id": user.result.id,
+    "Product_detail": "dsad",
+    "Quantity": totalAmount+(totalAmount*0.07),
+    "Total_price": newTotal,
 
-  const payment = ()=>{
-    console.log('user ',user)
+  }
+  // if(orders.length > 0 ){
+   
+  //   const compressed = pako.deflate(JSON.stringify(orders));
+  //   const a = btoa(String.fromCharCode(...compressed));
+   
+
+  //   // const decompressed = Uint8Array.from(atob(a), c => c.charCodeAt(0));
+  //   // const decompressedString = pako.inflate(decompressed,{to:"string"});
+  //   // console.log('decompressedString ',JSON.parse(decompressedString))
+
+  // }
+
+  const payment = (obj)=>{
+    // compressed
+ 
+    console.log('obj ss',orders)
+    const compressed = pako.deflate(JSON.stringify(orders));
+    //base 64
+    const base64data = btoa(String.fromCharCode(...compressed));
+    obj.Product_detail = base64data
     fetch("http://127.0.0.1:4000/Transactions/create",{
       method:'POST',
       headers:{
         'Content-type':'application/json'
       },
-      body:JSON.stringify({
-        "Transaction_id": 1,
-        "Employee_id": user.id,
-        "Product_id": 1,
-        "Quantity": totalAmount+(totalAmount*0.07),
-        "Total_price": newTotal,
-
-      })
+      body:JSON.stringify(obj)
     }).then((res)=>{
       if(res.status == 200){
         console.log("Success")
@@ -170,8 +205,10 @@ function Purchase() {
             color: "#fff",
           }}
           onClick={() => {
-            payment();
-            
+           console.log('obj ',obj)
+            if(orders.length < 0 ) return 
+            if(obj.Employee_id != null || obj.Employee_id != undefined) payment(obj);
+         
           }}
         >
           Success
