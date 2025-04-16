@@ -3,6 +3,8 @@ import Mycontent from '../../Components/content/content';
 import Powder from '../../MockUpData/Supply/Powder';
 import General from '../../MockUpData/Supply/General';
 import Topping from '../../MockUpData/Supply/Topping';
+import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop';
+import VendorPage from '../../Components/Vendor/vender';
 
 import  Btn from './supplybtn';
 import MyOrderlist from '../../Components/Orderlist/orderlist';
@@ -74,20 +76,9 @@ function SupplyPage() {
   }
 
   }, [path])
-
- { console.log("result :", result) }
-  if (load) {
-    return (
-      <>
-        <div style={{"display":"flex"}}>
-          <Mycontent results={result !== undefined ? result : ''} btn={Btn} />
-          {/* <MyOrderlist setStateOrderlist={Orderlist}/> */}
-        </div>
-        
-      </>
-
-    )
-  } 
+ return(
+  <VendorPage/>
+ )
 }
 
 export default SupplyPage
