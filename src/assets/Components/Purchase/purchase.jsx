@@ -72,7 +72,8 @@ function Purchase() {
       body:JSON.stringify(obj)
     }).then((res)=>{
       if(res.status == 200){
-        console.log("Success")
+        const cleanOrderlist = localStorage.removeItem("order_list")
+        setOrders([])
       }
     }).catch((res)=>{
       if(res.status == 404){

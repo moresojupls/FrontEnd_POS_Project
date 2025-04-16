@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../../../MyCard.css'
 import  { useState,cache } from 'react'
 // import Button from 'react-bootstrap/Button';
@@ -25,14 +25,16 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
     Whisp: false,
   });
   const [quantity, setQuantity] = useState(1);
+  const [cardPrice,setPrice]= useState(price);
   
-
+  const topping = [];
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleToppingChange = (topping) => {
     setToppings((prev) => ({ ...prev, [topping]: !prev[topping] }));
   };
+  
 
   const handleAddOrder = () => {
     const newOrder = {
@@ -49,7 +51,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
       amount,
       total,
     };
-   
+   console.log('newOrder : ',newOrder)
     
     const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
     // console.log(localStorage.getItem("order_list"));
@@ -59,15 +61,18 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
       const findorder = storedOrders.find((value,index)=>
         value.id == newOrder.id
       );
-      sameorder[0].quantity +=1
+      console.log('findorder',newOrder)
+      sameorder[0].quantity = quantity;
       findorder.amount = findorder.amount + quantity;
-      console.log('findorder',sameorder[0])
-      findorder.total = findorder.amount * Number(findorder.price);
+      console.log('findorder',storedOrders)
+      findorder.total += cardPrice;
       console.log('dasfaf',quantity)
       updatedOrders = [...storedOrders];
 
     }else{
-      newOrder.total = newOrder.price;
+      newOrder.total = cardPrice;
+      newOrder.amount = quantity;
+
       
       updatedOrders = [...storedOrders, newOrder];
     }
@@ -75,14 +80,98 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
     setShow(false);
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
   };
+  const [old,setOld] = useState([]); 
+  useEffect(()=>{
+    
+    switch(selectedSize){
+      case "S":
+        setPrice(()=>price);
+        console.log('price2 : ',cardPrice)
+        break;
+      case "M":
+        setPrice(()=>price+5);
+        console.log('price2 : ',cardPrice)
+        break;
+      case "L":
+        setPrice(()=>price+10);
+        console.log('price2 : ',cardPrice)
+        break;
+      default:
+        break;
+    }
+  },[selectedSize])
+  useEffect(()=>{
+    if(selectedMood ==  'Hot'){
+      setPrice(()=>price-5)
+    }
+    else{
+      setPrice(()=>price)
+    }
+  },[selectedMood])
+  useEffect(()=>{
+    //  Bubble: false,
+    // Jelly: false,
+    // konjac: false,
+    // Whisp: false,
+   
+    
+    Object.keys(toppings).forEach((res)=>{
+      if(toppings[res] == true){
+        topping.push(res)
+        
+        switch(res){
+          case "Bubble":
+            setPrice(()=>cardPrice+5)
+            topping.push(res)
+            break;
+          case "Jelly":
+            setPrice(()=>cardPrice+10)
+            topping.push(res)
+            break;
+          case "konjac":
+            setPrice(()=>cardPrice+10)
+            topping.push(res)
+            break;
+          case "Whisp":
+            setPrice(()=>cardPrice+15)
+            topping.push(res)
+            break;
+          default:
+            break;
+        }
+       
+      }
+      // check filter old value is same topping
+      const search = old.filter((res)=>(
+        !topping.includes(res)
+      ))
+      // decreseable price 5 bath
+      search.map(()=>(
+        setPrice(()=>cardPrice-5)
+      ))
+
+      // old Value
+      setOld(()=>topping)
+  
+      
+    
+      
+    })
+  
+  },[toppings])
+  
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);  // เพิ่มจำนวน
+    const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
+    setPrice(()=>(cardPrice+(cardPrice/quantity)));
+  
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);  // ลดจำนวน ถ้าจำนวนมากกว่า 1
+      setPrice(()=>cardPrice-(cardPrice/quantity));
     }
   };
 
@@ -115,7 +204,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
                 
                 <h4>Discription</h4>
 
-                <h3>ราคา { price} บาท</h3>
+                <h3>ราคา { cardPrice } บาท</h3>
               </div>
             </div>
           

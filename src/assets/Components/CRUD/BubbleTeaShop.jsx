@@ -16,7 +16,8 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
   const [currentItem, setCurrentItem] = useState(null);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-
+  const [isCreate,setIsCreate] = useState(false);
+  
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
   useEffect(() => {
     setFilteredData(data);
@@ -26,6 +27,8 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
     setData(result);
     setFilteredData(result);
     if(column !== undefined) setColumn(column);
+    if(page != "transaction") setIsCreate(true);
+     
     
     
   },[])
@@ -33,11 +36,13 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
   // ฟังก์ชันค้นหา match two column between own page column and crud column
   
   const columns =  [...columnTable,...[{
+    
     title: 'การดำเนินการ',
     key: 'action',
     render: (_, record) => (
-      <Space size="middle">
-        <Button 
+      
+     <Space size="middle">
+       <Button 
           type="primary" 
           shape="circle" 
           icon={<EditOutlined />} 
@@ -51,8 +56,11 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
           onClick={() => handleDelete(record.product_id)}
         />
       </Space>
-    ),
-  },]]
+      
+    
+    
+    )
+  }]];
   
    
   
@@ -408,18 +416,18 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
               ล้างการค้นหา
             </Button>
           </Form>
-          <Button 
+          {isCreate ? (<Button 
             type="primary" 
             icon={<PlusOutlined />} 
             onClick={showCreateModal}
           >
             เพิ่มสินค้าใหม่
-          </Button>
+          </Button>):''}
         </div>
       </div>
       <Card className="menu-card">
         <Table 
-          columns={columns} 
+          columns={!isCreate  ? columnTable:columns} 
           dataSource={filteredData}
           pagination={{ pageSize: 5 }} 
           bordered
