@@ -231,7 +231,21 @@ function Userpage() {
 
  
   
-  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column}  page={"employee"} /> :<h1>Loadding.... </h1>)
+  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column}  page={"employee"} get={()=>new Promise((resolve)=>{
+    fetch('http://127.0.0.1:4000/employees/employees').then(res=>{
+      return res.json()
+    }).then((result)=>{
+      if(!result.statusCode == 200){
+        throw Error("Connection failed");
+      }
+      setResult(result)
+      setLoad(true)
+      resolve(result)
+     
+      
+    })
+    
+  })}/> :<h1>Loadding.... </h1>)
     
   
 }

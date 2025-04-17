@@ -20,10 +20,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
   const [isLoad,setLoad] = useState(false);
   
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
-  useEffect(() => {
-    setFilteredData(data);
-   
-  }, [data]);
+ 
   useEffect(()=>{
     setData(result);
     setFilteredData(result);
@@ -33,7 +30,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     
     
   },[])
-  
+  useEffect(() => {
+    setFilteredData(data);
+   
+  }, [data]);
   // ฟังก์ชันค้นหา match two column between own page column and crud column
   
   const columns =  [...columnTable,...[{
@@ -95,7 +95,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     console.log('create item :',page);
     switch(page){
       case "product":
-        fetch("http://127.0.0.1:4000/Products/create",{
+       await fetch("http://127.0.0.1:4000/Products/create",{
             method: 'POST',
             headers:{
               'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
           
         break;
       case "employee":
-        fetch("http://127.0.0.1:4000/Employees/create",{
+        await fetch("http://127.0.0.1:4000/Employees/create",{
           method: 'POST',
           headers:{
             'Content-Type': 'application/json'
@@ -137,7 +137,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
         });
         break;
       case "supply":
-        fetch("http://127.0.0.1:4000/materials/create",{
+        await fetch("http://127.0.0.1:4000/materials/create",{
           method: 'POST',
           headers:{
             'Content-Type': 'application/json'
@@ -168,10 +168,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
         await productItemApi(newItem)
         break;
       case "employee":
-        employeeItemApi(newItem);
+        await employeeItemApi(newItem);
         break;
       case "supply":
-        supplyItemApi(newItem);
+        await supplyItemApi(newItem);
         break;
       default:
         break;
@@ -191,10 +191,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
    
   }
 
-  const employeeItemApi = (newItem)=>{
+  const employeeItemApi = async(newItem)=>{
     console.log('item :',newItem);
     
-    return fetch("http://127.0.0.1:4000/employees/update",{
+    await fetch("http://127.0.0.1:4000/employees/update",{
       method: 'PATCH',
       headers:{
         'Content-Type': 'application/json'
@@ -203,10 +203,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     })
   }
 
-  const supplyItemApi = (newItem)=>{
+  const supplyItemApi = async(newItem)=>{
     console.log('item :',newItem);
     
-    return fetch("http://127.0.0.1:4000/materials/update",{
+    await fetch("http://127.0.0.1:4000/materials/update",{
       method: 'PATCH',
       headers:{
         'Content-Type': 'application/json'
@@ -349,25 +349,24 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
       )
     
       console.log('values :',updatedData)
-      
+   
       await updateItemApi(values);
-    
-      await get().then((res)=>{
-        console.log('sss',res)
-        if(res.statusCode == 200){
-          setData(()=>res.result);
-          setFilteredData(()=>res.result);
+      
+      const result = await get();
+      console.log('sss',result)
+        if(result.statusCode == 200 || result.statuscode == 200){
           message.success('อัปเดตสินค้าสำเร็จแล้ว');
+          setData(result.result);
+          // setFilteredData((prev)=>[...prev,result.result]);
+          
+         
         }
         
        
-      });
+     
      
       
-      // console.log('dasdasd',updatedData);
-      // setData(updatedData);
-      // setFilteredData(updatedData);
-      // message.success('อัปเดตสินค้าสำเร็จแล้ว');
+    
      
 
 
