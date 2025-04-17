@@ -59,6 +59,7 @@ export default function SupplyStock(){
           dataIndex: 'created_at',
           key: 'created_at',
           width: 150,
+          readonly: true,
           render: (text) => {
             const date = new Date(text);
             return date.toLocaleString('th-TH', {
@@ -76,6 +77,7 @@ export default function SupplyStock(){
           dataIndex: 'updated_at',
           key: 'updated_at',
           width: 150,
+          readonly: true,
           render: (text) => {
             const date = new Date(text);
             return date.toLocaleString('th-TH', {
