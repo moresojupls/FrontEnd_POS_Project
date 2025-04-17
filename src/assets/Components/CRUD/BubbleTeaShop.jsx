@@ -7,7 +7,7 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = ({result,column,page,selectOption}) => {
+const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
   const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
@@ -17,6 +17,7 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isCreate,setIsCreate] = useState(false);
+  const [isLoad,setLoad] = useState(false);
   
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
   useEffect(() => {
@@ -90,7 +91,7 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
     setFilteredData(data);
   };
  
-  const createItemApi = (newItem) =>{
+  const createItemApi = async(newItem) =>{
     console.log('create item :',page);
     switch(page){
       case "product":
@@ -109,9 +110,11 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
           }).then((data)=>{
             
             message.success('เพิ่มสินค้าใหม่สำเร็จแล้ว');
+            get();
           }).catch((error) => {
             message.error(`เกิดข้อผิดพลาด: ${error.message}`);
           });
+          
         break;
       case "employee":
         fetch("http://127.0.0.1:4000/Employees/create",{
@@ -158,11 +161,11 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
     }
   
   }
-  const updateItemApi = (newItem) => {
+  const updateItemApi = async(newItem) => {
     console.log('page :',page);
     switch(page){
       case "product":
-        productItemApi(newItem);
+        await productItemApi(newItem)
         break;
       case "employee":
         employeeItemApi(newItem);
@@ -176,8 +179,8 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
 
     
   }
-  const productItemApi = (newItem)=>{
-     return fetch("http://127.0.0.1:4000/Products/update",{
+  const productItemApi = async(newItem)=>{
+     await fetch("http://127.0.0.1:4000/Products/update",{
       method: 'PATCH',
       headers:{
         'Content-Type': 'application/json'
@@ -265,17 +268,17 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
       <Form.Item
         label={res.title}
         name={res.key} 
-      hidden
+      hidden 
       >
        <button>Click</button>
       </Form.Item>
     )
-    if(res.readonly  ) return ( <Form.Item
+    if(res.readonly == true) return ( <Form.Item
         label={res.title}
         name={res.key} 
-      hidden
+        hidden
       >
-        <Input placeholder={res.title} readOnly hidden />
+        <Input placeholder={res.title} readOnly  hidden />
       </Form.Item>)
     if(res.type == "select")return ( <Form.Item
       label="หมวดหมู่"
@@ -327,55 +330,47 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
 
   }
 
-  const onFinish =  (values) => {
+  const onFinish =  async(values) => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     console.log('value :',values)
     if (currentItem) {
+      
  
       const updatedData = data.map(item => 
         item[column[0].key] == currentItem[column[0].key] 
           ? { 
               // employee_id: currentItem.employee_id,
               ...values,
-              created_at: currentItem.create_at,
-              updated_at: now 
+              // created_at: currentItem.created_at,
+              // updated_at: now 
             } 
           : item
          
       )
     
       console.log('values :',updatedData)
-      updateItemApi(values);
-      console.log('dasdasd',updatedData);
-      setData(updatedData);
-      setFilteredData(updatedData);
-      message.success('อัปเดตสินค้าสำเร็จแล้ว');
-
-
-      // const updatedData = data.map(item => 
-      //   item.product_id == currentItem.product_id 
-      //     ? { 
-      //         product_id: currentItem.product_id,
-      //         ...values, 
-      //         create_dated: currentItem.create_at,
-      //         update_dated: now 
-      //       } 
-      //     : item
-         
-      // );
+      
+      await updateItemApi(values);
     
-  
-      // fetch("http://127.0.0.1:4000/Products/update",{
-      //   method: 'PATCH',
-      //   headers:{
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(values)
-      // })
-      // console.log('dasdasd',values);
+      await get().then((res)=>{
+        console.log('sss',res)
+        if(res.statusCode == 200){
+          setData(()=>res.result);
+          setFilteredData(()=>res.result);
+          message.success('อัปเดตสินค้าสำเร็จแล้ว');
+        }
+        
+       
+      });
+     
+      
+      // console.log('dasdasd',updatedData);
       // setData(updatedData);
       // setFilteredData(updatedData);
       // message.success('อัปเดตสินค้าสำเร็จแล้ว');
+     
+
+
     } else {
       const newItem = {
         ...values,
@@ -390,6 +385,8 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
       createItemApi(newItem);
       setData(newData);
       setFilteredData(newData);
+      message.success('เพิ่มสินค้าสำเร็จแล้ว');
+
       // // create new data by api
       
      
@@ -427,7 +424,7 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
           </Button>):''}
         </div>
       </div>
-      <Card className="menu-card">
+      {!isLoad ? <Card className="menu-card">
         <Table 
           columns={!isCreate  ? columnTable:columns} 
           dataSource={filteredData}
@@ -435,7 +432,7 @@ const BubbleTeaShop = ({result,column,page,selectOption}) => {
           bordered
           scroll={{ x: 300 }}
         />
-      </Card>
+      </Card>:<></>}
       
       
       <Modal
