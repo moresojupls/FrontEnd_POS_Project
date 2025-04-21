@@ -49,7 +49,7 @@ export default function SupplyStock(){
           type:'active',
           render: (active) => (
             <Tag color={active ? 'green' : 'red'}>
-              {active ? 'เปิดขาย' : 'ปิดขาย'}
+              {active ? 'ใช้งาน' : 'ไม่ใช้งาน'}
             </Tag>
           ),
           width: 100,

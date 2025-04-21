@@ -88,11 +88,22 @@ export default function HistoryPage() {
       //   width: 100,
       // },
       {
-        title: 'ทํารายการ',
+        title: 'วันที่ทํารายการ',
         dataIndex: 'transaction_date',
         key: 'transaction_date',
         type: 'null',
         width: 150,
+        render: (text) => {
+          const date = new Date(text);
+          return date.toLocaleString('th-TH', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          });
+        },
       }]
 
       const columns = [
@@ -150,6 +161,7 @@ export default function HistoryPage() {
                 
             ),
           },
+        
       ];
     useEffect(()=>{
             fetch("http://127.0.0.1:4000/Transactions/Transactions/Test").then(response=>{

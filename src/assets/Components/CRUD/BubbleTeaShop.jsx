@@ -243,7 +243,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
       title: 'ยืนยันการลบ',
       content: (
         <div>
-          <p>คุณกำลังจะลบสินค้า: {productToDelete?.product_name || 'รหัส ' + productId}</p>
+          <p>คุณกำลังจะลบ: {productToDelete?.product_name || productToDelete?.mat_name || productToDelete?.employee_name || 'รหัส ' + productId}</p>
           <p>การกระทำนี้ไม่สามารถยกเลิกได้</p>
         </div>
       ),
@@ -252,14 +252,24 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
       cancelText: 'ไม่ลบ',
       icon: <ExclamationCircleOutlined />,
       centered: true,
-      onOk() {
+      async onOk() {
         // ฟังก์ชันลบจริงๆ
         const newData = data.filter(item => item.product_id !== productId);
-        setData(newData);
-        setFilteredData(newData);
-        message.success('ลบสินค้าสำเร็จแล้ว');
+      
+        const result = await get();
+        console.log('sss',result)
+          if(result.statusCode == 200 || result.statuscode == 200){
+            // wait delete api
+            setData(result.result);
+            setFilteredData(result.result);
+            message.success('ลบสำเร็จแล้ว');
+            
+           
+      }
       }
     });
+
+   
   };
 
   const createModal =(res)=>{
