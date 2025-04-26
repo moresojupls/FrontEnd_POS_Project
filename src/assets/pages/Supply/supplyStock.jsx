@@ -1,8 +1,6 @@
-import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop'
-import {useState,useEffect} from 'react'
-import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, Switch, message } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
-
+import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop';
+import { useState, useEffect } from 'react';
+import { Tag } from 'antd';
 
 export default function SupplyStock(){
     const [result, setResult] = useState();
@@ -144,4 +142,3 @@ export default function SupplyStock(){
     
     
 }
-
