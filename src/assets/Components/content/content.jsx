@@ -12,7 +12,8 @@ import  './context.css';
 function Mycontent({results,btn}) {
   const [result,setResult] = useState([])
   const [Orderlist,setOrderlist] = useState(true);
-  
+  const [image,setImage] = useState();
+  const [image2,setImage2] = useState();
 
   function plus(results,btn){
     results = 5;
@@ -30,7 +31,6 @@ function Mycontent({results,btn}) {
   },[results !== result])
 
  
-
   
 
 
@@ -48,14 +48,14 @@ function Mycontent({results,btn}) {
      
         <div style={{marginTop:"15px",height:'10%',width:'100%',display:"flex",flexWrap:"wrap",justifyContent:"left"}}>
           
-        
 
+      
           {
             
           // Item list code
             result ? result.map(element => (
-          
-              <MyCard  key={element.product_id} id={element.product_id} img = { element.product_img } name = { element.product_name } price = { Number(element.price) } img = {element.image_url} />
+              
+              <MyCard  key={element.product_id} id={element.product_id} img = { element.image_url } name = { element.product_name } price = { Number(element.price) }  />
                 
             )): "No data"
 

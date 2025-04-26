@@ -7,7 +7,7 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
+const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
@@ -18,6 +18,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
   const [filteredData, setFilteredData] = useState([]);
   const [isCreate,setIsCreate] = useState(false);
   const [isLoad,setLoad] = useState(false);
+  const [image,setImage] = useState();
+
   
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
  
@@ -26,7 +28,12 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     setFilteredData(result);
     if(column !== undefined) setColumn(column);
     if(page != "transaction") setIsCreate(true);
-     
+    
+    // deny all of is import to visible
+    setColumn(column.filter((column)=>{
+      return column.type != "image"
+    }))
+   
     
     
   },[])
@@ -54,7 +61,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
           danger 
           shape="circle" 
           icon={<DeleteOutlined />} 
-          onClick={() => handleDelete(record.product_id)}
+          onClick={() => handleDelete(record)}
         />
       </Space>
       
@@ -62,6 +69,20 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     
     )
   }]];
+
+  const handleImage = (e)=>{
+    const image = e.target.files[0];
+    if(image){
+      //console.log('image',image);
+      const reader = new FileReader();
+      reader.onload = (event)=>{
+        console.log('dasdasd',event.target.result);
+        // console.log('image :',event.target.result)
+        setImage(event.target.result);
+      };
+      reader.readAsDataURL(image);
+    }
+  }
   
    
   
@@ -179,7 +200,42 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
 
     
   }
+
+  const productById = ()=>{
+   
+  
+       return new Promise((resolve,reject)=>{
+        fetch("http://127.0.0.1:4000/products/products/3").then(response => {
+          
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json()
+        }).then(result =>{
+          
+          setImage(result.result[0].image_url)
+          resolve(result.result[0].image_url)
+        
+         
+        })
+       }) 
+    
+    
+     
+
+   
+  }
   const productItemApi = async(newItem)=>{
+    if(image == undefined){
+      await productById(newItem).then((res)=>{
+      newItem.image = res
+      })}
+    else{
+      newItem.image = image
+    };
+    console.log('item :',newItem)
+   
+   
      await fetch("http://127.0.0.1:4000/Products/update",{
       method: 'PATCH',
       headers:{
@@ -189,7 +245,14 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
       
     })
    
+   
+  
+  setImage(undefined)
+
+    
+   
   }
+  
 
   const employeeItemApi = async(newItem)=>{
     console.log('item :',newItem);
@@ -224,6 +287,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     setIsModalVisible(true);
   };
 
+  
+
   const showEditModal = (record) => {
     setCurrentItem(record);
     form.setFieldsValue(record);
@@ -237,13 +302,29 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
   // ในคอมโพเนนต์ของคุณ
   const handleDelete = (productId) => {
     // หาข้อมูลสินค้าจาก productId เพื่อเอาชื่อมาแสดง
-    const productToDelete = data.find(item => item.product_id === productId);
+    //item.mat_id === productId.mat_id ||
+   console.log(productId)
+    const productToDelete = data.find(item =>{
+      if (productId.mat_id && item.mat_id === productId.mat_id) {
+        return true;
+      }
+      if (productId.employee_id && item.employee_id === productId.employee_id) {
+        return true;
+      }
+      if (productId.product_id && item.product_id === productId.product_id) {
+        return true;
+      }
+      return false;
+    }
+    );
+    
+    const tableToDeleteId = productToDelete.mat_id || productToDelete.product_id || productToDelete.employee_id;
     
     Modal.confirm({
       title: 'ยืนยันการลบ',
       content: (
         <div>
-          <p>คุณกำลังจะลบสินค้า: {productToDelete?.product_name || 'รหัส ' + productId}</p>
+          <p>คุณกำลังจะลบ: {productToDelete?.product_name || productToDelete?.mat_name || productToDelete?.employee_name || 'รหัส ' + productId}</p>
           <p>การกระทำนี้ไม่สามารถยกเลิกได้</p>
         </div>
       ),
@@ -252,18 +333,43 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
       cancelText: 'ไม่ลบ',
       icon: <ExclamationCircleOutlined />,
       centered: true,
-      onOk() {
+      async onOk() {
         // ฟังก์ชันลบจริงๆ
-        const newData = data.filter(item => item.product_id !== productId);
-        setData(newData);
-        setFilteredData(newData);
-        message.success('ลบสินค้าสำเร็จแล้ว');
+        console.log('tableToDeleteId',tableToDeleteId)
+        const deleteapi = await deleteApi(tableToDeleteId);
+       deleteapi
+        if(deleteapi.statusCode == 200){
+          const result = await get();
+          
+          if(result.statusCode == 200 || result.statuscode == 200){
+            // wait delete api
+            setData(result.result);
+            setFilteredData(result.result);
+            message.success('ลบสำเร็จแล้ว');
+            
+           
+          }
+        }
+       
       }
     });
+
+   
   };
 
   const createModal =(res)=>{
     if(res.type == "null") return(<></>)
+    if(res.type == "image") return(
+      <Form.Item
+        label={res.title}
+        name={res.key} 
+       
+      
+      >
+        
+       <input type='file' accept="image/*" onChange={handleImage} value={image}/>
+      </Form.Item>
+    )
     if(res.type == "detail") return(
       <Form.Item
         label={res.title}
@@ -332,7 +438,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
 
   const onFinish =  async(values) => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    console.log('value :',values)
+    console.log(typeof image)
+   
     if (currentItem) {
       
  
@@ -371,6 +478,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
 
 
     } else {
+      
       const newItem = {
         ...values,
         active: values.active !== undefined ? values.active : true,
