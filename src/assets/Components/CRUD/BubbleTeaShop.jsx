@@ -18,6 +18,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
   const [filteredData, setFilteredData] = useState([]);
   const [isCreate,setIsCreate] = useState(false);
   const [isLoad,setLoad] = useState(false);
+  const [image,setImage] = useState();
+
   
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
  
@@ -26,7 +28,12 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     setFilteredData(result);
     if(column !== undefined) setColumn(column);
     if(page != "transaction") setIsCreate(true);
-     
+    
+    // deny all of is import to visible
+    setColumn(column.filter((column)=>{
+      return column.type != "image"
+    }))
+   
     
     
   },[])
@@ -62,6 +69,20 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     
     )
   }]];
+
+  const handleImage = (e)=>{
+    const image = e.target.files[0];
+    if(image){
+      //console.log('image',image);
+      const reader = new FileReader();
+      reader.onload = (event)=>{
+        console.log('dasdasd',event.target.result);
+        // console.log('image :',event.target.result)
+        setImage(event.target.result);
+      };
+      reader.readAsDataURL(image);
+    }
+  }
   
    
   
@@ -179,7 +200,42 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
 
     
   }
+
+  const productById = ()=>{
+   
+  
+       return new Promise((resolve,reject)=>{
+        fetch("http://127.0.0.1:4000/products/products/3").then(response => {
+          
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json()
+        }).then(result =>{
+          
+          setImage(result.result[0].image_url)
+          resolve(result.result[0].image_url)
+        
+         
+        })
+       }) 
+    
+    
+     
+
+   
+  }
   const productItemApi = async(newItem)=>{
+    if(image == undefined){
+      await productById(newItem).then((res)=>{
+      newItem.image = res
+      })}
+    else{
+      newItem.image = image
+    };
+    console.log('item :',newItem)
+   
+   
      await fetch("http://127.0.0.1:4000/Products/update",{
       method: 'PATCH',
       headers:{
@@ -189,7 +245,14 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
       
     })
    
+   
+  
+  setImage(undefined)
+
+    
+   
   }
+  
 
   const employeeItemApi = async(newItem)=>{
     console.log('item :',newItem);
@@ -223,6 +286,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
     form.resetFields();
     setIsModalVisible(true);
   };
+
+  
 
   const showEditModal = (record) => {
     setCurrentItem(record);
@@ -274,6 +339,17 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
 
   const createModal =(res)=>{
     if(res.type == "null") return(<></>)
+    if(res.type == "image") return(
+      <Form.Item
+        label={res.title}
+        name={res.key} 
+       
+      
+      >
+        
+       <input type='file' accept="image/*" onChange={handleImage} value={image}/>
+      </Form.Item>
+    )
     if(res.type == "detail") return(
       <Form.Item
         label={res.title}
@@ -342,7 +418,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
 
   const onFinish =  async(values) => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    console.log('value :',values)
+    console.log(typeof image)
+   
     if (currentItem) {
       
  
@@ -381,6 +458,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
 
 
     } else {
+      
       const newItem = {
         ...values,
         active: values.active !== undefined ? values.active : true,

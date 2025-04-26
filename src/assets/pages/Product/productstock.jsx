@@ -36,6 +36,13 @@ export default function Productstock(){
           width: 70,
         },
         {
+          title: 'รูป',
+          dataIndex: 'image',
+          key: 'image',
+          type:'image',
+          width: 70,
+        },
+        {
           title: 'หมวดหมู่',
           dataIndex: 'category',
           type:'select',
