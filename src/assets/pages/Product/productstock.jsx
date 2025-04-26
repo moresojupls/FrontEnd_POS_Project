@@ -118,7 +118,24 @@ export default function Productstock(){
     
     
     
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"} selectOption={selectOption} get = {()=>new Promise((resolve)=>{
+     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"} selectOption={selectOption} deleteApi = {
+      (id)=>new Promise((resolve)=>{
+        fetch(`http://127.0.0.1:4000/Products/delete/${id}`,{method:'DELETE'}).then(response=>{
+            if(!response.ok){
+                throw Error("Connection failed"); 
+            }
+            return response.json()
+        }).then((result)=>{
+            if(!result.statusCode == 200){
+                throw Error("Connection failed");
+            }
+            setResult(result);
+            setLoad(true);
+            resolve(result);
+          
+        })
+    })
+    }get = {()=>new Promise((resolve)=>{
       fetch("http://127.0.0.1:4000/Products/Products/Table").then(response=>{
           if(!response.ok){
               throw Error("Connection failed"); 

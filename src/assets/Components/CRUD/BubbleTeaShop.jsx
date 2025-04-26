@@ -302,9 +302,22 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   // ในคอมโพเนนต์ของคุณ
   const handleDelete = (productId) => {
     // หาข้อมูลสินค้าจาก productId เพื่อเอาชื่อมาแสดง
-   console.log(productId.mat_id)
-    const productToDelete = data.find(item => item.mat_id === productId.mat_id );
-    console.log('productToDelete',productToDelete)
+    //item.mat_id === productId.mat_id ||
+   console.log(productId)
+    const productToDelete = data.find(item =>{
+      if (productId.mat_id && item.mat_id === productId.mat_id) {
+        return true;
+      }
+      if (productId.employee_id && item.employee_id === productId.employee_id) {
+        return true;
+      }
+      if (productId.product_id && item.product_id === productId.product_id) {
+        return true;
+      }
+      return false;
+    }
+    );
+    
     const tableToDeleteId = productToDelete.mat_id || productToDelete.product_id || productToDelete.employee_id;
     
     Modal.confirm({
@@ -327,7 +340,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
        deleteapi
         if(deleteapi.statusCode == 200){
           const result = await get();
-      
+          
           if(result.statusCode == 200 || result.statuscode == 200){
             // wait delete api
             setData(result.result);
