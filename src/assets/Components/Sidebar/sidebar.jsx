@@ -21,7 +21,7 @@ function MySidebar() {
   var [respone,setrespone]= useState(false);
 
   useEffect(() => {
-    setpermission(JSON.parse(userData).result.permission);
+    if(userData != null || userData != undefined) setpermission(JSON.parse(userData).result.permission);
     function handleResize() {
       // Update the state or perform any other actions when the
       // browser is resized

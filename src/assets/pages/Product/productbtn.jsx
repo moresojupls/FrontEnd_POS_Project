@@ -1,3 +1,3 @@
-const btn = ["favourite","greentea","fruittea","milktea","beer"];
+const btn = ["favourite","fruittea","milktea"];
 
 export default btn
