@@ -109,7 +109,24 @@ export default function SupplyStock(){
     },[])
     
     
-      return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"supply"} selectOption={selectOption} get={()=>new Promise((resolve)=>{
+      return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"supply"} selectOption={selectOption} deleteApi = {
+        (id)=>{return(
+          new Promise((resolve)=>{
+          fetch(`http://127.0.0.1:4000/materials/delete/${id}`,{method:'DELETE'}).then(response=>{
+              if(!response.ok){
+                  throw Error("Connection failed"); 
+              }
+              return response.json()
+          }).then((result)=>{
+              if(!result.statusCode == 200){
+                  throw Error("Connection failed");
+              }
+              setResult(result);
+              setLoad(true);
+              resolve(result);
+            
+          })}))}
+      } get={()=>new Promise((resolve)=>{
         fetch("http://127.0.0.1:4000/materials/materials/").then(response=>{
             if(!response.ok){
                 throw Error("Connection failed"); 

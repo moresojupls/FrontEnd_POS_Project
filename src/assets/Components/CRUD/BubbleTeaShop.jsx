@@ -7,7 +7,7 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
+const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
@@ -61,7 +61,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
           danger 
           shape="circle" 
           icon={<DeleteOutlined />} 
-          onClick={() => handleDelete(record.product_id)}
+          onClick={() => handleDelete(record)}
         />
       </Space>
       
@@ -302,7 +302,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
   // ในคอมโพเนนต์ของคุณ
   const handleDelete = (productId) => {
     // หาข้อมูลสินค้าจาก productId เพื่อเอาชื่อมาแสดง
-    const productToDelete = data.find(item => item.product_id === productId);
+   console.log(productId.mat_id)
+    const productToDelete = data.find(item => item.mat_id === productId.mat_id );
+    console.log('productToDelete',productToDelete)
+    const tableToDeleteId = productToDelete.mat_id || productToDelete.product_id || productToDelete.employee_id;
     
     Modal.confirm({
       title: 'ยืนยันการลบ',
@@ -319,10 +322,12 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
       centered: true,
       async onOk() {
         // ฟังก์ชันลบจริงๆ
-        const newData = data.filter(item => item.product_id !== productId);
+        console.log('tableToDeleteId',tableToDeleteId)
+        const deleteapi = await deleteApi(tableToDeleteId);
+       deleteapi
+        if(deleteapi.statusCode == 200){
+          const result = await get();
       
-        const result = await get();
-        console.log('sss',result)
           if(result.statusCode == 200 || result.statuscode == 200){
             // wait delete api
             setData(result.result);
@@ -330,7 +335,9 @@ const BubbleTeaShop = ({result,column,page,selectOption,get}) => {
             message.success('ลบสำเร็จแล้ว');
             
            
-      }
+          }
+        }
+       
       }
     });
 
