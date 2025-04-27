@@ -1,17 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Card,
-  Row,
-  Col,
-  Typography,
-  InputNumber,
-  Button,
-  Divider,
-  message,
-  Modal,
-  Spin,
-  Alert,
-} from "antd";
+import { Card, Row, Col, Typography, InputNumber, Button, Divider, message, Modal, Spin } from "antd";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -28,9 +16,13 @@ const VendorPage = () => {
   const slipRef = useRef();
   const [isReceiptReady, setIsReceiptReady] = useState(false);
   const [savedOrderItems, setSavedOrderItems] = useState([]);
+  const [savedTotal, setSavedTotal] = useState(0);
+  const [isReceiptDownloaded, setIsReceiptDownloaded] = useState(false);
 
+  useEffect(() => {
+    fetchMaterials();
+  }, []);
 
-  // Fetch materials (for demo, use static data)
   const fetchMaterials = async () => {
     try {
       setLoading(true);
@@ -76,16 +68,19 @@ const VendorPage = () => {
     },
   ];
 
-  useEffect(() => {
-    fetchMaterials();
-  }, []);
-
-  // Handle quantity change
+  const [orderTotal, setOrderTotal] = useState(0);
   const handleQtyChange = (id, value) => {
-    setQuantities({ ...quantities, [id]: value });
+    const newQuantities = { ...quantities, [id]: value };
+    setQuantities(newQuantities);
+
+    const calculateTotal = materials.reduce((sum, item) => {
+      const qty = newQuantities[item.material_id] || 0;
+      return sum + qty * item.supply_price;
+    }, 0);
+
+    setOrderTotal(calculateTotal);
   };
 
-  // Handle order creation
   const handleOrder = () => {
     const items = materials
       .filter((item) => quantities[item.material_id] > 0)
@@ -113,75 +108,82 @@ const VendorPage = () => {
     setQuantities(newQuantities);
   };
 
-  // Format price
   const formatPrice = (price) => price && !isNaN(price) ? price.toFixed(2) : "0.00";
 
-  // Generate PDF
   const generatePDF = async () => {
     try {
       if (!slipRef.current) {
         throw new Error("Receipt not ready");
       }
-  
+
       const input = slipRef.current;
-  
       const canvas = await html2canvas(input, {
         scale: 2,
         useCORS: true,
         backgroundColor: "#ffffff",
       });
       const imgData = canvas.toDataURL("image/png");
-  
+
       const pdf = new jsPDF("p", "mm", "a4");
-  
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-  
+
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
       pdf.save(`Order_${newVendorId || "temp"}.pdf`);
-  
+
+      setIsReceiptDownloaded(true);
     } catch (error) {
       console.error("Error generating PDF:", error);
       message.error("Failed to generate PDF");
     }
   };
-  
-  
-  
 
-  // Confirm order
   const confirmOrder = async () => {
     try {
       setLoading(true);
-  
+
       const tempOrderId = `temp_${Date.now()}`;
       setNewVendorId(tempOrderId);
-  
-      // 🛠 Backup orderItems ก่อนเคลียร์
-      setSavedOrderItems(orderItems); 
-  
+
+      setSavedOrderItems(orderItems);
+      setSavedTotal(orderTotal);
+
       const orderData = {
         order_id: tempOrderId,
         items: orderItems,
-        total: total,
+        total: orderTotal,
         date: new Date().toISOString(),
-        status: 'pending',
+        status: 'pending'
       };
-  
+
       Modal.success({
         title: "Order Saved Successfully",
         content: (
           <div>
             <p>Order saved. Now you can download your receipt.</p>
             <p>Order ID: <strong>{tempOrderId}</strong></p>
+            <Button
+              type="default"
+              size="large"
+              onClick={generatePDF}
+              style={{ width: "100%", marginTop: 16 }}
+              disabled={isReceiptDownloaded}
+            >
+              📥 Download Receipt
+            </Button>
           </div>
         ),
       });
-  
+
       setIsReceiptReady(true);
+
+      // Clear data after confirmation
       setQuantities({});
+      setOrderItems([]);
+      setOrderTotal(0);
+      setIsReceiptDownloaded(false);
       setOrderModalVisible(false);
-      setOrderItems([]); // ล้างตัว main ได้ตามปกติ
     } catch (error) {
       console.error("Error:", error);
       Modal.error({
@@ -197,10 +199,8 @@ const VendorPage = () => {
       setLoading(false);
     }
   };
-  
-  
 
-  const total = orderItems.reduce(
+  const calculateTotal = orderItems.reduce(
     (sum, item) => sum + (item.quantity * item.supply_price),
     0
   );
@@ -215,16 +215,8 @@ const VendorPage = () => {
 
   return (
     <div style={{ maxWidth: 1200, margin: "auto", padding: "24px", height: "100vh", overflowY: "auto", position: "relative" }}>
-      <Title level={3}>🛒 Purchase Order (Temporary)</Title>
+      <Title level={3}>🛒 Purchase Order </Title>
       <Text type="secondary">Select quantities and confirm order</Text>
-
-      <Alert
-        type="info"
-        message="Temporary System"
-        description="Order data is temporarily stored in the browser until the backend is available."
-        style={{ marginTop: 16 }}
-        showIcon
-      />
 
       <Row gutter={[16, 16]} style={{ marginTop: 24 }}>
         {materials.map((item) => (
@@ -248,34 +240,19 @@ const VendorPage = () => {
       </Row>
 
       <div style={{ position: "fixed", bottom: 24, right: 24, background: "#fff", padding: 16, boxShadow: "0 0 10px rgba(0,0,0,0.1)", borderRadius: 12, zIndex: 1000 }}>
-  <Title level={5} style={{ marginBottom: 12 }}>💰 Total: {total} THB</Title>
+        <Title level={5} style={{ marginBottom: 12 }}>💰 Total: {orderTotal} THB</Title>
 
-  {/* Confirm Order Button */}
-  <Button
-    type="primary"
-    size="large"
-    disabled={Object.values(quantities).every((q) => q === 0)}
-    onClick={handleOrder}
-    style={{ marginBottom: 8 }}
-  >
-    ✅ Confirm Order
-  </Button>
+        <Button
+          type="primary"
+          size="large"
+          disabled={Object.values(quantities).every((q) => q === 0)}
+          onClick={handleOrder}
+          style={{ marginBottom: 8 }}
+        >
+          ✅ Confirm Order
+        </Button>
+      </div>
 
-  {/* ✅ New: Download Receipt Button */}
-  {isReceiptReady && (
-    <Button
-      type="default"
-      size="large"
-      onClick={generatePDF}
-      style={{ width: "100%", marginTop: 8 }}
-    >
-      📥 Download Receipt
-    </Button>
-  )}
-</div>
-
-
-      {/* Order Modal */}
       <Modal
         title="📦 Review Your Order (Temporary)"
         open={isOrderModalVisible}
@@ -297,7 +274,7 @@ const VendorPage = () => {
             ))}
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16, fontSize: 18, fontWeight: "bold" }}>
               <span>Total</span>
-              <span>{total} THB</span>
+              <span>{orderTotal} THB</span>
             </div>
           </>
         ) : (
@@ -307,18 +284,11 @@ const VendorPage = () => {
         )}
       </Modal>
 
-      {/* Hidden PurchaseSlipComponent for PDF rendering */}
-      <div ref={slipRef} style={{ position: 'absolute',
-            left: '-9999px',
-            top: 0,
-            width: 500,
-            padding: 20,
-            fontFamily: 'Arial, sans-serif',
-            background: 'white' }}>
+      <div ref={slipRef} style={{ position: 'absolute', left: '-9999px', top: 0, width: 500, padding: 20, fontFamily: 'Arial, sans-serif', background: 'white' }}>
         <div style={{ textAlign: "center" }}>
           <Title level={2} style={{ marginBottom: 10 }}>🧾 Purchase Order Slip</Title>
           <Text type="secondary">Order ID: <strong>{newVendorId}</strong></Text><br />
-          <Text type="secondary">Date: {new Date().toLocaleString()}</Text>
+          <Text type="secondary">Date: {new Date().toLocaleString()}</Text><br />
           <Divider />
         </div>
         <div style={{ marginTop: 16 }}>
@@ -336,7 +306,7 @@ const VendorPage = () => {
           <Divider />
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 18, fontWeight: "bold" }}>
             <span>Total</span>
-            <span>{formatPrice(total)} THB</span>
+            <span>{formatPrice(savedTotal)} THB</span>
           </div>
         </div>
         <Divider />
