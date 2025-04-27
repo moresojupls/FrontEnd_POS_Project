@@ -1,0 +1,28 @@
+/* Style สำหรับ scrollbar */
+.custom-scrollbar {
+    overflow-y: auto;
+    padding-right: 16px;  /* เพิ่ม padding เพื่อให้ content ห่างจาก scrollbar */
+  }
+  
+  /* Style สำหรับ scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  /* Style สำหรับ thumb ของ scrollbar */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+  
+  /* Style เมื่อ hover บน scrollbar */
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Style สำหรับ scrollbar track */
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+  }
+  
