@@ -19,6 +19,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   const [isCreate,setIsCreate] = useState(false);
   const [isLoad,setLoad] = useState(false);
   const [image,setImage] = useState();
+  const [selectedValue, setSelectedValue] = useState(selectOption[0]); // ล็อคค่าเริ่มต้น
 
   
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
@@ -384,6 +385,12 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
    
   };
 
+  const handleChange = (e) => {
+    
+    setSelectedValue(e);
+  };
+
+
   const createModal =(res)=>{
     if(res.type == "null") return(<></>)
     if(res.type == "image") return(
@@ -418,7 +425,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
       name="category"
       rules={[{  message: 'กรุณาเลือกหมวดหมู่' }]}
     >
-      <Select defaultValue={selectOption[0]}>
+      <Select defaultValue={selectOption[0]} value={selectedValue}  onChange={handleChange}>
         {
         selectOption.map(result=>
           <Option key={result} value={result}>{result}</Option>
@@ -465,8 +472,9 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
 
   const onFinish =  async(values) => {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    console.log(typeof image)
-   
+    console.log("selectedValue",selectedValue)
+    values.category =selectedValue;
+    
     if (currentItem) {
       
  
@@ -510,15 +518,16 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
         ...values,
         active: values.active !== undefined ? values.active : true,
         // product_id: `${data.length + 1}`,
-        created_at: now,
-        updated_at: now,
+       
       };
-      console.log('new item :',newItem);
+      newItem.image = image;
+      console.log('new item :',values);
       const newData = [...data, newItem];
       console.log('new Data ',newData);
-      createItemApi(newItem);
+      await createItemApi(newItem);
       setData(newData);
       setFilteredData(newData);
+      setImage(undefined);
       message.success('เพิ่มสินค้าสำเร็จแล้ว');
 
       // // create new data by api
