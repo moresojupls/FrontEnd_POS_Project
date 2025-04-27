@@ -35,18 +35,22 @@ const VendorPage = () => {
     try {
       setLoading(true);
       const response = await fetch("http://127.0.0.1:4000/materials/materials/");
-      if (!response.ok) throw new Error("Failed to fetch data");
+      const responseVendorMaterial = await fetch("http://127.0.0.1:4000/vendor_material/vendor_material");
+      if (!response.ok && !responseVendorMaterial.ok) throw new Error("Failed to fetch data");
 
       const data = await response.json();
-      const formattedMaterials = data.result.map((item) => ({
-        material_id: item.mat_id,
-        material_name: item.mat_name,
-        supply_price: parseFloat(item.price),
+      const vendorMaterialData = await responseVendorMaterial.json();
+     
+      
+      const formattedMaterials = vendorMaterialData.result.map((item,index) => ({
+        material_id: data.result[index].mat_id,
+        material_name: data.result[index].mat_name,
+        supply_price: parseFloat(data.result[index].price),
         lead_time_days: 2,
-        img_url: item.img_url || "https://source.unsplash.com/featured/?ingredient",
-        supplier_name: item.vendor_name || "Unknown",
+        img_url: data.result[index].img_url || "https://source.unsplash.com/featured/?ingredient",
+        supplier_name: data.result[index].mat_id == item.mat_id ? item.vendor_name : "Unknown",
       }));
-
+     
       setMaterials(formattedMaterials);
     } catch (error) {
       console.error(error);
