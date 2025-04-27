@@ -201,11 +201,11 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
     
   }
 
-  const productById = ()=>{
+  const productById = (newItem)=>{
    
   
        return new Promise((resolve,reject)=>{
-        fetch("http://127.0.0.1:4000/products/products/3").then(response => {
+        fetch(`http://127.0.0.1:4000/products/products/${newItem.product_id}`).then(response => {
           
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -265,9 +265,36 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
       body: JSON.stringify(newItem)
     })
   }
-
+  const supplyById = (newItem)=>{
+    return new Promise((resolve,reject)=>{
+      console.log('item :',newItem);
+      fetch(`http://127.0.0.1:4000/materials/materials/${newItem.mat_id}`).then(response => {
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json()
+      }).then(result =>{
+        
+        setImage(result.result[0].img_url)
+        resolve(result.result[0].img_url)
+      
+       
+      })
+     }) 
+  }
   const supplyItemApi = async(newItem)=>{
-    console.log('item :',newItem);
+    console.log('item 22:',newItem);
+    if(image == undefined){
+      await supplyById(newItem).then((res)=>{
+        console.log('resss',res)
+      newItem.image = res
+      })}
+    else{
+      newItem.image = image
+    };
+  
+    console.log('item :',newItem)
     
     await fetch("http://127.0.0.1:4000/materials/update",{
       method: 'PATCH',
