@@ -20,11 +20,11 @@ export default function SupplyStock(){
           render: (text) => <strong>{text}</strong>,
         },
         {
-          title: 'คำอธิบาย',
-          dataIndex: 'description',
-          key: 'description',
-          type:'textArea',
-          ellipsis: true,
+          title: 'จํานวน',
+          dataIndex: 'amount',
+          key: 'amount',
+          type:'input',
+      
         },
         {
           title: 'หมวดหมู่',
@@ -39,6 +39,12 @@ export default function SupplyStock(){
           type:'input',
           key: 'price',
           width: 120,
+        }, {
+          title: 'รูป',
+          dataIndex: 'image',
+          key: 'image',
+          type:'image',
+          width: 70,
         },
         {
           title: 'สถานะ',
