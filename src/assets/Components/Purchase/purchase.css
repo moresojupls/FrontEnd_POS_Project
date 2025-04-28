@@ -1,22 +1,68 @@
-.btn {
-    display: flex;
-    flex-direction: column;  /* ให้รูปอยู่ด้านบนและข้อความอยู่ด้านล่าง */
-    align-items: center;     /* จัดกลางทั้งแนวนอน */
-    justify-content: center; /* จัดกลางทั้งแนวตั้ง */
-    padding: 10px 20px;
-    border: 2px solid #000;
-    border-radius: 5px;
-    background-color: #FFE8AD;
-    cursor: pointer;
-  }
-  
-  .btn-image {
-    width: 50px; /* ปรับขนาดรูป */
-    height: 50px; /* ปรับขนาดรูป */
-    margin-bottom: 10px; /* เพิ่มระยะห่างระหว่างรูปกับข้อความ */
-  }
-  
-  .btn-text {
-    font-size: 14px;
-    text-align: center;
-  }
+/* src/components/Receipt.css */
+.receipt-container {
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 2px solid #B17457;
+  border-radius: 10px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.receipt-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.receipt-logo {
+  width: 50px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.receipt-header h3 {
+  font-size: 26px;
+  color: #B17457;
+}
+
+.receipt-body {
+  margin-bottom: 20px;
+}
+
+.receipt-items {
+  margin-top: 20px;
+}
+
+.receipt-item {
+  margin-bottom: 15px;
+}
+
+.receipt-item p {
+  margin: 5px 0;
+}
+
+.receipt-total {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.receipt-footer {
+  text-align: center;
+}
+
+.generate-pdf-button {
+  background-color: #6495ED;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.generate-pdf-button:hover {
+  background-color: #4169E1;
+}
