@@ -37,14 +37,37 @@ const VendorPage = () => {
       const data = await response.json();
       const vendorMaterialData = await responseVendorMaterial.json();
      
-      const formattedMaterials = vendorMaterialData.result.map((item,index) => ({
-        material_id: data.result[index].mat_id,
-        material_name: data.result[index].mat_name,
-        supply_price: parseFloat(data.result[index].price),
-        lead_time_days: 2,
-        img_url: data.result[index].img_url || "https://source.unsplash.com/featured/?ingredient",
-        supplier_name: data.result[index].mat_id == item.mat_id ? item.vendor_name : "Unknown",
-      }));
+     console.log('vendorMaterialData',vendorMaterialData)
+     const formattedMaterials   = data.result.map((item1) => {
+      const a = vendorMaterialData.result.find((res)=>{
+        return res.mat_id == item1.mat_id
+      })
+
+      item1.vendor_name = a === undefined ? "SuperMarket" : a.vendor_name
+      
+      
+      return item1
+        
+      })
+     
+      
+      // console.log('index',index);
+   
+      // return item.mat_id == vendorMaterialData.result[index].mat_id 
+      
+    
+
+    console.log('formattedMaterials :',formattedMaterials)
+    //   const formattedMaterials = vendorMaterialData.result.map((item,index) => {
+    //     if(data.result[index].mat_id == item.mat_id) return ({
+    //     material_id: data.result[index].mat_id,
+    //     material_name: data.result[index].mat_name,
+    //     supply_price: parseFloat(data.result[index].price),
+    //     lead_time_days: 2,
+    //     img_url: data.result[index].img_url || "https://source.unsplash.com/featured/?ingredient",
+    //     supplier_name: data.result[index].mat_id == item.mat_id ? item.vendor_name : "Unknown",
+    //   })
+    // });
      
       setMaterials(formattedMaterials);
     } catch (error) {
@@ -88,12 +111,13 @@ const VendorPage = () => {
 
   const [orderTotal, setOrderTotal] = useState(0);
   const handleQtyChange = (id, value) => {
+    console.log('id ',quantities)
     const newQuantities = { ...quantities, [id]: value };
     setQuantities(newQuantities);
 
     const calculateTotal = materials.reduce((sum, item) => {
-      const qty = newQuantities[item.material_id] || 0;
-      return sum + qty * item.supply_price;
+      const qty = newQuantities[item.mat_id] || 0;
+      return sum + qty * parseInt(item.price);
     }, 0);
 
     setOrderTotal(calculateTotal);
@@ -101,12 +125,12 @@ const VendorPage = () => {
 
   const handleOrder = () => {
     const items = materials
-      .filter((item) => quantities[item.material_id] > 0)
+      .filter((item) => quantities[item.mat_id] > 0)
       .map((item) => ({
-        material_id: item.material_id,
-        quantity: quantities[item.material_id],
-        material_name: item.material_name,
-        supply_price: item.supply_price,
+        material_id: item.mat_id,
+        quantity: quantities[item.mat_id],
+        material_name: item.mat_name,
+        supply_price: item.price,
       }));
 
     if (!items.length) {
@@ -262,26 +286,26 @@ const VendorPage = () => {
         {/* Material Cards */}
         <Row gutter={[16, 16]} style={{ marginTop: 24 }}>
           {materials.map((item) => (
-            <Col xs={24} sm={12} md={8} key={item.material_id}>
+            <Col xs={24} sm={12} md={8} key={item.mat_id}>
               <Card
                 hoverable
                 cover={
                   <img
-                    alt={item.material_name}
+                    alt={item.mat_name}
                     src={item.img_url}
                     style={{ height: 180, objectFit: "cover" }}
                   />
                 }
               >
-                <Title level={5}>{item.material_name}</Title>
-                <Text>🏷️ Supplier: {item.supplier_name}</Text><br />
-                <Text>💸 Price: {item.supply_price} THB</Text><br />
-                <Text>⏱️ Lead time: {item.lead_time_days} days</Text>
+                <Title level={5}>{item.mat_name}</Title>
+                <Text>🏷️ Supplier: {item.vendor_name}</Text><br />
+                <Text>💸 Price: {item.price} THB</Text><br />
+                <Text>⏱️ Lead time: 2 days</Text>
                 <Divider style={{ margin: "12px 0" }} />
                 <InputNumber
                   min={0}
-                  value={quantities[item.material_id] || 0}
-                  onChange={(val) => handleQtyChange(item.material_id, val)}
+                  value={quantities[item.mat_id] || 0}
+                  onChange={(val) => handleQtyChange(item.mat_id, val)}
                   style={{ width: "100%" }}
                   placeholder="Quantity"
                 />
