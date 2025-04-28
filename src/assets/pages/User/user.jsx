@@ -231,7 +231,7 @@ function Userpage() {
 
  
   
-  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column}  page={"employee"} get={()=>new Promise((resolve)=>{
+  return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} selectOption={[]}  page={"employee"} get={()=>new Promise((resolve)=>{
     fetch('http://127.0.0.1:4000/employees/employees').then(res=>{
       return res.json()
     }).then((result)=>{

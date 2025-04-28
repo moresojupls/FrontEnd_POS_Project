@@ -224,7 +224,7 @@ export default function HistoryPage() {
                 </div>
                
             </Modal>
-            <BubbleTeaShop  result ={result.result} column = {column} page = {"transaction"}/>
+            <BubbleTeaShop  result ={result.result} column = {column} selectOption = {[]} page = {"transaction"}/>
         </> :<h1>Loadding.... </h1>
     )
 
