@@ -140,7 +140,7 @@ function Userpage() {
     dataIndex: 'employee_name',
     key: 'employee_name',
     type: 'input',
-    width: 100,
+    width: 140,
     render: (text) => <strong>{text}</strong>,
   },
   {
@@ -148,7 +148,7 @@ function Userpage() {
     dataIndex: 'employee_lastname',
     key: 'employee_lastname',
     type: 'input',
-    width: 100,
+    width: 140,
     ellipsis: true,
   },
   {
@@ -157,7 +157,7 @@ function Userpage() {
     key: 'email',
     type: 'textArea',
     render: (email) => `${email} `,
-    width: 180,
+    width: 200,
   },
   {
     title: 'phone',
@@ -173,13 +173,13 @@ function Userpage() {
     type:'input',
     width: 100,
   },
-  {
-    title: 'salary',
-    dataIndex: 'salary',
-    key: 'salary',
-    type:'input',
-    width: 100,
-  },
+  // {
+  //   title: 'salary',
+  //   dataIndex: 'salary',
+  //   key: 'salary',
+  //   type:'input',
+  //   width: 100,
+  // },
   {
     title: 'สถานะ',
     dataIndex: 'active',
