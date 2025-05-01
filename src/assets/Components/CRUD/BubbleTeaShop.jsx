@@ -540,7 +540,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   return (
     <div className="bubble-tea-container">
       <div className="header">
-        <h1>ระบบจัดการเมนูชานมไข่มุก</h1>
+        <h1> {page} page</h1>
         <div className="actions">
         <Form form={searchForm} onFinish={handleSearch} layout="inline">
           <Form.Item name="searchText">

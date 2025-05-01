@@ -81,7 +81,6 @@ function MyOrderlist() {
                 width: '100%',
                 height: '50px',
                 fontSize: '20px',
-                fontFamily: 'cursive',
                 color: 'green',
                 backgroundColor: 'white',
                 border: '3.5px solid #FFB38E',
