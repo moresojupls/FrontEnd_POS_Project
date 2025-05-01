@@ -28,6 +28,7 @@ function Pending_Order() {
     const fetchOrders = () => {
       const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
       setOrders(storedOrders);
+      console.log('storedOrders',storedOrders)
     };
   
     fetchOrders(); // 🔥 ต้องเรียกตอนแรกเพื่อโหลดข้อมูลที่เคยบันทึกไว้
@@ -48,7 +49,12 @@ function Pending_Order() {
     setSelectedSugar(order.selectedSugar || 50);
     setName(order.name);
     console.log('order.toppings',order.toppings)
-    setToppings(order.toppings);
+    setToppings(order.toppings || {
+      Bubble: false,
+      Jelly: false,
+      Whisp: false,
+      konjac: false,
+    });
     setQuantity(order.quantity || 1);
     setImage(order.img);
     setPrice(order.price);
@@ -346,8 +352,9 @@ function Pending_Order() {
               {[
       "Bubble",
       "Jelly",
-      "Whisp",
       "konjac",
+      "Whisp",
+     
     ].map((topping, index) => (
                 <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
                   <input

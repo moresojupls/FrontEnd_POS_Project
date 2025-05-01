@@ -17,7 +17,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
   const [selectedMood, setSelectedMood] = useState("Cold");
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedSugar, setSelectedSugar] = useState(50);
-  ["Bubble", "Jelly", "konjac", "Whisp"]
+ 
   const [toppings, setToppings] = useState({
     Bubble: false,
     Jelly: false,
@@ -32,6 +32,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
   const handleShow = () => setShow(true);
 
   const handleToppingChange = (topping) => {
+
     setToppings((prev) => ({ ...prev, [topping]: !prev[topping] }));
   };
   
@@ -76,6 +77,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
       
       updatedOrders = [...storedOrders, newOrder];
     }
+    
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders));
     setShow(false);
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
@@ -85,15 +87,15 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
     
     switch(selectedSize){
       case "S":
-        setPrice(()=>price);
+        setPrice(()=>price-5);
         console.log('price2 : ',cardPrice)
         break;
       case "M":
-        setPrice(()=>price+5);
+        setPrice(()=>price);
         console.log('price2 : ',cardPrice)
         break;
       case "L":
-        setPrice(()=>price+10);
+        setPrice(()=>price+5);
         console.log('price2 : ',cardPrice)
         break;
       default:
