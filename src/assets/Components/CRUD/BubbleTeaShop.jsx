@@ -545,7 +545,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
         <Form form={searchForm} onFinish={handleSearch} layout="inline">
           <Form.Item name="searchText">
           <Input 
-            placeholder="ค้นหาสินค้า..." 
+            placeholder="ค้นหา"
             prefix={<SearchOutlined />} 
             style={{ width: 200 }} 
             onPressEnter={() => searchForm.submit()} // กด Enter เพื่อค้นหา
@@ -563,7 +563,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
             icon={<PlusOutlined />} 
             onClick={showCreateModal}
           >
-            เพิ่มสินค้าใหม่
+            เพิ่ม {page}
           </Button>):''}
         </div>
       </div>

@@ -9,15 +9,17 @@ function Pending_Order() {
   const [selectedOrder, setSelectedOrder] = useState(null); // เก็บข้อมูลรายการที่คลิก
   const [show, setShow] = useState(false); // state สำหรับ Modal
   const [image,setImage] = useState(null);
+  const [name,setName] = useState(null);
   const [price,setPrice]= useState(null);
+  const [total,setTotalPrice]= useState(null);
   const [selectedMood, setSelectedMood] = useState(null);
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedSugar, setSelectedSugar] = useState(50);
   const [toppings, setToppings] = useState({
-    ไข่มุก: false,
-    เยลลี่: false,
-    บุก: false,
-    วิปครีม: false,
+    Bubble: false,
+    Jelly: false,
+    Whisp: false,
+    konjac: false,
   });
   const [quantity, setQuantity] = useState(1);
 
@@ -44,15 +46,13 @@ function Pending_Order() {
     setSelectedMood(order.selectedMood || null);
     setSelectedSize(order.selectedSize || "M");
     setSelectedSugar(order.selectedSugar || 50);
-    setToppings(order.toppings || {
-      ไข่มุก: false,
-      เยลลี่: false,
-      บุก: false,
-      วิปครีม: false,
-    });
+    setName(order.name);
+    console.log('order.toppings',order.toppings)
+    setToppings(order.toppings);
     setQuantity(order.quantity || 1);
     setImage(order.img);
     setPrice(order.price);
+    setTotalPrice(order.total);
     setShow(true);
     {console.log(order)}
   };
@@ -268,7 +268,7 @@ function Pending_Order() {
                       
                       <h4>Discription</h4>
       
-                      <h3>ราคา {price} บาท</h3>
+                      <h3>ราคา {total} บาท</h3>
                     </div>
                   </div>
                 
@@ -343,7 +343,12 @@ function Pending_Order() {
                 gap: "10px", // ระยะห่างระหว่างแต่ละช่อง
               }}
             >
-              {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
+              {[
+      "Bubble",
+      "Jelly",
+      "Whisp",
+      "konjac",
+    ].map((topping, index) => (
                 <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
                   <input
                     className='checkbox-menu'
@@ -351,6 +356,7 @@ function Pending_Order() {
                     id={topping}
                     value={topping}
                     onChange={(e) => setToppings(e.target.value, e.target.checked)}
+                    checked ={toppings[topping]}
                   />
                   <label htmlFor={topping} >{topping}</label>
                 </div>
