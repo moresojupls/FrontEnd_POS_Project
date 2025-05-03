@@ -536,7 +536,14 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
     }
     setIsModalVisible(false);
   };
-
+  const [selectedRowKeys, setSelectedRowKeys]=useState([])
+  const onSelectChange = (newSelectedRowKeys) => {
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
   return (
     <div className="bubble-tea-container">
       <div className="header">
@@ -574,6 +581,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
           pagination={{ pageSize: 5 }} 
           bordered
           scroll={{ x: 300 }}
+          loading={isLoad}
+          onChange={()=><h1>dasd</h1>}
+         
+          
         />
       </Card>:<></>}
       

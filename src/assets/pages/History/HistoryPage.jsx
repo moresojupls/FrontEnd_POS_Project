@@ -1,8 +1,8 @@
-import { Functions } from "@mui/icons-material";
+import { Filter, Functions } from "@mui/icons-material";
 import { DynamicCRUD } from "../../Components/DynamicCRUD/DynamicCRUD";
 import Mycontent from '../../Components/content/content';
 import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, Switch, message } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, SortDescendingOutlined } from '@ant-design/icons';
 import { useState,useEffect } from "react";
 import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop'
 export default function HistoryPage() {
@@ -104,6 +104,18 @@ export default function HistoryPage() {
             second: '2-digit',
           });
         },
+        filters:[{
+          text:'lastest',
+          value:'lastest'
+          }
+        ],
+        onFilter:(value,record)=>{
+          return record.total_price > 60
+        
+        },
+        
+        sorter: (a, b) => a.name.length - b.name.length,
+        sortDirection:['ascend']
       }]
 
       const columns = [
