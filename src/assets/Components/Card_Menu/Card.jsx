@@ -32,7 +32,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
   const handleShow = () => setShow(true);
 
   const handleToppingChange = (topping) => {
-
+    console.log('topp',topping)
     setToppings((prev) => ({ ...prev, [topping]: !prev[topping] }));
   };
   
@@ -119,41 +119,50 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
     
     Object.keys(toppings).forEach((res)=>{
       if(toppings[res] == true){
-        topping.push(res)
+      
         
         switch(res){
           case "Bubble":
-            setPrice(()=>cardPrice+5)
+            setPrice(()=>cardPrice+(quantity*5))
             topping.push(res)
             break;
           case "Jelly":
-            setPrice(()=>cardPrice+10)
+            setPrice(()=>cardPrice+(quantity*10))
             topping.push(res)
             break;
           case "konjac":
-            setPrice(()=>cardPrice+10)
+            setPrice(()=>cardPrice+(quantity*10))
             topping.push(res)
             break;
           case "Whisp":
-            setPrice(()=>cardPrice+15)
+            setPrice(()=>cardPrice+(quantity*15))
             topping.push(res)
             break;
           default:
             break;
         }
+        // old Value
+        setOld(()=>topping)
        
+      }else{
+         // check filter old value is same topping
+        if(topping){
+          
+          const search = old.filter((res)=>(
+            !topping.includes(res)
+          ))
+       
+          // decreseable price 5 bath
+          search.map((res)=>(
+            setPrice(()=>(cardPrice-(quantity*(res == 'konjac' ? 10 : res == 'Whisp'?15:5))))
+          ))
+        }
+        
       }
-      // check filter old value is same topping
-      const search = old.filter((res)=>(
-        !topping.includes(res)
-      ))
-      // decreseable price 5 bath
-      search.map(()=>(
-        setPrice(()=>cardPrice-5)
-      ))
 
-      // old Value
-      setOld(()=>topping)
+   
+
+     
   
       
     
