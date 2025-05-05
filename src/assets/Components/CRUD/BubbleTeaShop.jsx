@@ -28,7 +28,19 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
     setData(result);
     setFilteredData(result);
     if(column !== undefined) setColumn(column);
-    if(page != "transaction") setIsCreate(true);
+    switch(page){
+      case "transaction":
+        setIsCreate(false);
+        break;
+      case "orderhistory":
+        setIsCreate(false);
+        break;
+      default:
+        setIsCreate(true);
+        break;
+
+    }
+
     
     // deny all of is import to visible
     setColumn(column.filter((column)=>{
