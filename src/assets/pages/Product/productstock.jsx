@@ -7,6 +7,11 @@ import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant
 export default function Productstock(){
     const [result, setResult] = useState();
     const [load, setLoad] = useState(false);
+    const [pagination, setPagination] = useState({
+          current: 0,
+          pageSize: 5,
+          total: 0,
+        });
     const column = [{
           title: 'รหัสสินค้า',
           dataIndex: 'product_id',
@@ -101,24 +106,38 @@ export default function Productstock(){
    
     const selectOption = ["Milk Tea","Fruit Tea","General"]
     useEffect(()=>{
-        fetch("http://127.0.0.1:4000/Products/Products/Table").then(response=>{
-            if(!response.ok){
-                throw Error("Connection failed"); 
-            }
-            return response.json()
-        }).then((result)=>{
-            if(!result.statusCode == 200){
-                throw Error("Connection failed");
-            }
-            setResult(result);
-            setLoad(true);
-        })
+      fetchData(0)
     },[])
+
+    const fetchData= (id)=>{
+      new Promise((resolve,reject)=>{
+    
+        fetch("http://127.0.0.1:4000/Products/Products/"+id).then(response=>{
+          if(!response.ok){
+              throw Error("Connection failed"); 
+          }
+          return response.json()
+      }).then((result)=>{
+          if(!result.statusCode == 200){
+              throw Error("Connection failed");
+          }
+          setResult(result);
+          setLoad(true);
+          resolve(result)
+          setPagination({
+            current:result.currentpage,
+            pageSize:result.sizepaginationPage,
+            total:result.total
+          })
+      })
+      })
+        
+    }
     
     
     
     
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"} selectOption={selectOption} deleteApi = {
+     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"} selectOption={selectOption} get={fetchData} Pagination = {pagination} deleteApi = {
       (id)=>new Promise((resolve)=>{
         fetch(`http://127.0.0.1:4000/Products/delete/${id}`,{method:'DELETE'}).then(response=>{
             if(!response.ok){
@@ -135,22 +154,7 @@ export default function Productstock(){
           
         })
     })
-    }get = {()=>new Promise((resolve)=>{
-      fetch("http://127.0.0.1:4000/Products/Products/Table").then(response=>{
-          if(!response.ok){
-              throw Error("Connection failed"); 
-          }
-          return response.json()
-      }).then((result)=>{
-          if(!result.statusCode == 200){
-              throw Error("Connection failed");
-          }
-          setResult(result);
-          setLoad(true);
-          resolve(result);
-        
-      })
-  })}/> :<h1>Loadding.... </h1>)
+    }/> :<h1>Loadding.... </h1>)
     
     
 }

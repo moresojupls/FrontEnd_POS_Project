@@ -30,7 +30,15 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
     pagination.current = record.current;
     pagination.pageSize = record.pageSize;
     const result = await get(pagination.current-1);
- 
+    console.log('Pagination',Pagination)
+    if(Pagination == undefined){
+      setPagination({
+        current:record.current,
+        pageSize: 5,
+        total: 20,
+       
+      })
+    }
     if( result.statuscode == 200){
       console.log('result',result)
       setData(result.result);
