@@ -22,11 +22,20 @@ function OrderHistorySupplierPage() {
       fetch(pagination.current)
     },[])
     const fetch =(number)=>{
+      return new Promise((resolve,reject)=>{
         axios.get('http://127.0.0.1:4000/supplierorderhistory/supplierorderhistory/'+number).then((res)=>{
-          console.log('res',res.data)
+        
           setResult(res.data)
           setLoad(true)
+          setPagination({
+            current:res.data.currentpage,
+            pageSize:res.data.sizepaginationPage,
+            total:res.data.total
+          })
+          resolve(res.data)
+        })
       })
+        
     }
     const showCreateModal = (record) => {
       console.log('record22',record.items)
@@ -176,7 +185,7 @@ function OrderHistorySupplierPage() {
                 </div>
                
             </Modal>
-    <BubbleTeaShop result={result.result} column = {columns} selectOption = {[]} page = {"orderhistory"} /></>:<h1>Loadding....</h1>
+    <BubbleTeaShop result={result.result} Pagination={pagination} column = {columns} selectOption = {[]} get={(res)=>fetch(res)} page = {"orderhistory"} /></>:<h1>Loadding....</h1>
   )
 }
 

@@ -7,7 +7,7 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
+const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination}) => {
   const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
@@ -20,6 +20,26 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   const [isLoad,setLoad] = useState(false);
   const [image,setImage] = useState();
   const [selectedValue, setSelectedValue] = useState(selectOption[0]); // ล็อคค่าเริ่มต้น
+  const [pagination,setPagination] = useState(Pagination|| {
+    current: 1,
+    pageSize: 5,
+    total: 10,
+  })
+
+  const createPagination =async(record)=>{
+    pagination.current = record.current;
+    pagination.pageSize = record.pageSize;
+    const result = await get(pagination.current-1);
+ 
+    if( result.statuscode == 200){
+      console.log('result',result)
+      setData(result.result);
+      setFilteredData(result.result);
+      
+      
+    }
+    console.log('record',record)
+  }
 
   
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
@@ -27,6 +47,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   useEffect(()=>{
     setData(result);
     setFilteredData(result);
+    console.log('result.Pagination',Pagination)
+  
     if(column !== undefined) setColumn(column);
     switch(page){
       case "transaction":
@@ -590,11 +612,11 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
         <Table 
           columns={!isCreate  ? columnTable:columns} 
           dataSource={filteredData}
-          pagination={{ pageSize: 5 }} 
+          pagination={pagination} 
           bordered
           scroll={{ x: 300 }}
           loading={isLoad}
-          onChange={()=><h1>dasd</h1>}
+          onChange={createPagination}
          
           
         />
