@@ -2,6 +2,7 @@ import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop'
 import {useState,useEffect} from 'react'
 import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, Switch, message } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 
 export default function Productstock(){
@@ -106,38 +107,30 @@ export default function Productstock(){
    
     const selectOption = ["Milk Tea","Fruit Tea","General"]
     useEffect(()=>{
-      fetchData(0)
+      fetchData(pagination.current)
     },[])
 
-    const fetchData= (id)=>{
-      new Promise((resolve,reject)=>{
-    
-        fetch("http://127.0.0.1:4000/Products/Products/"+id).then(response=>{
-          if(!response.ok){
-              throw Error("Connection failed"); 
-          }
-          return response.json()
-      }).then((result)=>{
-          if(!result.statusCode == 200){
-              throw Error("Connection failed");
-          }
-          setResult(result);
-          setLoad(true);
-          resolve(result)
-          setPagination({
-            current:result.currentpage,
-            pageSize:result.sizepaginationPage,
-            total:result.total
-          })
-      })
-      })
+    const fetchData= (number)=>{
+      return new Promise((resolve,reject)=>{
         
-    }
+     axios.get('http://127.0.0.1:4000/Products/Products/'+number).then((res)=>{
+        
+          setResult(res.data)
+          setLoad(true)
+          setPagination({
+            current:res.data.currentpage,
+            pageSize:res.data.sizepaginationPage,
+            total:res.data.total
+          })
+          resolve(res.data)
+        })  
+    })}
+      
     
     
+   
     
-    
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"} selectOption={selectOption} get={fetchData} Pagination = {pagination} deleteApi = {
+     return (load == true ? <BubbleTeaShop  result ={result.result} Pagination={pagination} column = {column} page = {"product"} selectOption={selectOption} get={(res)=>fetchData(res)}  deleteApi = {
       (id)=>new Promise((resolve)=>{
         fetch(`http://127.0.0.1:4000/Products/delete/${id}`,{method:'DELETE'}).then(response=>{
             if(!response.ok){

@@ -128,6 +128,7 @@ export default function SupplyStock(){
               setResult(result);
               setLoad(true);
               resolve(result);
+              
             
           })}))}
       } get={()=>new Promise((resolve)=>{

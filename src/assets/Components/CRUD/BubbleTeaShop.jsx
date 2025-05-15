@@ -27,19 +27,22 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
   })
 
   const createPagination =async(record)=>{
+    console.log('recordssss',get)
     pagination.current = record.current;
     pagination.pageSize = record.pageSize;
     const result = await get(pagination.current-1);
-    console.log('Pagination',Pagination)
+    console.log('record',result)
+  
     if(Pagination == undefined){
       setPagination({
         current:record.current,
         pageSize: 5,
-        total: 20,
+        total: record.total,
        
       })
     }
-    if( result.statuscode == 200){
+
+    if( result.statuscode == 200 ){
       console.log('result',result)
       setData(result.result);
       setFilteredData(result.result);
@@ -55,7 +58,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
   useEffect(()=>{
     setData(result);
     setFilteredData(result);
-    console.log('result.Pagination',Pagination)
+    console.log('result.Pagination',data)
   
     if(column !== undefined) setColumn(column);
     switch(page){
