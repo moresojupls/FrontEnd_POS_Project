@@ -36,8 +36,8 @@ export default function Productstock(){
         },
         {
           title: 'ราคา',
-          dataIndex: 'price',
-          key: 'price',
+          dataIndex: 'product_price',
+          key: 'product_price',
           type:'input',
           width: 70,
         },
@@ -50,16 +50,16 @@ export default function Productstock(){
         },
         {
           title: 'หมวดหมู่',
-          dataIndex: 'category',
+          dataIndex: 'product_category',
           type:'select',
-          key: 'category',
+          key: 'product_category',
           width: 120,
         },
         {
           title: 'สถานะ',
-          dataIndex: 'active',
+          dataIndex: 'product_active',
           key: 'active',
-          type:'active',
+          type:'product_active',
           render: (active) => (
             <Tag color={active ? 'green' : 'red'}>
               {active ? 'เปิดขาย' : 'ปิดขาย'}
@@ -112,9 +112,15 @@ export default function Productstock(){
 
     const fetchData= (number)=>{
       return new Promise((resolve,reject)=>{
-        
-     axios.get('http://127.0.0.1:4000/Products/Products/'+number).then((res)=>{
-        
+         const userData = localStorage.getItem("user");
+        const parseUser = JSON.parse(userData);
+        const auth = parseUser.Authorization.replace("Bearer ","")
+      axios.get('http://127.0.0.1:4000/Products/Products/',{
+      headers:{
+        authorization:"Bearer "+auth
+      }
+     }).then((res)=>{
+          console.log('res header',res)
           setResult(res.data)
           setLoad(true)
           setPagination({

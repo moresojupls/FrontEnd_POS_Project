@@ -29,20 +29,15 @@ function Userpage() {
 
   const [result, setResult] = useState();
   const [load, setLoad] = useState(false);
-      useEffect(()=>{
-          fetch("http://127.0.0.1:4000/employees/employees").then(response=>{
-              if(!response.ok){
-                  throw Error("Connection failed"); 
-              }
-              return response.json()
-          }).then((result)=>{
-              if(!result.statusCode == 200){
-                  throw Error("Connection failed");
-              }
-              setResult(result);
-              setLoad(true);
-          })
-      },[])
+   const userData = localStorage.getItem("user");
+  const parseUser = JSON.parse(userData);
+  const auth = parseUser.Authorization.replace("Bearer ","")
+  const config =   {
+                      headers:{
+          authorization:"Bearer "+auth
+          }
+        }
+      
       console.log('result : ',result)
 
   // สถานะสำหรับ Snackbar
@@ -215,7 +210,7 @@ function Userpage() {
   }
 
   useEffect(()=>{
-    fetch('http://127.0.0.1:4000/employees/employees').then(res=>{
+    fetch('http://127.0.0.1:4000/employees/employees',config).then(res=>{
       return res.json()
     }).then((result)=>{
       setResult(result)
@@ -232,7 +227,7 @@ function Userpage() {
  
   
   return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} selectOption={[]}  page={"employee"} get={()=>new Promise((resolve)=>{
-    fetch('http://127.0.0.1:4000/employees/employees').then(res=>{
+    fetch('http://127.0.0.1:4000/employees/employees',config).then(res=>{
       return res.json()
     }).then((result)=>{
       if(!result.statusCode == 200){

@@ -17,13 +17,22 @@ function OrderHistorySupplierPage() {
       pageSize: 5,
       total: 0,
     });
-     const [detail,setDetail] = useState(null)
+    
+      const [detail,setDetail] = useState(null)
+      const userData = localStorage.getItem("user");
+      const parseUser = JSON.parse(userData);
+      const auth = parseUser.Authorization.replace("Bearer ","")
+      const config =   {
+                      headers:{
+          authorization:"Bearer "+auth
+          }
+        }
     useEffect(() => {
       fetch(pagination.current)
     },[])
     const fetch =(number)=>{
       return new Promise((resolve,reject)=>{
-        axios.get('http://127.0.0.1:4000/supplierorderhistory/supplierorderhistory/'+number).then((res)=>{
+        axios.get('http://127.0.0.1:4000/supplierorderhistory/supplierorderhistory/'+number,config).then((res)=>{
         
           setResult(res.data)
           setLoad(true)

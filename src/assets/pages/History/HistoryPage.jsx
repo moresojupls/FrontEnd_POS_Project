@@ -12,7 +12,14 @@ export default function HistoryPage() {
      const [isModalVisible, setIsModalVisible] = useState(false);
      const [form] = Form.useForm();
      const [detail,setDetail] = useState(null)
-
+     const userData = localStorage.getItem("user");
+  const parseUser = JSON.parse(userData);
+  const auth = parseUser.Authorization.replace("Bearer ","")
+  const config =   {
+                      headers:{
+          authorization:"Bearer "+auth
+          }
+        }
     const showCreateModal = (record) => {
         setCurrentItem(null);
         form.resetFields();
@@ -176,7 +183,7 @@ export default function HistoryPage() {
         
       ];
     useEffect(()=>{
-            fetch("http://127.0.0.1:4000/Transactions/Transactions/Test").then(response=>{
+            fetch("http://127.0.0.1:4000/Transactions/Transactions/Test",config).then(response=>{
                 if(!response.ok){
                     throw Error("Connection failed"); 
                 }

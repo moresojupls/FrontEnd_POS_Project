@@ -98,7 +98,15 @@ export default function SupplyStock(){
    
     const selectOption = ["General","Powder","Topping"]
     useEffect(()=>{
-        fetch("http://127.0.0.1:4000/materials/materials/").then(response=>{
+        const userData = localStorage.getItem("user");
+    const parseUser = JSON.parse(userData);
+    const auth = parseUser.Authorization.replace("Bearer ","")
+    const config =   {
+                      headers:{
+          authorization:"Bearer "+auth
+          }
+        }
+        fetch("http://127.0.0.1:4000/materials/materials/",config).then(response=>{
             if(!response.ok){
                 throw Error("Connection failed"); 
             }

@@ -25,7 +25,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
     pageSize: 5,
     total: 10,
   })
-
+    const userData = localStorage.getItem("user");
+    const parseUser = JSON.parse(userData);
+    const auth = parseUser.Authorization.replace("Bearer ","")
+   
   const createPagination =async(record)=>{
     console.log('recordssss',get)
     pagination.current = record.current;
@@ -159,17 +162,19 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
   };
  
   const createItemApi = async(newItem) =>{
-    console.log('create item :',page);
+    console.log('create item :',newItem);
     switch(page){
       case "product":
        await fetch("http://127.0.0.1:4000/Products/create",{
             method: 'POST',
             headers:{
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              "authorization":"Bearer "+auth
             },
             body: JSON.stringify(newItem)
             
           }).then((res)=>{
+            console.log('ress ',res)
             if (!res.ok) {
               throw new Error('การเชื่อมต่อ API ล้มเหลว');
             }
@@ -184,10 +189,12 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
           
         break;
       case "employee":
+        console.log('new item',newItem)
         await fetch("http://127.0.0.1:4000/Employees/create",{
           method: 'POST',
           headers:{
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization":"Bearer "+auth
           },
           body: JSON.stringify(newItem)
           
@@ -207,7 +214,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
         await fetch("http://127.0.0.1:4000/materials/create",{
           method: 'POST',
           headers:{
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization":"Bearer "+auth
           },
           body: JSON.stringify(newItem)
 
@@ -251,7 +259,11 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
    
   
        return new Promise((resolve,reject)=>{
-        fetch(`http://127.0.0.1:4000/products/products/${newItem.product_id}`).then(response => {
+        fetch(`http://127.0.0.1:4000/products/products/${newItem.product_id}`,{
+          headers:{
+            "authorization":"Bearer "+auth
+          }
+        }).then(response => {
           
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -285,7 +297,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
      await fetch("http://127.0.0.1:4000/Products/update",{
       method: 'PATCH',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "authorization":"Bearer "+auth
       },
       body: JSON.stringify(newItem)
       
@@ -306,7 +319,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
     await fetch("http://127.0.0.1:4000/employees/update",{
       method: 'PATCH',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "authorization":"Bearer "+auth
       },
       body: JSON.stringify(newItem)
     })
@@ -314,7 +328,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
   const supplyById = (newItem)=>{
     return new Promise((resolve,reject)=>{
       console.log('item :',newItem);
-      fetch(`http://127.0.0.1:4000/materials/materials/${newItem.mat_id}`).then(response => {
+      fetch(`http://127.0.0.1:4000/materials/materials/${newItem.mat_id}`,{
+        headers:{
+        "authorization":"Bearer "+auth
+      }}).then(response => {
         
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -345,7 +362,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
     await fetch("http://127.0.0.1:4000/materials/update",{
       method: 'PATCH',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "authorization":"Bearer "+auth
       },
       body: JSON.stringify(newItem)
     })
@@ -437,6 +455,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
 
 
   const createModal =(res)=>{
+    console.log('res',res);
     if(res.type == "null") return(<></>)
     if(res.type == "image") return(
       <Form.Item
@@ -566,14 +585,19 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
        
       };
       newItem.image = image;
-      console.log('new item :',values);
-      const newData = [...data, newItem];
-      console.log('new Data ',newData);
-      await createItemApi(newItem);
-      setData(newData);
-      setFilteredData(newData);
-      setImage(undefined);
-      message.success('เพิ่มสินค้าสำเร็จแล้ว');
+      console.log('new item :',data);
+      if( data != undefined){
+          console.log('new Data ',data);
+         const newData = [ ...data,newItem];
+        console.log('new Data ',newData);
+        await createItemApi(newItem);
+        setData(newData);
+        setFilteredData(newData);
+        setImage(undefined);
+        message.success('เพิ่มสินค้าสำเร็จแล้ว');
+
+      }
+     
 
       // // create new data by api
       
