@@ -4,7 +4,7 @@ import { Button, ButtonGroup } from '@mui/material';
 import Myimg from '../Image/img';
 import './Pending_order.css';
 
-function Pending_Order() {
+function Pending_Order({order}) {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null); // เก็บข้อมูลรายการที่คลิก
   const [show, setShow] = useState(false); // state สำหรับ Modal
@@ -43,6 +43,28 @@ const handleIncrease = () => {
   setTotalPrice(()=>cardPrice-(cardPrice/quantity));
 
 };
+ // โหลดข้อมูลจาก localStorage เมื่อ component ถูก mount
+  useEffect(() => {
+    const fetchOrders = () => {
+      const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
+      
+  
+      setOrders(storedOrders);
+      console.log('storedOrders',storedOrders)
+    };
+  
+    fetchOrders(); // 🔥 ต้องเรียกตอนแรกเพื่อโหลดข้อมูลที่เคยบันทึกไว้
+  
+    // ฟัง event 'storage' เพื่อดักการเปลี่ยนแปลงใน localStorage
+    window.addEventListener("storage", fetchOrders);
+  
+    return () => {
+      window.removeEventListener("storage", fetchOrders);
+    };
+    
+  }, []);
+
+  
   useEffect(()=>{
     
     switch(selectedSize){
@@ -140,23 +162,7 @@ const handleIncrease = () => {
   
   },[toppings])
 
-  // โหลดข้อมูลจาก localStorage เมื่อ component ถูก mount
-  useEffect(() => {
-    const fetchOrders = () => {
-      const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
-      setOrders(storedOrders);
-      console.log('storedOrders',storedOrders)
-    };
-  
-    fetchOrders(); // 🔥 ต้องเรียกตอนแรกเพื่อโหลดข้อมูลที่เคยบันทึกไว้
-  
-    // ฟัง event 'storage' เพื่อดักการเปลี่ยนแปลงใน localStorage
-    window.addEventListener("storage", fetchOrders);
-  
-    return () => {
-      window.removeEventListener("storage", fetchOrders);
-    };
-  }, []);
+ 
 
   // เมื่อคลิกที่กล่องรายการ
   const handleItemClick = (order) => {
@@ -191,6 +197,13 @@ const handleIncrease = () => {
   };
 
 
+   const handleClear= (id) => {
+    const updatedOrders = []; // ลบเฉพาะรายการที่ id ไม่ตรงกับที่เลือก
+    setOrders(updatedOrders); // อัปเดต State ของ orders
+    window.localStorage.setItem("order_list", JSON.stringify(updatedOrders)); // บันทึกการเปลี่ยนแปลงใน localStorage
+    window.dispatchEvent(new Event("storage"));
+  };
+
   // บันทึกข้อมูลใหม่ใน localStorage และปิด Modal
   const handleSave = () => {
     if (selectedOrder) {
@@ -219,6 +232,9 @@ const handleIncrease = () => {
 
   return (
     <div style={{ padding: "10px", backgroundColor: "#f9f9f9", borderRadius: "5px" }}>
+      <div style={{display:'flex' ,justifyContent:'end',width:'100%'}}>
+        <button    onClick={() => handleClear()}>Clear all item</button>
+      </div>
       <div style={{ width: "100%", backgroundColor: "white", padding: "10px", borderRadius: "5px" }}>
         {orders.length > 0 ? (
           orders.map((order, index) => (
