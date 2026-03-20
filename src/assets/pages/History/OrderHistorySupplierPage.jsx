@@ -194,7 +194,7 @@ function OrderHistorySupplierPage() {
                 </div>
                
             </Modal>
-    <BubbleTeaShop result={result.result} Pagination={pagination} column = {columns} selectOption = {[]} get={(res)=>fetch(res)} page = {"Vendor history"} /></>:<h1>Loadding....</h1>
+    <BubbleTeaShop result={result.result} Pagination={pagination} page = {"transaction"} column = {columns} selectOption = {[]} get={(res)=>fetch(res)} /></>:<h1>Loadding....</h1>
   )
 }
 
