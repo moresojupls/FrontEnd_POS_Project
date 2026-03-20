@@ -111,28 +111,30 @@ function MyOrderlist() {
              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '5px', margin: '10px' }}>
           
             <p className="mb-2" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ marginRight: '10px' }}>Tax:</span>
+              <span style={{ marginRight: '10px' }}>VAT 7% : </span>
               <span style={{ marginLeft: '10px' }}>{total !== 0 ? (total * 0.07).toFixed(2) : 0} บาท</span> {/* แสดงผล Tax ทศนิยม 2 หลัก */}
             </p>
             <p className="font-bold" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ marginRight: '10px' }}>Total:</span>
+              <span style={{ marginRight: '10px' }}>Total :</span>
               <span style={{ marginLeft: '10px' }}>{total.toFixed(2)} บาท</span> {/* แสดงผล Total ทศนิยม 2 หลัก */}
             </p>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-evenly', justifyItems: 'center', paddingBottom: '20px', marginTop: '-10px' }}>
-            <Mybutton size={"120"}
-              process={() => alert("hold order")}
-              topic={"Hold Order"}
-              color={"#FFB38E"} />
+            {/* <Mybutton size={"120"}
+              process={() => {
+                setO
+              }}
+              topic={"Clear"}
+              color={"#FFB38E"} /> */}
 
-            <Mybutton size={"80"}
+            <Mybutton size={"380"}
               process={() => {
                 if (total === 0) return 0;
                 navigate('/purchase');
               }}
               topic={"done"}
-              color={"#C2F5A1"}
+              color={"#58be14"}
             />
           </div>
           </div>
