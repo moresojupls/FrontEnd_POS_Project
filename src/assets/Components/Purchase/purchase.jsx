@@ -36,12 +36,14 @@ function Purchase() {
 
   // Fetch employee name based on user ID
   useEffect(() => {
+    function UserDisplay(){
+    const  user =  JSON.parse(localStorage.getItem("user")) || null;
+    //localStorage.removeItem('user');
+    if(user != null) return `${user.gender === 'man'?'Mr':'Miss'} ${user.result.user} `;
+    }
     const fetchEmployeeName = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem("user")) || null;
-        const response = await fetch(`http://127.0.0.1:4000/employees/employees/${user.result.id}`);
-        const data = await response.json();
-        setEmployeeName(data.result[0]?.employee_name);
+        setEmployeeName(UserDisplay);
       } catch (error) {
         console.error("Failed to fetch employee name", error);
       }
@@ -231,7 +233,7 @@ function Purchase() {
             )}
           </div>
           <h3 style={{ marginTop: 'auto' }}>
-            ยอดรวม: {(newTotal + (newTotal * 0.07)).toFixed(2)} บาท
+            ยอดรวม: {(newTotal).toFixed(2)} บาท
           </h3>
         </div>
 
