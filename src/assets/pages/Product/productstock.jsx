@@ -36,8 +36,8 @@ export default function Productstock(){
         },
         {
           title: 'ราคา',
-          dataIndex: 'product_price',
-          key: 'product_price',
+          dataIndex: 'price',
+          key: 'price',
           type:'input',
           width: 70,
         },
@@ -50,17 +50,18 @@ export default function Productstock(){
         },
         {
           title: 'หมวดหมู่',
-          dataIndex: 'product_category',
+          dataIndex: 'category',
           type:'select',
-          key: 'product_category',
+          key: 'category',
           width: 120,
         },
         {
           title: 'สถานะ',
-          dataIndex: 'product_active',
+          dataIndex: 'active',
           key: 'active',
-          type:'product_active',
+          type:'active',
           render: (active) => (
+           
             <Tag color={active ? 'green' : 'red'}>
               {active ? 'เปิดขาย' : 'ปิดขาย'}
             </Tag>

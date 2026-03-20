@@ -455,7 +455,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
 
 
   const createModal =(res)=>{
-    console.log('res',res);
+   
     if(res.type == "null") return(<></>)
     if(res.type == "image") return(
       <Form.Item
@@ -513,15 +513,16 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
       <TextArea rows={3} placeholder={res.title} />
     </Form.Item>
     )
+   console.log('res',res)
     if(res.type == "active") return (<Form.Item
       label={res.title}
       name={res.key}
       valuePropName="checked"
     >
-      <Switch 
+      {/* <Switch 
         checkedChildren="เปิดขาย" 
         unCheckedChildren="ปิดขาย"
-      />
+      /> */}
     </Form.Item>)
     // return (
     //   <Form.Item
