@@ -23,8 +23,8 @@ function Pending_Order() {
    const [toppings, setToppings] = useState({
       Bubble: false,
       Jelly: false,
-      konjac: false,
-      Whisp: false,
+      // konjac: false,
+      // Whisp: false,
     });
   const [cardPrice,setPrice]= useState(total);
   const [quantity, setQuantity] = useState(1);
@@ -92,17 +92,17 @@ const handleIncrease = () => {
             topping.push(res)
             break;
           case "Jelly":
-            setPrice(()=>cardPrice+(10*quantity))
+            setPrice(()=>cardPrice+(5*quantity))
             topping.push(res)
             break;
-          case "konjac":
-            setPrice(()=>cardPrice+(10*quantity))
-            topping.push(res)
-            break;
-          case "Whisp":
-            setPrice(()=>cardPrice+(15*quantity))
-            topping.push(res)
-            break;
+          // case "konjac":
+          //   setPrice(()=>cardPrice+(10*quantity))
+          //   topping.push(res)
+          //   break;
+          // case "Whisp":
+          //   setPrice(()=>cardPrice+(15*quantity))
+          //   topping.push(res)
+          //   break;
           default:
             break;
         }
@@ -374,8 +374,8 @@ const handleIncrease = () => {
               {[
       "Bubble",
       "Jelly",
-      "konjac",
-      "Whisp",
+      // "konjac",
+      // "Whisp",
      
     ].map((topping, index) => (
                 <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>

@@ -152,8 +152,8 @@ function CardMenu(image, name, total) {
                                     {[
                                         "Bubble",
                                         "Jelly",
-                                        "konjac",
-                                        "Whisp",
+                                        // "konjac",
+                                        // "Whisp",
 
                                     ].map((topping, index) => (
                                         <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
