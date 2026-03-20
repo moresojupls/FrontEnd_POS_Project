@@ -649,7 +649,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
           dataSource={filteredData}
           pagination={pagination} 
           bordered
-          scroll={{ x: 300 }}
+          scroll={{ x: 300 ,y:600}}
           loading={isLoad}
           onChange={createPagination}
          

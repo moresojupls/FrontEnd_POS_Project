@@ -120,12 +120,13 @@ export default function Productstock(){
         authorization:"Bearer "+auth
       }
      }).then((res)=>{
-          console.log('res header',res)
+        console.log('res sizepaginationPage',res.data.sizepaginationPage)
+        
           setResult(res.data)
           setLoad(true)
           setPagination({
             current:res.data.currentpage,
-            pageSize:res.data.sizepaginationPage,
+            pageSize:8,
             total:res.data.total
           })
           resolve(res.data)

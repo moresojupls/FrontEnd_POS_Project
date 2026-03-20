@@ -13,9 +13,9 @@ export default defineConfig({
    port: 3000,
    strictPort: true,
     host:true,
-   origin: "http://127.0.0.1:3000",
+   origin: "http://127.0.0.1:5000",
   
   },
-  base:"http://127.0.0.1:3000/FrontEnd_POS_Project"
+  base:"http://127.0.0.1:5000/FrontEnd_POS_Project"
 
 })
