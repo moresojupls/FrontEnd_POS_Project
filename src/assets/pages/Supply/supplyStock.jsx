@@ -5,6 +5,9 @@ import { Tag } from 'antd';
 export default function SupplyStock(){
     const [result, setResult] = useState();
     const [load, setLoad] = useState(false);
+      const userData = localStorage.getItem("user");
+    const parseUser = JSON.parse(userData);
+    const auth = parseUser.Authorization.replace("Bearer ","")
     const column = [{
           title: 'รหัสสินค้า',
           dataIndex: 'mat_id',
@@ -124,7 +127,7 @@ export default function SupplyStock(){
       return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"supply"} selectOption={selectOption} deleteApi = {
         (id)=>{return(
           new Promise((resolve)=>{
-          fetch(`http://127.0.0.1:4000/materials/delete/${id}`,{method:'DELETE'}).then(response=>{
+          fetch(`http://127.0.0.1:4000/materials/delete/${id}`,{method:'DELETE',headers:{authorization:"Bearer "+auth}}).then(response=>{
               if(!response.ok){
                   throw Error("Connection failed"); 
               }
@@ -140,7 +143,7 @@ export default function SupplyStock(){
             
           })}))}
       } get={()=>new Promise((resolve)=>{
-        fetch("http://127.0.0.1:4000/materials/materials/").then(response=>{
+        fetch("http://127.0.0.1:4000/materials/materials/",{headers:{authorization:"Bearer "+auth}}).then(response=>{
             if(!response.ok){
                 throw Error("Connection failed"); 
             }

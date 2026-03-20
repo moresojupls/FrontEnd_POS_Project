@@ -8,6 +8,9 @@ import axios from 'axios';
 export default function Productstock(){
     const [result, setResult] = useState();
     const [load, setLoad] = useState(false);
+     const userData = localStorage.getItem("user");
+    const parseUser = JSON.parse(userData);
+    const auth = parseUser.Authorization.replace("Bearer ","")
     const [pagination, setPagination] = useState({
           current: 0,
           pageSize: 5,
@@ -116,7 +119,7 @@ export default function Productstock(){
          const userData = localStorage.getItem("user");
         const parseUser = JSON.parse(userData);
         const auth = parseUser.Authorization.replace("Bearer ","")
-      axios.get('http://127.0.0.1:4000/Products/Products/',{
+      axios.get('http://127.0.0.1:4000/Products/Products/table',{
       headers:{
         authorization:"Bearer "+auth
       }
@@ -140,7 +143,12 @@ export default function Productstock(){
     
      return (load == true ? <BubbleTeaShop  result ={result.result} Pagination={pagination} column = {column} page = {"product"} selectOption={selectOption} get={(res)=>fetchData(res)}  deleteApi = {
       (id)=>new Promise((resolve)=>{
-        fetch(`http://127.0.0.1:4000/Products/delete/${id}`,{method:'DELETE'}).then(response=>{
+        fetch(`http://127.0.0.1:4000/Products/delete/${id}`,{method:'DELETE',
+          headers:{
+        'Content-Type': 'application/json',
+        "authorization":"Bearer "+auth
+      },
+        }).then(response=>{
             if(!response.ok){
                 throw Error("Connection failed"); 
             }
