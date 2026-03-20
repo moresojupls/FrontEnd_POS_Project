@@ -219,7 +219,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
               <div className='m-3'>
                 <h1>{name}</h1>
                 
-                <h4>Discription</h4>
+                <h4>Description</h4>
 
                 <h3>ราคา { cardPrice } บาท</h3>
               </div>
