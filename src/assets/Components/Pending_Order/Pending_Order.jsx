@@ -169,14 +169,15 @@ const handleIncrease = () => {
     setToppings(order.toppings || {
       Bubble: false,
       Jelly: false,
-      Whisp: false,
-      konjac: false,
+      // Whisp: false,
+      // konjac: false,
     });
     setQuantity(order.quantity || 1);
     setImage(order.img);
     setPrice(order.total);
     setTotalPrice(order.total);
     setShow(true);
+  
     {console.log(order)}
   };
 
@@ -294,7 +295,7 @@ const handleIncrease = () => {
                     <div className='m-3'>
                       <h1>{name}</h1>
                       
-                      <h4>Discription</h4>
+                      <h4>Description</h4>
       
                       <h3>ราคา {cardPrice} บาท</h3>
                     </div>
@@ -394,7 +395,7 @@ const handleIncrease = () => {
           </div>
         </div>
       </div>
-      <div style={{ flex: 3 }}>
+      <div style={{ flex: 5 }}>
       <div className="quantity-container">
         <button className="quantity-btn decrease" onClick={handleDecrease}>-</button>
         <span className="quantity-display">{quantity}</span>

@@ -19,8 +19,8 @@ function CardMenu(image, name, total) {
       const [toppings, setToppings] = useState({
         Bubble: false,
         Jelly: false,
-        Whisp: false,
-        konjac: false,
+        // Whisp: false,
+        // konjac: false,
       });
       const handleSave = () => {
         if (selectedOrder) {

@@ -31,6 +31,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
   const topping = [];
   const handleClose = () => {
     setPrice(price)
+    setSelectedSize("M")
     setShow(false);
   }
   const handleShow = () =>{ setShow(true)};
@@ -85,6 +86,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders));
     setShow(false);
     setPrice(price);
+    setSelectedSize("M");
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
   };
   const [old,setOld] = useState([]); 
