@@ -17,7 +17,9 @@ function Purchase() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const [employeeName, setEmployeeName] = useState('');
-
+   const userData = localStorage.getItem("user");
+    const parseUser = JSON.parse(userData);
+    const auth = parseUser.Authorization.replace("Bearer ","")
   // Load orders from localStorage and parse toppings
   useEffect(() => {
     const storedOrders = JSON.parse(localStorage.getItem("order_list")) || [];
@@ -140,7 +142,9 @@ function Purchase() {
 
     fetch("http://127.0.0.1:4000/Transactions/create", {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-type': 'application/json',
+         "authorization":"Bearer "+auth
+       },
       body: JSON.stringify(obj)
     }).then((res) => {
       if (res.status === 200) {
@@ -292,6 +296,7 @@ function Purchase() {
                 payment(obj); // Process payment and clear orders
                 generatePDF(orders, newTotal , employeeName);
               }
+
             }}
           >
             Success

@@ -168,13 +168,13 @@ function Userpage() {
     type:'input',
     width: 100,
   },
-  // {
-  //   title: 'salary',
-  //   dataIndex: 'salary',
-  //   key: 'salary',
-  //   type:'input',
-  //   width: 100,
-  // },
+  {
+    title: 'salary',
+    dataIndex: 'salary',
+    key: 'salary',
+    type:'input',
+    width: 100,
+  },
   {
     title: 'สถานะ',
     dataIndex: 'active',
