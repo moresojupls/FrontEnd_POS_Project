@@ -174,6 +174,7 @@ function Purchase() {
   // Handle modal confirmation
   const handleModalOk = () => {
     setIsModalVisible(false);
+    localStorage.removeItem("order_list");
     navigate('/FrontEnd_POS_Project/product/favourite');
   };
 
@@ -289,7 +290,7 @@ function Purchase() {
               if (orders.length <= 0) return; // Ensure there's an order to process
               if (obj.Employee_id != null || obj.Employee_id != undefined) {
                 payment(obj); // Process payment and clear orders
-                generatePDF(orders, newTotal + (newTotal * 0.07), employeeName);
+                generatePDF(orders, newTotal , employeeName);
               }
             }}
           >
