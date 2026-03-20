@@ -66,16 +66,24 @@ function MyOrderlist() {
 
   return (
     <>
-      <div className='d-flex Orderlist' style={{ width: '30%' }}>
-        <div style={{ width: '100%' }}>
-          <h3>Order list</h3>
-          <div style={{ display: 'flex', height: '360px' }}>
+      <div className='d-flex Orderlist' style={{ width: '30%', height:'90%'}}>
+        <div style={{ width: '100%' ,display:'flex',flexDirection:'column' ,justifyContent:'space-between'}}>
+          <div>
+            <h3>Order list</h3>
+           
+          </div>
+          <div style={{ width: '100%', height: '100%', border: '2px', marginBottom: '20px', overflow: "scroll", display: 'block' }}>
+              <Pending_Order />
+          </div>
+    
+{/*        
+          <div style={{ display: 'flex'}}>
             <div style={{ width: '100%', height: '100%', border: '2px', marginBottom: '20px', overflow: "scroll", display: 'block' }}>
               <Pending_Order />
             </div>
-          </div>
+          </div> */}
 
-          <div style={{ paddingBottom: '5px' }}>
+          {/* <div style={{ paddingBottom: '5px' }}>
             <button
               style={{
                 width: '100%',
@@ -98,20 +106,17 @@ function MyOrderlist() {
                 style={{ width: '25px', height: '25px' }}
               />
             </button>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '5px', margin: '10px' }}>
-            <p className="mb-2" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ marginRight: '10px' }}>SubTotal:</span>
-              <span style={{ marginLeft: '10px' }}>{total.toFixed(2)} บาท</span> {/* แสดงผล total ทศนิยม 2 หลัก */}
-            </p>
+          </div> */}
+          <div>
+             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '5px', margin: '10px' }}>
+          
             <p className="mb-2" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ marginRight: '10px' }}>Tax:</span>
               <span style={{ marginLeft: '10px' }}>{total !== 0 ? (total * 0.07).toFixed(2) : 0} บาท</span> {/* แสดงผล Tax ทศนิยม 2 หลัก */}
             </p>
             <p className="font-bold" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ marginRight: '10px' }}>Total:</span>
-              <span style={{ marginLeft: '10px' }}>{sum} บาท</span> {/* แสดงผล Total ทศนิยม 2 หลัก */}
+              <span style={{ marginLeft: '10px' }}>{total.toFixed(2)} บาท</span> {/* แสดงผล Total ทศนิยม 2 หลัก */}
             </p>
           </div>
 
@@ -130,6 +135,8 @@ function MyOrderlist() {
               color={"#C2F5A1"}
             />
           </div>
+          </div>
+         
 
         </div>
       </div>

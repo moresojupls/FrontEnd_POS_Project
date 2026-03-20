@@ -94,8 +94,8 @@ function App() {
   return(
     
       <div style={{width:'100%',height:'100vh' ,overflow:'hidden'}}>
-        <Mynavbar className='d-flex '/>
-        <div className='d-flex justify-content-center'  style={{width:'100%',height:'90%' }}>
+        <Mynavbar className='d-flex  ' />
+        <div className='d-flex justify-content-center'  style={{width:'100%',height:"100%" }}>
           <MySidebar />
           
           <div style={{width:'100%'}}>
