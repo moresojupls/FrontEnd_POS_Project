@@ -19,6 +19,7 @@ import Purchase from './assets/Components/Purchase/purchase'
 import LoginPage from './assets/Components/LoginPage/LoginPage';
 import LoginoutPage from './assets/Components/LoginPage/LoginoutPage';
 import HistoryPage from './assets/pages/History/HistoryPage';
+import OrderHistorySupplierPage from './assets/pages/History/OrderHistorySupplierPage';
 import SupplyStock from './assets/pages/Supply/supplyStock';
 
 
@@ -43,7 +44,7 @@ function MyRouter() {
                 <Route   path="User"  element={<Userpage />}/>
                 <Route   path="History"  element={<HistoryPage />}/>
                 <Route   path="History/Transactions"  element={<HistoryPage />}/>
-              
+                <Route   path="History/OrderHistory"  element={<OrderHistorySupplierPage />}/>
                 <Route   path="Product/Stock"  element={<Productstock />}/>
     
                 {/* <Route  path={'Supply/crud'}  element={<ProductPage/>} />

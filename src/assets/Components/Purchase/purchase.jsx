@@ -26,11 +26,12 @@ function Purchase() {
       element.menu = element.name;
       element.size = "M";
       Object.keys(element.toppings).forEach(res => {
-        if (element.toppings[res] === true) topping.push(res);
+        if (element.toppings[res] === true) topping.push({name:res});
       });
       element.toppings = topping;
     });
     setOrders(storedOrders);
+    console.log('order',orders)
   }, []);
 
   // Fetch employee name based on user ID
@@ -127,10 +128,13 @@ function Purchase() {
       alert('Invalid order total');
       return;
     }
-
+    console.log('order',orders);
+    console.log('obj',obj);
     const compressed = pako.deflate(JSON.stringify(orders));
     const base64data = btoa(String.fromCharCode(...compressed));
     obj.Product_detail = base64data;
+ 
+
 
     fetch("http://127.0.0.1:4000/Transactions/create", {
       method: 'POST',
@@ -149,7 +153,7 @@ function Purchase() {
     }).finally(() => {
       setIsModalVisible(true); // Open Modal when payment is complete
     });
-  };
+   };
 
   // Handle payment method selection
   const handlePayment = (type) => {

@@ -30,10 +30,15 @@ function LoginPage() {
         password: password
       })
     }).then((res)=>{
+      // transform api to json file
+
       return res.json();
     }).then((result)=>{
       if(result.statuscode != 200) throw new Error('Login Failed')
       setError(false);
+       // localStorage.removeItem("user");
+      console.log('result ',result);
+
       localStorage.setItem("user",JSON.stringify(result));
       navigator('/Frontend_POS_Project');
     }).catch((err)=>{
@@ -41,6 +46,8 @@ function LoginPage() {
       // localStorage.removeItem("user");
       console.log('err',err)
     })
+
+    
   }
   return (
     <div className="login-container">

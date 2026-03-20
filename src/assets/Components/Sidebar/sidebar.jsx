@@ -138,6 +138,17 @@ function MySidebar() {
                 </ListItem>
               </Link>
             </div>
+            <div className='Onclickhover '>
+            <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History/OrderHistory"} >
+                <ListItem button width='100rem' >
+                  <div>
+                    <Myimg  url={img.Sale} size={45}></Myimg>
+                    <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>OrderHistory</h4>
+                  </div>
+                
+                </ListItem>
+              </Link>
+            </div>
             </div>
             
           </div>

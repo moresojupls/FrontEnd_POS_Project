@@ -1,8 +1,8 @@
-import { Functions } from "@mui/icons-material";
+import { Filter, Functions } from "@mui/icons-material";
 import { DynamicCRUD } from "../../Components/DynamicCRUD/DynamicCRUD";
 import Mycontent from '../../Components/content/content';
 import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, Switch, message } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, SortDescendingOutlined } from '@ant-design/icons';
 import { useState,useEffect } from "react";
 import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop'
 export default function HistoryPage() {
@@ -12,7 +12,14 @@ export default function HistoryPage() {
      const [isModalVisible, setIsModalVisible] = useState(false);
      const [form] = Form.useForm();
      const [detail,setDetail] = useState(null)
-
+     const userData = localStorage.getItem("user");
+  const parseUser = JSON.parse(userData);
+  const auth = parseUser.Authorization.replace("Bearer ","")
+  const config =   {
+                      headers:{
+          authorization:"Bearer "+auth
+          }
+        }
     const showCreateModal = (record) => {
         setCurrentItem(null);
         form.resetFields();
@@ -104,6 +111,18 @@ export default function HistoryPage() {
             second: '2-digit',
           });
         },
+        filters:[{
+          text:'lastest',
+          value:'lastest'
+          }
+        ],
+        onFilter:(value,record)=>{
+          return record.total_price > 60
+        
+        },
+        
+        sorter: (a, b) => a.name.length - b.name.length,
+        sortDirection:['ascend']
       }]
 
       const columns = [
@@ -164,7 +183,7 @@ export default function HistoryPage() {
         
       ];
     useEffect(()=>{
-            fetch("http://127.0.0.1:4000/Transactions/Transactions/Test").then(response=>{
+            fetch("http://127.0.0.1:4000/Transactions/Transactions/Test",config).then(response=>{
                 if(!response.ok){
                     throw Error("Connection failed"); 
                 }

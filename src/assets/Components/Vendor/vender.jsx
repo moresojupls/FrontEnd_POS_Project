@@ -30,8 +30,17 @@ const VendorPage = () => {
   const fetchMaterials = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://127.0.0.1:4000/materials/materials/");
-      const responseVendorMaterial = await fetch("http://127.0.0.1:4000/vendor_material/vendor_material");
+      const userData = localStorage.getItem("user");
+      const parseUser = JSON.parse(userData);
+      const auth = parseUser.Authorization.replace("Bearer ","")
+      const config =   {
+                          headers:{
+              authorization:"Bearer "+auth
+              }
+            }
+      const response = await fetch("http://127.0.0.1:4000/materials/materials/",config);
+      const responseVendorMaterial = await fetch("http://127.0.0.1:4000/vendor_material/vendor_material",config);
+       
       if (!response.ok && !responseVendorMaterial.ok) throw new Error("Failed to fetch data");
 
       const data = await response.json();

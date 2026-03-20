@@ -7,7 +7,7 @@ import '../../Components/CRUD/BubbleTeaShop.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
+const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination}) => {
   const [columnTable,setColumn] = useState([]);
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
@@ -20,6 +20,40 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   const [isLoad,setLoad] = useState(false);
   const [image,setImage] = useState();
   const [selectedValue, setSelectedValue] = useState(selectOption[0]); // ล็อคค่าเริ่มต้น
+  const [pagination,setPagination] = useState(Pagination|| {
+    current: 1,
+    pageSize: 5,
+    total: 10,
+  })
+    const userData = localStorage.getItem("user");
+    const parseUser = JSON.parse(userData);
+    const auth = parseUser.Authorization.replace("Bearer ","")
+   
+  const createPagination =async(record)=>{
+    console.log('recordssss',get)
+    pagination.current = record.current;
+    pagination.pageSize = record.pageSize;
+    const result = await get(pagination.current-1);
+    console.log('record',result)
+  
+    if(Pagination == undefined){
+      setPagination({
+        current:record.current,
+        pageSize: 5,
+        total: record.total,
+       
+      })
+    }
+
+    if( result.statuscode == 200 ){
+      console.log('result',result)
+      setData(result.result);
+      setFilteredData(result.result);
+      
+      
+    }
+    console.log('record',record)
+  }
 
   
   // ตั้งค่า filteredData เท่ากับ data เมื่อโหลดครั้งแรก
@@ -27,8 +61,22 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   useEffect(()=>{
     setData(result);
     setFilteredData(result);
+    console.log('result.Pagination',data)
+  
     if(column !== undefined) setColumn(column);
-    if(page != "transaction") setIsCreate(true);
+    switch(page){
+      case "transaction":
+        setIsCreate(false);
+        break;
+      case "orderhistory":
+        setIsCreate(false);
+        break;
+      default:
+        setIsCreate(true);
+        break;
+
+    }
+
     
     // deny all of is import to visible
     setColumn(column.filter((column)=>{
@@ -114,17 +162,19 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   };
  
   const createItemApi = async(newItem) =>{
-    console.log('create item :',page);
+    console.log('create item :',newItem);
     switch(page){
       case "product":
        await fetch("http://127.0.0.1:4000/Products/create",{
             method: 'POST',
             headers:{
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              "authorization":"Bearer "+auth
             },
             body: JSON.stringify(newItem)
             
           }).then((res)=>{
+            console.log('ress ',res)
             if (!res.ok) {
               throw new Error('การเชื่อมต่อ API ล้มเหลว');
             }
@@ -139,10 +189,12 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
           
         break;
       case "employee":
+        console.log('new item',newItem)
         await fetch("http://127.0.0.1:4000/Employees/create",{
           method: 'POST',
           headers:{
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization":"Bearer "+auth
           },
           body: JSON.stringify(newItem)
           
@@ -162,7 +214,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
         await fetch("http://127.0.0.1:4000/materials/create",{
           method: 'POST',
           headers:{
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization":"Bearer "+auth
           },
           body: JSON.stringify(newItem)
 
@@ -206,7 +259,11 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
    
   
        return new Promise((resolve,reject)=>{
-        fetch(`http://127.0.0.1:4000/products/products/${newItem.product_id}`).then(response => {
+        fetch(`http://127.0.0.1:4000/products/products/${newItem.product_id}`,{
+          headers:{
+            "authorization":"Bearer "+auth
+          }
+        }).then(response => {
           
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -240,7 +297,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
      await fetch("http://127.0.0.1:4000/Products/update",{
       method: 'PATCH',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "authorization":"Bearer "+auth
       },
       body: JSON.stringify(newItem)
       
@@ -261,7 +319,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
     await fetch("http://127.0.0.1:4000/employees/update",{
       method: 'PATCH',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "authorization":"Bearer "+auth
       },
       body: JSON.stringify(newItem)
     })
@@ -269,7 +328,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
   const supplyById = (newItem)=>{
     return new Promise((resolve,reject)=>{
       console.log('item :',newItem);
-      fetch(`http://127.0.0.1:4000/materials/materials/${newItem.mat_id}`).then(response => {
+      fetch(`http://127.0.0.1:4000/materials/materials/${newItem.mat_id}`,{
+        headers:{
+        "authorization":"Bearer "+auth
+      }}).then(response => {
         
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -300,7 +362,8 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
     await fetch("http://127.0.0.1:4000/materials/update",{
       method: 'PATCH',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "authorization":"Bearer "+auth
       },
       body: JSON.stringify(newItem)
     })
@@ -392,6 +455,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
 
 
   const createModal =(res)=>{
+    console.log('res',res);
     if(res.type == "null") return(<></>)
     if(res.type == "image") return(
       <Form.Item
@@ -521,14 +585,19 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
        
       };
       newItem.image = image;
-      console.log('new item :',values);
-      const newData = [...data, newItem];
-      console.log('new Data ',newData);
-      await createItemApi(newItem);
-      setData(newData);
-      setFilteredData(newData);
-      setImage(undefined);
-      message.success('เพิ่มสินค้าสำเร็จแล้ว');
+      console.log('new item :',data);
+      if( data != undefined){
+          console.log('new Data ',data);
+         const newData = [ ...data,newItem];
+        console.log('new Data ',newData);
+        await createItemApi(newItem);
+        setData(newData);
+        setFilteredData(newData);
+        setImage(undefined);
+        message.success('เพิ่มสินค้าสำเร็จแล้ว');
+
+      }
+     
 
       // // create new data by api
       
@@ -536,16 +605,23 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
     }
     setIsModalVisible(false);
   };
-
+  const [selectedRowKeys, setSelectedRowKeys]=useState([])
+  const onSelectChange = (newSelectedRowKeys) => {
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
   return (
     <div className="bubble-tea-container">
       <div className="header">
-        <h1>ระบบจัดการเมนูชานมไข่มุก</h1>
+        <h1> {page} page</h1>
         <div className="actions">
         <Form form={searchForm} onFinish={handleSearch} layout="inline">
           <Form.Item name="searchText">
           <Input 
-            placeholder="ค้นหาสินค้า..." 
+            placeholder="ค้นหา"
             prefix={<SearchOutlined />} 
             style={{ width: 200 }} 
             onPressEnter={() => searchForm.submit()} // กด Enter เพื่อค้นหา
@@ -563,7 +639,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
             icon={<PlusOutlined />} 
             onClick={showCreateModal}
           >
-            เพิ่มสินค้าใหม่
+            เพิ่ม {page}
           </Button>):''}
         </div>
       </div>
@@ -571,9 +647,13 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi}) => {
         <Table 
           columns={!isCreate  ? columnTable:columns} 
           dataSource={filteredData}
-          pagination={{ pageSize: 5 }} 
+          pagination={pagination} 
           bordered
-          scroll={{ x: 300 }}
+          scroll={{ x: 300 ,y:600}}
+          loading={isLoad}
+          onChange={createPagination}
+         
+          
         />
       </Card>:<></>}
       

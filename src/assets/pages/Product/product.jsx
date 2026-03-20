@@ -29,9 +29,20 @@ function ProductPage() {
   [])
   useEffect(() => {
     setPath(pathafterCatagory.toLowerCase())
+    const userData = localStorage.getItem("user");
+    const parseUser = JSON.parse(userData);
+    const auth = parseUser.Authorization.replace("Bearer ","")
+    const config =   {
+                      headers:{
+          authorization:"Bearer "+auth
+          }
+        }
     switch (pathafterCatagory.toLowerCase()) {
+      
       case "favourite":
-        fetch("http://127.0.0.1:4000/Products/Products").then(response => {
+        fetch("http://127.0.0.1:4000/Products/Products",
+            config
+        ).then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
@@ -42,8 +53,11 @@ function ProductPage() {
         })
         break;
       case "milktea":
-        fetch("http://127.0.0.1:4000/Products/category/milktea").then(response => {
-          
+        
+        fetch("http://127.0.0.1:4000/Products/category/milktea",
+          config
+        ).then(response => {
+           
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
@@ -54,7 +68,9 @@ function ProductPage() {
         })
         break;
       case "fruittea":
-        fetch("http://127.0.0.1:4000/Products/category/fruittea").then(response => {
+        fetch("http://127.0.0.1:4000/Products/category/fruittea",
+            config
+        ).then(response => {
           
           if (!response.ok) {
             throw new Error('Network response was not ok');

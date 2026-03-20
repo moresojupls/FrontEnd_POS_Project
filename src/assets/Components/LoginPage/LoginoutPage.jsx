@@ -5,7 +5,7 @@ function LoginoutPage() {
  
     const navigate = useNavigate();
   useEffect(()=>{
-    const user = localStorage.removeItem('user');
+     localStorage.removeItem('user');
     navigate('/login');
 
    

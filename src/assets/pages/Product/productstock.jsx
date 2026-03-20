@@ -2,11 +2,17 @@ import BubbleTeaShop from '../../Components/CRUD/BubbleTeaShop'
 import {useState,useEffect} from 'react'
 import { Modal, Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, Switch, message } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 
 export default function Productstock(){
     const [result, setResult] = useState();
     const [load, setLoad] = useState(false);
+    const [pagination, setPagination] = useState({
+          current: 0,
+          pageSize: 5,
+          total: 0,
+        });
     const column = [{
           title: 'รหัสสินค้า',
           dataIndex: 'product_id',
@@ -30,8 +36,8 @@ export default function Productstock(){
         },
         {
           title: 'ราคา',
-          dataIndex: 'price',
-          key: 'price',
+          dataIndex: 'product_price',
+          key: 'product_price',
           type:'input',
           width: 70,
         },
@@ -44,16 +50,16 @@ export default function Productstock(){
         },
         {
           title: 'หมวดหมู่',
-          dataIndex: 'category',
+          dataIndex: 'product_category',
           type:'select',
-          key: 'category',
+          key: 'product_category',
           width: 120,
         },
         {
           title: 'สถานะ',
-          dataIndex: 'active',
+          dataIndex: 'product_active',
           key: 'active',
-          type:'active',
+          type:'product_active',
           render: (active) => (
             <Tag color={active ? 'green' : 'red'}>
               {active ? 'เปิดขาย' : 'ปิดขาย'}
@@ -101,24 +107,37 @@ export default function Productstock(){
    
     const selectOption = ["Milk Tea","Fruit Tea","General"]
     useEffect(()=>{
-        fetch("http://127.0.0.1:4000/Products/Products/Table").then(response=>{
-            if(!response.ok){
-                throw Error("Connection failed"); 
-            }
-            return response.json()
-        }).then((result)=>{
-            if(!result.statusCode == 200){
-                throw Error("Connection failed");
-            }
-            setResult(result);
-            setLoad(true);
-        })
+      fetchData(pagination.current)
     },[])
+
+    const fetchData= (number)=>{
+      return new Promise((resolve,reject)=>{
+         const userData = localStorage.getItem("user");
+        const parseUser = JSON.parse(userData);
+        const auth = parseUser.Authorization.replace("Bearer ","")
+      axios.get('http://127.0.0.1:4000/Products/Products/',{
+      headers:{
+        authorization:"Bearer "+auth
+      }
+     }).then((res)=>{
+        console.log('res sizepaginationPage',res.data.sizepaginationPage)
+        
+          setResult(res.data)
+          setLoad(true)
+          setPagination({
+            current:res.data.currentpage,
+            pageSize:8,
+            total:res.data.total
+          })
+          resolve(res.data)
+        })  
+    })}
+      
     
     
+   
     
-    
-     return (load == true ? <BubbleTeaShop  result ={result.result} column = {column} page = {"product"} selectOption={selectOption} deleteApi = {
+     return (load == true ? <BubbleTeaShop  result ={result.result} Pagination={pagination} column = {column} page = {"product"} selectOption={selectOption} get={(res)=>fetchData(res)}  deleteApi = {
       (id)=>new Promise((resolve)=>{
         fetch(`http://127.0.0.1:4000/Products/delete/${id}`,{method:'DELETE'}).then(response=>{
             if(!response.ok){
@@ -135,22 +154,7 @@ export default function Productstock(){
           
         })
     })
-    }get = {()=>new Promise((resolve)=>{
-      fetch("http://127.0.0.1:4000/Products/Products/Table").then(response=>{
-          if(!response.ok){
-              throw Error("Connection failed"); 
-          }
-          return response.json()
-      }).then((result)=>{
-          if(!result.statusCode == 200){
-              throw Error("Connection failed");
-          }
-          setResult(result);
-          setLoad(true);
-          resolve(result);
-        
-      })
-  })}/> :<h1>Loadding.... </h1>)
+    }/> :<h1>Loadding.... </h1>)
     
     
 }

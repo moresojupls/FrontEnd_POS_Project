@@ -3,9 +3,9 @@
 
 // Library
 import { useState,useEffect } from 'react'
-import { Outlet,Router,Routes,Route,Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -15,13 +15,11 @@ import './App.css'
 
 import Mynavbar from './assets/Components/Navbar/navbar';
 import MySidebar from './assets/Components/Sidebar/sidebar';
-import Mycontent from './assets/Components/content/content';
-import Mybutton from './assets/Components/Button/button';
 
 
-// data
-import GreenTea from './assets/MockUpData/Product/Greentea';
-import Favourite from './assets/MockUpData/Product/Favourite';
+
+
+
 
 
 
@@ -34,9 +32,9 @@ function App() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
 
  
-  const [result,setResult] = useState();
-  const [Orderlist,setOrderlist] = useState(true);
-  const [user,setUser] = useState(); 
+  
+
+  const [token,settoken] = useState(); 
   
  
   // set up for page
@@ -48,28 +46,51 @@ function App() {
 
 
   const userData = localStorage.getItem("user");
-      useEffect(()=>{
+  const teleportLogin = ()=>{
+                navigate('/login');
+           }
+  const  fetchData =  async()=>{
+        
           if (userData) {
-            setUser(JSON.parse(userData)); // ✅ Safe parsing
-            
+            try{
+               const parseUser = JSON.parse(userData)
+              settoken(parseUser.Authorization.replace("Bearer ","")); 
+           
+          
+              console.log('parseUser.Authorization ',parseUser)
+               const api=await axios({
+              method:"get",
+              url:"http://127.0.0.1:4000/employees/employees",
+              headers:{
+                Authorization:"Bearer "+parseUser.Authorization.replace("Bearer ","")
+                // Authorization:`Bearer ${parseUser.token}`
+              }
+
+            })
+            console.log('token',api.headers)
+           
+            }catch(error){
+              console.log('error ',error)
+            }
+           
+          
             //localStorage.removeItem("user");
         } else {
       
           
-            const token = ()=>{
-                navigate('/login');
-            }
+            
             console.log('User',userData)
             if(userData == null || userData == undefined){
-                token();
+                teleportLogin();
             }
         }
+      }
+      useEffect(()=>{
+        fetchData()
         },[])
   
 
-  function Or(){
-    return setOrderlist(!Orderlist)
-  }
+  
   return(
     
       <div style={{width:'100%',height:'100vh' ,overflow:'hidden'}}>

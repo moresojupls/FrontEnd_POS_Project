@@ -16,11 +16,18 @@ function SupplyPage() {
   const [path, setPath] = useState();
   const [result, setResult] = useState();
   const [load, setLoad] = useState(false);
-
+  const userData = localStorage.getItem("user");
+  const parseUser = JSON.parse(userData);
+  const auth = parseUser.Authorization.replace("Bearer ","")
+  const config =   {
+                      headers:{
+          authorization:"Bearer "+auth
+          }
+        }
   if (pathafterCatagory.toLowerCase() !== path) setPath(pathafterCatagory)
 
     useEffect(() => {
-      fetch("http://127.0.0.1:4000/materials/materials/").then(response => {
+      fetch("http://127.0.0.1:4000/materials/materials/",config).then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -33,9 +40,10 @@ function SupplyPage() {
 
   useEffect(() => {
   setPath(pathafterCatagory.toLowerCase())
+    
   switch (pathafterCatagory.toLowerCase()) {
     case "powder":
-      fetch("http://127.0.0.1:4000/materials/category/Tea").then(response => {
+      fetch("http://127.0.0.1:4000/materials/category/Tea",config).then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -46,7 +54,7 @@ function SupplyPage() {
       })
       break;
     case "general":
-      fetch("http://127.0.0.1:4000/materials/category/General").then(response => {
+      fetch("http://127.0.0.1:4000/materials/category/General",config).then(response => {
         
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -58,7 +66,7 @@ function SupplyPage() {
       })
       break;
     case "topping":
-      fetch("http://127.0.0.1:4000/materials/category/Sauce").then(response => {
+      fetch("http://127.0.0.1:4000/materials/category/Sauce",config).then(response => {
         
         if (!response.ok) {
           throw new Error('Network response was not ok');

@@ -9,23 +9,143 @@ function Pending_Order() {
   const [selectedOrder, setSelectedOrder] = useState(null); // เก็บข้อมูลรายการที่คลิก
   const [show, setShow] = useState(false); // state สำหรับ Modal
   const [image,setImage] = useState(null);
-  const [price,setPrice]= useState(null);
+  const [name,setName] = useState(null);
+  const [total,setTotalPrice]= useState(null);
   const [selectedMood, setSelectedMood] = useState(null);
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedSugar, setSelectedSugar] = useState(50);
-  const [toppings, setToppings] = useState({
-    ไข่มุก: false,
-    เยลลี่: false,
-    บุก: false,
-    วิปครีม: false,
-  });
+  const [change,setChange] = useState(false);
+  const handleToppingChange = (topping) => {
+    console.log('topp',topping)
+    setToppings((prev) => ({ ...prev, [topping]: !prev[topping] }));
+    setChange(true)
+  };
+   const [toppings, setToppings] = useState({
+      Bubble: false,
+      Jelly: false,
+      konjac: false,
+      Whisp: false,
+    });
+  const [cardPrice,setPrice]= useState(total);
   const [quantity, setQuantity] = useState(1);
+  const topping = [];
+ const [old,setOld] = useState([]); 
+ const handleDecrease = () => {
+  if (quantity > 1) {
+    setQuantity(quantity - 1);  // ลดจำนวน ถ้าจำนวนมากกว่า 1
+    setPrice(()=>cardPrice-(cardPrice/quantity));
+    setTotalPrice(()=>cardPrice-(cardPrice/quantity));
+  }
+};
+const handleIncrease = () => {
+  setQuantity(quantity + 1);  // เพิ่มจำนวน
+  setPrice(()=>(cardPrice+(cardPrice/quantity)));
+  setTotalPrice(()=>cardPrice-(cardPrice/quantity));
+
+};
+  useEffect(()=>{
+    
+    switch(selectedSize){
+      case "S":
+        setPrice(()=>total-(quantity*5));
+        console.log('price2 : ',cardPrice)
+        break;
+      case "M":
+        setPrice(()=>total-(quantity*0));
+        console.log('price2 : ',cardPrice)
+        break;
+      case "L":
+        setPrice(()=>total+(quantity*5));
+        console.log('price2 : ',cardPrice)
+        break;
+      default:
+        break;
+    }
+  },[selectedSize])
+  useEffect(()=>{
+    if(selectedMood ==  'Hot'){
+      console.log('price 2',total-(quantity*5))
+      console.log('total 2',total)
+      setPrice(()=>total-(quantity*5))
+    }
+    else{
+      setPrice(()=>total)
+    }
+  },[selectedMood])
+
+  useEffect(()=>{
+    //  Bubble: false,
+    // Jelly: false,
+    // konjac: false,
+    // Whisp: false,
+    
+    console.log('topping 22',(cardPrice+(5*quantity)))
+    Object.keys(toppings).forEach((res)=>{
+     
+    if(toppings[res] == true){
+        
+  
+        switch(res){
+          case "Bubble":
+            setPrice(()=>(cardPrice+(5*quantity)))
+            console.log('totalbbb',cardPrice)
+            topping.push(res)
+            break;
+          case "Jelly":
+            setPrice(()=>cardPrice+(10*quantity))
+            topping.push(res)
+            break;
+          case "konjac":
+            setPrice(()=>cardPrice+(10*quantity))
+            topping.push(res)
+            break;
+          case "Whisp":
+            setPrice(()=>cardPrice+(15*quantity))
+            topping.push(res)
+            break;
+          default:
+            break;
+        }
+        
+
+         // check filter old value is same topping
+     
+      
+        // old Value
+      setOld(()=>topping)
+    
+    }else{
+      const search = old.filter((res)=>(
+        !topping.includes(res)
+      ))
+      
+      // decreseable price 5 bath
+      search.map((res)=>(
+        
+        setPrice(()=>(cardPrice-(quantity*(res == 'konjac' ? 10 : res == 'Whisp'?15:5))))
+        
+        
+      ))
+
+      console.log('searchsearch ',cardPrice);
+
+     
+    }
+     
+  
+      
+    
+      
+    })
+  
+  },[toppings])
 
   // โหลดข้อมูลจาก localStorage เมื่อ component ถูก mount
   useEffect(() => {
     const fetchOrders = () => {
       const storedOrders = JSON.parse(window.localStorage.getItem("order_list")) || [];
       setOrders(storedOrders);
+      console.log('storedOrders',storedOrders)
     };
   
     fetchOrders(); // 🔥 ต้องเรียกตอนแรกเพื่อโหลดข้อมูลที่เคยบันทึกไว้
@@ -44,15 +164,18 @@ function Pending_Order() {
     setSelectedMood(order.selectedMood || null);
     setSelectedSize(order.selectedSize || "M");
     setSelectedSugar(order.selectedSugar || 50);
+    setName(order.name);
+    console.log('order.toppings',order)
     setToppings(order.toppings || {
-      ไข่มุก: false,
-      เยลลี่: false,
-      บุก: false,
-      วิปครีม: false,
+      Bubble: false,
+      Jelly: false,
+      Whisp: false,
+      konjac: false,
     });
     setQuantity(order.quantity || 1);
     setImage(order.img);
-    setPrice(order.price);
+    setPrice(order.total);
+    setTotalPrice(order.total);
     setShow(true);
     {console.log(order)}
   };
@@ -161,101 +284,6 @@ function Pending_Order() {
 
       {/* Modal สำหรับแสดงข้อมูล */}
       {selectedOrder && (
-        // <Modal show={showModal} onHide={handleClose}>
-        //   <Modal.Header closeButton>
-        //     <Modal.Title>{selectedOrder.name}</Modal.Title>
-        //   </Modal.Header>
-        //   <Modal.Body>
-        //     <div style={{ textAlign: "center" }}>
-        //       <img src={selectedOrder.img} alt="" style={{ width: "35%", borderRadius: "8px" }} />
-        //       <h3>{selectedOrder.name}</h3>
-        //       <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "10px" }}>
-        //         {/* Mood */}
-        //         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
-        //           <div style={{ flex: 1 }}>
-        //             <h5>Mood</h5>
-        //             <ButtonGroup>
-        //               <Button
-        //                 variant={selectedMood === "Hot" ? "contained" : "outlined"}
-        //                 onClick={() => setSelectedMood("Hot")}
-        //               >
-        //                 🔥 Hot
-        //               </Button>
-        //               <Button
-        //                 variant={selectedMood === "Cold" ? "contained" : "outlined"}
-        //                 onClick={() => setSelectedMood("Cold")}
-        //               >
-        //                 ❄️ Cold
-        //               </Button>
-        //             </ButtonGroup>
-        //           </div>
-
-        //           {/* Size */}
-        //           <div style={{ flex: 1 }}>
-        //             <h5>Size</h5>
-        //             <ButtonGroup>
-        //               {["S", "M", "L"].map((size) => (
-        //                 <Button
-        //                   key={size}
-        //                   variant={selectedSize === size ? "contained" : "outlined"}
-        //                   onClick={() => setSelectedSize(size)}
-        //                 >
-        //                   {size}
-        //                 </Button>
-        //               ))}
-        //             </ButtonGroup>
-        //           </div>
-        //         </div>
-
-        //         {/* Sugar */}
-        //         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
-        //           <div style={{ flex: 1 }}>
-        //             <h5>Sugar</h5>
-        //             <ButtonGroup>
-        //               {[25, 50, 75, 100].map((level) => (
-        //                 <Button
-        //                   key={level}
-        //                   variant={selectedSugar === level ? "contained" : "outlined"}
-        //                   onClick={() => setSelectedSugar(level)}
-        //                 >
-        //                   {level}%
-        //                 </Button>
-        //               ))}
-        //             </ButtonGroup>
-        //           </div>
-
-        //           {/* Topping */}
-        //           <div style={{ flex: 1 }}>
-        //             <h5>Topping</h5>
-        //             <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
-        //               {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
-        //                 <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
-        //                   <input
-        //                     type="checkbox"
-        //                     id={topping}
-        //                     value={topping}
-        //                     checked={toppings[topping]}
-        //                     onChange={(e) => setToppings({ ...toppings, [topping]: e.target.checked })}
-        //                   />
-        //                   <label htmlFor={topping} style={{ marginLeft: "10px" }}>{topping}</label>
-        //                 </div>
-        //               ))}
-        //             </div>
-        //           </div>
-        //         </div>
-        //       </div>
-        //     </div>
-        //   </Modal.Body>
-        //   <Modal.Footer>
-          
-        //     <Button style={{ color: "white", background: "red" }} onClick={handleClose}>
-        //       Cancel
-        //     </Button>
-        //     <Button style={{ color: "white", background: "green" }} onClick={handleSave}>
-        //       Save Changes
-        //     </Button>
-        //   </Modal.Footer>
-        // </Modal>
       <Modal className={"custom-border-modal"} show={show} onHide={handleClose}  backdrop={"static"} centered keyboard >
               <Modal.Header closeButton></Modal.Header>
               <Modal.Body >
@@ -268,7 +296,7 @@ function Pending_Order() {
                       
                       <h4>Discription</h4>
       
-                      <h3>ราคา {price} บาท</h3>
+                      <h3>ราคา {cardPrice} บาท</h3>
                     </div>
                   </div>
                 
@@ -343,14 +371,21 @@ function Pending_Order() {
                 gap: "10px", // ระยะห่างระหว่างแต่ละช่อง
               }}
             >
-              {["ไข่มุก", "เยลลี่", "บุก", "วิปครีม"].map((topping, index) => (
+              {[
+      "Bubble",
+      "Jelly",
+      "konjac",
+      "Whisp",
+     
+    ].map((topping, index) => (
                 <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
                   <input
                     className='checkbox-menu'
                     type="checkbox"
                     id={topping}
                     value={topping}
-                    onChange={(e) => setToppings(e.target.value, e.target.checked)}
+                    onChange={(e) => handleToppingChange(e.target.value, e.target.checked)}
+                    checked ={toppings[topping]}
                   />
                   <label htmlFor={topping} >{topping}</label>
                 </div>
@@ -359,6 +394,13 @@ function Pending_Order() {
           </div>
         </div>
       </div>
+      <div style={{ flex: 3 }}>
+      <div className="quantity-container">
+        <button className="quantity-btn decrease" onClick={handleDecrease}>-</button>
+        <span className="quantity-display">{quantity}</span>
+        <button className="quantity-btn increase" onClick={handleIncrease}>+</button>
+      </div>
+    </div>
       
                 </div>
               </Modal.Body>
