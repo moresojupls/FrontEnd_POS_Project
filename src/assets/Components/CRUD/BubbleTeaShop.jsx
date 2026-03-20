@@ -270,9 +270,10 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
           }
           return response.json()
         }).then(result =>{
-          
-          setImage(result.result[0].image_url)
-          resolve(result.result[0].image_url)
+
+          console.log('reszzzz',result)
+          setImage(result[0].image_url)
+          resolve(result[0].image_url)
         
          
         })
@@ -291,7 +292,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
     else{
       newItem.image = image
     };
-    console.log('item :',newItem)
+    console.log('newItem :',newItem)
    
    
      await fetch("http://127.0.0.1:4000/Products/update",{
@@ -455,7 +456,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
 
 
   const createModal =(res)=>{
-    console.log('res',res);
+   
     if(res.type == "null") return(<></>)
     if(res.type == "image") return(
       <Form.Item
@@ -513,6 +514,7 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
       <TextArea rows={3} placeholder={res.title} />
     </Form.Item>
     )
+  
     if(res.type == "active") return (<Form.Item
       label={res.title}
       name={res.key}
