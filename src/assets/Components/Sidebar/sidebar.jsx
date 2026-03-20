@@ -113,7 +113,7 @@ function MySidebar() {
 
 
             {/* History page */}
-            {permission != 'admin'? <></>:
+            
             <div className='Menu'>
             <div className='Menu Onclickhover'>
             <Link to={'/'+window.location.pathname.replace(window.location.pathname,window.location.pathname.split('/')[1])+"/History"} >
@@ -143,7 +143,7 @@ function MySidebar() {
                 <ListItem button width='100rem' >
                   <div>
                     <Myimg  url={img.Sale} size={45}></Myimg>
-                    <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>OrderHistory</h4>
+                    <h4 className="sidebarbtn" style={{display:respone? 'none':'' ,fontSize:'1vw'}}>Vendor history</h4>
                   </div>
                 
                 </ListItem>
@@ -152,7 +152,7 @@ function MySidebar() {
             </div>
             
           </div>
-            }
+            
             
             
 

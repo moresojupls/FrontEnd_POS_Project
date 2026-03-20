@@ -100,7 +100,7 @@ function LoginPage() {
           </div>
         </div>
 
-        <div className="form-options">
+        {/* <div className="form-options">
           <div className="remember-me">
             <input
               id="remember-me"
@@ -111,7 +111,7 @@ function LoginPage() {
             <label htmlFor="remember-me">จดจำฉันไว้</label>
           </div>
           <a href="#" className="forgot-password">ลืมรหัสผ่าน?</a>
-        </div>
+        </div> */}
 
         <button type="submit" className="login-button">
           เข้าสู่ระบบ
@@ -133,10 +133,10 @@ function LoginPage() {
         </button>
       </div> */}
 
-      <div className="signup-link">
+      {/* <div className="signup-link">
         <span>ยังไม่มีบัญชี? </span>
         <a href="#">สมัครสมาชิก</a>
-      </div>
+      </div> */}
     </div>
   </div>
   );

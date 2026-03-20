@@ -249,7 +249,7 @@ function Purchase() {
       </div>
 
       <section className="payment-buttons" style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-        {["cash", "Qrcode", "atmcard"].map((type) => (
+        {["Qrcode"].map((type) => (
           <button
             key={type}
             style={{

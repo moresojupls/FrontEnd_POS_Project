@@ -21,15 +21,20 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
   const [toppings, setToppings] = useState({
     Bubble: false,
     Jelly: false,
-    konjac: false,
-    Whisp: false,
+    // konjac: false,
+    // Whisp: false,
   });
   const [quantity, setQuantity] = useState(1);
   const [cardPrice,setPrice]= useState(price);
   
+  
   const topping = [];
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setPrice(price)
+    setSelectedSize("M")
+    setShow(false);
+  }
+  const handleShow = () =>{ setShow(true)};
 
   const handleToppingChange = (topping) => {
     console.log('topp',topping)
@@ -80,6 +85,8 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
     
     window.localStorage.setItem("order_list", JSON.stringify(updatedOrders));
     setShow(false);
+    setPrice(price);
+    setSelectedSize("M");
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
   };
   const [old,setOld] = useState([]); 
@@ -127,17 +134,17 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
             topping.push(res)
             break;
           case "Jelly":
-            setPrice(()=>cardPrice+(quantity*10))
+            setPrice(()=>cardPrice+(quantity*5))
             topping.push(res)
             break;
-          case "konjac":
-            setPrice(()=>cardPrice+(quantity*10))
-            topping.push(res)
-            break;
-          case "Whisp":
-            setPrice(()=>cardPrice+(quantity*15))
-            topping.push(res)
-            break;
+          // case "konjac":
+          //   setPrice(()=>cardPrice+(quantity*10))
+          //   topping.push(res)
+          //   break;
+          // case "Whisp":
+          //   setPrice(()=>cardPrice+(quantity*15))
+          //   topping.push(res)
+          //   break;
           default:
             break;
         }
@@ -154,7 +161,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
        
           // decreseable price 5 bath
           search.map((res)=>(
-            setPrice(()=>(cardPrice-(quantity*(res == 'konjac' ? 10 : res == 'Whisp'?15:5))))
+            setPrice(()=>(cardPrice-(quantity*(5))))
           ))
         }
         
@@ -212,7 +219,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
               <div className='m-3'>
                 <h1>{name}</h1>
                 
-                <h4>Discription</h4>
+                <h4>Description</h4>
 
                 <h3>ราคา { cardPrice } บาท</h3>
               </div>
@@ -289,7 +296,7 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
           gap: "10px", // ระยะห่างระหว่างแต่ละช่อง
         }}
       >
-        {["Bubble", "Jelly", "konjac", "Whisp"].map((topping, index) => (
+        {["Bubble", "Jelly"].map((topping, index) => (
           <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
             <input
               className='checkbox-menu'

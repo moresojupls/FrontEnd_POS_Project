@@ -66,16 +66,24 @@ function MyOrderlist() {
 
   return (
     <>
-      <div className='d-flex Orderlist' style={{ width: '30%' }}>
-        <div style={{ width: '100%' }}>
-          <h3>Order list</h3>
-          <div style={{ display: 'flex', height: '360px' }}>
+      <div className='d-flex Orderlist' style={{ width: '30%', height:'90%'}}>
+        <div style={{ width: '100%' ,display:'flex',flexDirection:'column' ,justifyContent:'space-between'}}>
+          <div>
+            <h3>Order list</h3>
+           
+          </div>
+          <div style={{ width: '100%', height: '100%', border: '2px', marginBottom: '20px', overflow: "scroll", display: 'block' }}>
+              <Pending_Order />
+          </div>
+    
+{/*        
+          <div style={{ display: 'flex'}}>
             <div style={{ width: '100%', height: '100%', border: '2px', marginBottom: '20px', overflow: "scroll", display: 'block' }}>
               <Pending_Order />
             </div>
-          </div>
+          </div> */}
 
-          <div style={{ paddingBottom: '5px' }}>
+          {/* <div style={{ paddingBottom: '5px' }}>
             <button
               style={{
                 width: '100%',
@@ -98,38 +106,39 @@ function MyOrderlist() {
                 style={{ width: '25px', height: '25px' }}
               />
             </button>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '5px', margin: '10px' }}>
+          </div> */}
+          <div>
+             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '5px', margin: '10px' }}>
+          
             <p className="mb-2" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ marginRight: '10px' }}>SubTotal:</span>
-              <span style={{ marginLeft: '10px' }}>{total.toFixed(2)} บาท</span> {/* แสดงผล total ทศนิยม 2 หลัก */}
-            </p>
-            <p className="mb-2" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ marginRight: '10px' }}>Tax:</span>
+              <span style={{ marginRight: '10px' }}>VAT 7% : </span>
               <span style={{ marginLeft: '10px' }}>{total !== 0 ? (total * 0.07).toFixed(2) : 0} บาท</span> {/* แสดงผล Tax ทศนิยม 2 หลัก */}
             </p>
             <p className="font-bold" style={{ fontSize: '25px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ marginRight: '10px' }}>Total:</span>
-              <span style={{ marginLeft: '10px' }}>{sum} บาท</span> {/* แสดงผล Total ทศนิยม 2 หลัก */}
+              <span style={{ marginRight: '10px' }}>Total :</span>
+              <span style={{ marginLeft: '10px' }}>{total.toFixed(2)} บาท</span> {/* แสดงผล Total ทศนิยม 2 หลัก */}
             </p>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-evenly', justifyItems: 'center', paddingBottom: '20px', marginTop: '-10px' }}>
-            <Mybutton size={"120"}
-              process={() => alert("hold order")}
-              topic={"Hold Order"}
-              color={"#FFB38E"} />
+            {/* <Mybutton size={"120"}
+              process={() => {
+                setO
+              }}
+              topic={"Clear"}
+              color={"#FFB38E"} /> */}
 
-            <Mybutton size={"80"}
+            <Mybutton size={"380"}
               process={() => {
                 if (total === 0) return 0;
                 navigate('/purchase');
               }}
               topic={"done"}
-              color={"#C2F5A1"}
+              color={"#58be14"}
             />
           </div>
+          </div>
+         
 
         </div>
       </div>

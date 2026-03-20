@@ -23,8 +23,8 @@ function Pending_Order() {
    const [toppings, setToppings] = useState({
       Bubble: false,
       Jelly: false,
-      konjac: false,
-      Whisp: false,
+      // konjac: false,
+      // Whisp: false,
     });
   const [cardPrice,setPrice]= useState(total);
   const [quantity, setQuantity] = useState(1);
@@ -92,17 +92,17 @@ const handleIncrease = () => {
             topping.push(res)
             break;
           case "Jelly":
-            setPrice(()=>cardPrice+(10*quantity))
+            setPrice(()=>cardPrice+(5*quantity))
             topping.push(res)
             break;
-          case "konjac":
-            setPrice(()=>cardPrice+(10*quantity))
-            topping.push(res)
-            break;
-          case "Whisp":
-            setPrice(()=>cardPrice+(15*quantity))
-            topping.push(res)
-            break;
+          // case "konjac":
+          //   setPrice(()=>cardPrice+(10*quantity))
+          //   topping.push(res)
+          //   break;
+          // case "Whisp":
+          //   setPrice(()=>cardPrice+(15*quantity))
+          //   topping.push(res)
+          //   break;
           default:
             break;
         }
@@ -169,14 +169,15 @@ const handleIncrease = () => {
     setToppings(order.toppings || {
       Bubble: false,
       Jelly: false,
-      Whisp: false,
-      konjac: false,
+      // Whisp: false,
+      // konjac: false,
     });
     setQuantity(order.quantity || 1);
     setImage(order.img);
     setPrice(order.total);
     setTotalPrice(order.total);
     setShow(true);
+  
     {console.log(order)}
   };
 
@@ -294,7 +295,7 @@ const handleIncrease = () => {
                     <div className='m-3'>
                       <h1>{name}</h1>
                       
-                      <h4>Discription</h4>
+                      <h4>Description</h4>
       
                       <h3>ราคา {cardPrice} บาท</h3>
                     </div>
@@ -374,8 +375,8 @@ const handleIncrease = () => {
               {[
       "Bubble",
       "Jelly",
-      "konjac",
-      "Whisp",
+      // "konjac",
+      // "Whisp",
      
     ].map((topping, index) => (
                 <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
@@ -394,7 +395,7 @@ const handleIncrease = () => {
           </div>
         </div>
       </div>
-      <div style={{ flex: 3 }}>
+      <div style={{ flex: 5 }}>
       <div className="quantity-container">
         <button className="quantity-btn decrease" onClick={handleDecrease}>-</button>
         <span className="quantity-display">{quantity}</span>
