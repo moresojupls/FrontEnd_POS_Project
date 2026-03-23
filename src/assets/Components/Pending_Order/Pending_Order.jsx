@@ -207,6 +207,7 @@ const handleIncrease = () => {
   // บันทึกข้อมูลใหม่ใน localStorage และปิด Modal
   const handleSave = () => {
     if (selectedOrder) {
+   console.log('cardPrice*quantity',cardPrice)
       const updatedOrder = {
         ...selectedOrder,
         selectedMood,
@@ -214,12 +215,17 @@ const handleIncrease = () => {
         selectedSugar,
         toppings,
         quantity,
+        total
       };
       const updatedOrders = orders.map((order) =>
-        order.id === selectedOrder.id ? updatedOrder : order
+        order.id == selectedOrder.id ? updatedOrder : order
       );
+      
+    
       setOrders(updatedOrders);
       window.localStorage.setItem("order_list", JSON.stringify(updatedOrders));
+      window.dispatchEvent(new Event("storage"));
+  
       setShow(false);
     }
   };
@@ -285,7 +291,7 @@ const handleIncrease = () => {
                 <div>
                   <p>สินค้า: {order.name}</p>
                   <div style={{display:"inline"}}>
-                    <p>จํานวน: {order.amount}</p>
+                    <p>จํานวน: {order.quantity}</p>
                     <p>ราคา: {order.total} บาท</p>
                   </div>
                 </div>
@@ -411,12 +417,14 @@ const handleIncrease = () => {
           </div>
         </div>
       </div>
-      <div style={{ flex: 5 }}>
-      <div className="quantity-container">
-        <button className="quantity-btn decrease" onClick={handleDecrease}>-</button>
-        <span className="quantity-display">{quantity}</span>
-        <button className="quantity-btn increase" onClick={handleIncrease}>+</button>
-      </div>
+    <div style={{ flex:  5 }}>
+        <div className="quantity-container" style={{ display:'flex',
+    justifyContent:'center',
+    alignItems:'center',}}>
+          <button className="quantity-btn decrease" onClick={handleDecrease}>-</button>
+          <span className="quantity-display">{quantity}</span>
+          <button className="quantity-btn increase" onClick={handleIncrease}>+</button>
+        </div>
     </div>
       
                 </div>

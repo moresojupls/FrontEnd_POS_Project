@@ -58,3 +58,8 @@
   .ant-tag {
     border-radius: 4px;
   }
+  .quantity-container{
+    display:'flex';
+    justifyContent:'center';
+    alignItems:'center';
+}

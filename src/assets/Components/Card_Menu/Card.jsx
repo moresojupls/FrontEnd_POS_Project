@@ -311,15 +311,15 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
       </div>
     </div>
   </div>
-  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
-    {/* Sugar */}
-    <div style={{ flex: 1 }}>
-      
-    </div>
+  {/* <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}> */}
+   <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
+   
 
     {/* Topping */}
-    <div style={{ flex: 3 }}>
-      <div className="quantity-container">
+    <div style={{ flex: 5 }}>
+      <div className="quantity-container" style={{ display:'flex',
+    justifyContent:'center',
+    alignItems:'center',}}>
         <button className="quantity-btn decrease" onClick={handleDecrease}>-</button>
         <span className="quantity-display">{quantity}</span>
         <button className="quantity-btn increase" onClick={handleIncrease}>+</button>
