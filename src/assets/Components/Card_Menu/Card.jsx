@@ -30,9 +30,12 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
   
   const topping = [];
   const handleClose = () => {
-    setPrice(price)
-    setSelectedSize("M")
     setShow(false);
+    setPrice(price);
+    setSelectedSize("M");
+    setQuantity(1);
+    setToppings([]);
+    setSelectedSugar(50);
   }
   const handleShow = () =>{ setShow(true)};
 
@@ -87,6 +90,9 @@ function MyCard({ img, name, size,id, price,amount=1,total=0}) {
     setShow(false);
     setPrice(price);
     setSelectedSize("M");
+    setQuantity(1);
+    setToppings([]);
+    setSelectedSugar(50);
     window.dispatchEvent(new Event("storage")); // สร้าง event เพื่อแจ้ง Pending_Order
   };
   const [old,setOld] = useState([]); 
