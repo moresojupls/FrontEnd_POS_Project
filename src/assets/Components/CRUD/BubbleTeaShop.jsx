@@ -71,6 +71,9 @@ const BubbleTeaShop = ({result,column,page,selectOption,get,deleteApi,Pagination
       case "orderhistory":
         setIsCreate(false);
         break;
+      case "Vendor History":
+        setIsCreate(false);
+        break;
       default:
         setIsCreate(true);
         break;
