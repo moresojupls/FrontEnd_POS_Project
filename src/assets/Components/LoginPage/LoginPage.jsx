@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaGoogle, FaFacebook } from 'react-icons/fa';
 import { GiCoffeeCup } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
-
+import  AlertBox  from '../alert/AlertBox';
+import { Alert } from 'antd';
 
 function LoginPage() {
    const userData = localStorage.getItem("user");
@@ -12,6 +13,7 @@ function LoginPage() {
    const [showPassword, setShowPassword] = useState(false);
    const [rememberMe, setRememberMe] = useState(false);
    const [showError,setError] = useState(false);
+   const [showAlertBox,setShowAlert] = useState('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
    const  navigator = useNavigate();
  
    const handleSubmit = (e) => {
@@ -34,7 +36,10 @@ function LoginPage() {
 
       return res.json();
     }).then((result)=>{
-      if(result.statuscode != 200) throw new Error('Login Failed')
+      if(result.statuscode != 200){
+        setShowAlert(result.message);
+        throw new Error('Login Failed')
+      }
       setError(false);
        // localStorage.removeItem("user");
       console.log('result ',result);
@@ -54,7 +59,15 @@ function LoginPage() {
     {/* ฟองไข่มุกตกแต่ง */}
     <div className="bubble bubble-1"></div>
     <div className="bubble bubble-2"></div>
-    {showError ?<h1>Welcome</h1>:<></>}
+    {showError ?<h1>
+      <AlertBox
+          message={showAlertBox}
+          type="error" 
+          onClose={() => setError(false)} 
+        />
+    </h1>:<></>
+    }
+  
     <div className="login-card">
       <div className="login-header">
         <GiCoffeeCup className="bubble-icon" />
