@@ -120,47 +120,105 @@ function Purchase() {
   };
 
   // Handle payment process
-  const payment = (obj) => {
-    if (orders.length === 0) {
-      alert('No orders to process');
-      return;
-    }
+  // const payment = (obj) => {
+  //   if (orders.length === 0) {
+  //     alert('No orders to process');
+  //     return;
+  //   }
 
-    // Check that all order totals are valid numbers
-    const validOrders = orders.every(order => typeof order.total === 'number' && !isNaN(order.total));
-    if (!validOrders) {
-      alert('Invalid order total');
-      return;
-    }
-    console.log('order',orders);
-    console.log('obj',obj);
-    const compressed = pako.deflate(JSON.stringify(orders));
-    const base64data = btoa(String.fromCharCode(...compressed));
-    obj.Product_detail = base64data;
+  //   // Check that all order totals are valid numbers
+  //   const validOrders = orders.every(order => typeof order.total === 'number' && !isNaN(order.total));
+  //   if (!validOrders) {
+  //     alert('Invalid order total');
+  //     return;
+  //   }
+  //   console.log('order',orders);
+  //   console.log('obj',obj);
+  //   const compressed = pako.deflate(JSON.stringify(orders));
+  //   const base64data = btoa(String.fromCharCode(...compressed));
+  //   obj.Product_detail = base64data;
  
 
 
-    fetch("http://127.0.0.1:4000/Transactions/create", {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json',
-         "authorization":"Bearer "+auth
-       },
-      body: JSON.stringify(obj)
-    }).then((res) => {
-      if (res.status === 200) {
-        // Clear order list after successful payment
-        localStorage.removeItem("order_list");
-        setOrders([]);  // Clear the local state of orders
-      }
-    }).catch((res) => {
-      if (res.status === 404) {
-        console.log('Not Found');
-      }
-    }).finally(() => {
-      setIsModalVisible(true); // Open Modal when payment is complete
-    });
-   };
+  //   fetch("http://127.0.0.1:4000/Transactions/create", {
+  //     method: 'POST',
+  //     headers: { 'Content-type': 'application/json',
+  //        "authorization":"Bearer "+auth
+  //      },
+  //     body: JSON.stringify(obj)
+  //   }).then((res) => {
+  //     if (res.status === 200) {
+  //       // Clear order list after successful payment
+  //       localStorage.removeItem("order_list");
+  //       setOrders([]);  // Clear the local state of orders
+  //     }
+  //   }).catch((res) => {
+  //     if (res.status === 404) {
+  //       console.log('Not Found');
+  //     }
+  //   }).finally(() => {
+  //     setIsModalVisible(true); // Open Modal when payment is complete
+  //   });
+  //  };
+  const payment = async (obj) => { // 1. เติม async ตรงนี้
+  if (orders.length === 0) {
+    alert('No orders to process');
+    return;
+  }
 
+  // Check that all order totals are valid numbers
+  const validOrders = orders.every(order => typeof order.total === 'number' && !isNaN(order.total));
+  if (!validOrders) {
+    alert('Invalid order total');
+    return;
+  }
+
+  try {
+    console.log('order', orders);
+    console.log('obj', obj);
+
+    // 2. บีบอัดข้อมูลด้วย pako
+    const compressed = pako.deflate(JSON.stringify(orders));
+
+    // 3. แปลงเป็น Base64 โดยใช้ Blob + FileReader (แก้ Stack Overflow)
+    const blob = new Blob([compressed]);
+    const base64data = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result.split(',')[1]; // ตัดเอาแต่เนื้อ data
+        resolve(base64String);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+
+    obj.Product_detail = base64data;
+
+    // 4. ส่งข้อมูลไปยัง Backend
+    const response = await fetch("http://127.0.0.1:4000/Transactions/create", {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        "authorization": "Bearer " + auth
+      },
+      body: JSON.stringify(obj)
+    });
+
+    if (response.status === 200) {
+      // Success
+      localStorage.removeItem("order_list");
+      setOrders([]); 
+    } else if (response.status === 404) {
+      console.log('Not Found');
+    }
+
+  } catch (error) {
+    console.error('Error during payment:', error);
+    alert('Something went wrong!');
+  } finally {
+    setIsModalVisible(true); // เปิด Modal เสมอเมื่อจบ process
+  }
+};
   // Handle payment method selection
   const handlePayment = (type) => {
     if (type === "Qrcode") {
