@@ -214,22 +214,24 @@ const VendorPage = () => {
         date: new Date().toISOString(),
         status: 'pending'
       };
- const r =     [
-  {
-    "unit": "ขวด",
-    "quantity": 10,
-    "product_id": 101,
-    "unit_price": 25.5,
-    "product_name": "เครื่องดื่มเกลือแร่"
-  },
-  {
-    "unit": "ขวด",
-    "quantity": 20,
-    "product_id": 102,
-    "unit_price": 7,
-    "product_name": "น้ำดื่ม 600ml"
-  }
-]
+
+      // Model prototype
+//  const r =     [
+//   {
+//     "unit": "ขวด",
+//     "quantity": 10,
+//     "product_id": 101,
+//     "unit_price": 25.5,
+//     "product_name": "เครื่องดื่มเกลือแร่"
+//   },
+//   {
+//     "unit": "ขวด",
+//     "quantity": 20,
+//     "product_id": 102,
+//     "unit_price": 7,
+//     "product_name": "น้ำดื่ม 600ml"
+//   }
+// ]
 
 const  containItemMapping=orderItems.map((result)=>{
   // mapping each item on object 

@@ -135,12 +135,13 @@ function OrderHistorySupplierPage() {
         dataIndex:"quantity",
         width:100,
       },
+      // {
+      //   title:'ขวด',
+      //   dataIndex:"unit",
+      //   key:"unit",
+      //   width:100,
+      // },
       {
-        title:'ขวด',
-        dataIndex:"unit",
-        key:"unit",
-        width:100,
-      },{
         title:'unit_price',
         dataIndex:"unit_price",
         key:"unit_price",
