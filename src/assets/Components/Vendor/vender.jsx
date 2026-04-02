@@ -3,6 +3,7 @@ import { Card, Row, Col, Typography, InputNumber, Button, Divider, message, Moda
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import "./vendor.css";
+import axios from "axios";
 
 // Define components and styles
 const { Title, Text } = Typography;
@@ -21,7 +22,10 @@ const VendorPage = () => {
   const [isReceiptDownloaded, setIsReceiptDownloaded] = useState(false);
 
   const [employeeName, setEmployeeName] = useState("");  // เพิ่ม state เพื่อเก็บชื่อผู้สั่ง
-
+  // authorization
+        const userData = localStorage.getItem("user");
+        const parseUser = JSON.parse(userData);
+        const auth = parseUser.Authorization.replace("Bearer ","")
   useEffect(() => {
     fetchMaterials();
     fetchEmployeeName();  // เรียกใช้ฟังก์ชันดึงชื่อพนักงาน
@@ -99,24 +103,24 @@ const VendorPage = () => {
     }
   };
 
-  const getSampleMaterials = () => [
-    {
-      material_id: 1,
-      material_name: "Wheat Flour",
-      supply_price: 50,
-      lead_time_days: 2,
-      img_url: "https://source.unsplash.com/featured/?flour",
-      supplier_name: "Bakery Shop",
-    },
-    {
-      material_id: 2,
-      material_name: "Sugar",
-      supply_price: 30,
-      lead_time_days: 2,
-      img_url: "https://source.unsplash.com/featured/?sugar",
-      supplier_name: "Bakery Shop",
-    },
-  ];
+  // const getSampleMaterials = () => [
+  //   {
+  //     material_id: 1,
+  //     material_name: "Wheat Flour",
+  //     supply_price: 50,
+  //     lead_time_days: 2,
+  //     img_url: "https://source.unsplash.com/featured/?flour",
+  //     supplier_name: "Bakery Shop",
+  //   },
+  //   {
+  //     material_id: 2,
+  //     material_name: "Sugar",
+  //     supply_price: 30,
+  //     lead_time_days: 2,
+  //     img_url: "https://source.unsplash.com/featured/?sugar",
+  //     supplier_name: "Bakery Shop",
+  //   },
+  // ];
 
   const [orderTotal, setOrderTotal] = useState(0);
   const handleQtyChange = (id, value) => {
@@ -211,24 +215,63 @@ const VendorPage = () => {
         status: 'pending'
       };
 
-      Modal.success({
-        title: "Order Saved Successfully",
-        content: (
-          <div>
-            <p>Order saved. Now you can download your receipt.</p>
-            <p>Order ID: <strong>{tempOrderId}</strong></p>
-            <Button
-              type="default"
-              size="large"
-              onClick={generatePDF}
-              style={{ width: "100%", marginTop: 16 }}
-              disabled={isReceiptDownloaded}
-            >
-              📥 Download Receipt
-            </Button>
-          </div>
-        ),
-      });
+      // Model prototype
+//  const r =     [
+//   {
+//     "unit": "ขวด",
+//     "quantity": 10,
+//     "product_id": 101,
+//     "unit_price": 25.5,
+//     "product_name": "เครื่องดื่มเกลือแร่"
+//   },
+//   {
+//     "unit": "ขวด",
+//     "quantity": 20,
+//     "product_id": 102,
+//     "unit_price": 7,
+//     "product_name": "น้ำดื่ม 600ml"
+//   }
+// ]
+
+const  containItemMapping=orderItems.map((result)=>{
+  // mapping each item on object 
+  return {
+  "product_name":result.material_name,
+  "quantity":result.quantity,
+  "unit_price":result.supply_price
+}
+})
+
+
+const  user =  JSON.parse(localStorage.getItem("user")) || null;
+await axios.post("http://127.0.0.1:4000/supplierorderhistory/SupplierOrderHistory/create", {
+     supplier_id:"2",
+     employee_id:user.result.id,
+     items:containItemMapping
+    },{
+      headers:{
+        authorization:"Bearer "+auth
+      }
+    });
+  
+      // Modal.success({
+      //   title: "Order Saved Successfully",
+      //   content: (
+      //     <div>
+      //       <p>Order saved. Now you can download your receipt.</p>
+      //       <p>Order ID: <strong>{tempOrderId}</strong></p>
+      //       <Button
+      //         type="default"
+      //         size="large"
+      //         onClick={generatePDF}
+      //         style={{ width: "100%", marginTop: 16 }}
+      //         disabled={isReceiptDownloaded}
+      //       >
+      //         📥 Download Receipt
+      //       </Button>
+      //     </div>
+      //   ),
+      // });
 
       setIsReceiptReady(true);
 
